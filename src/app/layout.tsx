@@ -6,7 +6,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
 const Grotesk = localFont({
-  src: "../public/fonts/founders-grotesk-regular.woff2",
+  src: "../../public/fonts/founders-grotesk-regular.woff2",
   variable: "--font-grotesk",
   display: "swap",
 });
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Paria Creative Hub",
   description: "Personal portfolio of Paria",
   icons: {
-    icon: "/public/images/oceanusLogo.jpg",
+    icon: "/images/logo.jpg",
   },
 };
 
