@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import pariaLogo from "../../../public/images/paria.png";
-import {navigation} from '@/data/navigation';
+import {navigation} from '@/data/data';
 
 
 export default function Header() {

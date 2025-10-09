@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {navigation} from '@/data/navigation';
+import {navigation} from '@/data/data';
 import InstagramIcon from "@/components/icons/InstagramIcon";
 
 export default function Footer() {

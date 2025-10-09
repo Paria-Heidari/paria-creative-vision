@@ -11,7 +11,7 @@ export const Hero = () => {
       >
         <source src="/videos/IMG_1174.mov" type="video/mp4" />
       </video>
-      <div className="absolute z-10 bottom-50 left-1/12">
+      <div className="absolute z-10 bottom-50 left-1/7">
         <h1 className="text-5xl tracking-wider font-syne">
           Exploring the World Through Code and Lens
         </h1>
