@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import localFont from 'next/font/local';
 import "./globals.css";
 import BodyLayout from "@/components/Body/bodyLayout";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
+import { Syne, Inter } from "next/font/google";
 
+const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });;
 const Grotesk = localFont({
   src: "../../public/fonts/founders-grotesk-regular.woff2",
   variable: "--font-grotesk",
@@ -28,11 +29,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${Grotesk.className} font-grotesk`}>
+    <html
+      lang="en"
+      className={`${Grotesk.className} ${inter.className} ${syne.className} font-grotesk`}
+    >
       <body>
-        <BodyLayout>
-          {children}
-        </BodyLayout>
+        <BodyLayout>{children}</BodyLayout>
       </body>
     </html>
   );

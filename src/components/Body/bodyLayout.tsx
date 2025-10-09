@@ -8,7 +8,9 @@ export default function BodyLayout({
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow pt-16">{children}</main>
+      <main className="flex-grow pt-16">
+        <div className="mx-auto w-full">{children}</div>
+      </main>
       <Footer />
     </div>
   );
