@@ -15,6 +15,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  @apply m-0 p-0 overflow-x-hidden;
 }
 /* tailwind tokens */
 /* stylelint-disable at-rule-no-unknown */
@@ -22,7 +23,7 @@ body {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   /* custom tokens*/
-  --color-header-beige: #d8cbba;
+  --color-layout-beige: #d8cbba;
   --color-component-beige: #e2d5c6;
   --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

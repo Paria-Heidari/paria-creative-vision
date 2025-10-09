@@ -31,9 +31,7 @@ export default function RootLayout({
     <html lang="en" className={`${Grotesk.className} font-grotesk`}>
       <body>
         <BodyLayout>
-          <Header />
           {children}
-          <Footer />
         </BodyLayout>
       </body>
     </html>
