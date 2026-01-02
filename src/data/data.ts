@@ -4,7 +4,7 @@ export const navigation = [
     href: "/",
     current: true,
   },
-  { name: "PORTFOLIO", href: "/pages/portfolio/photography" },
+  { name: "PORTFOLIO", href: "/pages/portfolio" },
   { name: "ARTICLES", href: "/pages/articles" },
   { name: "ABOUT", href: "/pages/about" },
 ];

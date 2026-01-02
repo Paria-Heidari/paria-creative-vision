@@ -1,6 +1,6 @@
-import { GalleryCardItem } from "@/components/GalleryCardItem/GalleryCardItem";
-import  {Hero}  from "@/components/Hero/Hero";
-import {TextBlock}  from "@/components/TextBlock/TextBlock";
+import {Hero} from "@/components/Hero/Hero";
+import {TextBlock} from "@/components/TextBlock/TextBlock";
+import {FeaturedGallery} from "@/components/FeaturedGallery/FeaturedGallery";
 import {textBlockData} from "@/data/data";
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <Hero />
       <TextBlock content={textBlockData.content} />
-      <GalleryCardItem />
+      <FeaturedGallery />
     </>
   );
 }
