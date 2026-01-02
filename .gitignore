@@ -41,5 +41,5 @@ yarn-error.log*
 next-env.d.ts
 
 #large files
-public/videos
-public/images
+/public/videos
+/public/images
