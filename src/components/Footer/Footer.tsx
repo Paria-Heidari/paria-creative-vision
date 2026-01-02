@@ -9,7 +9,7 @@ export default function Footer() {
         <p className="text-sm">
           © 2025 Paria Photography. All Rights Reserved.
         </p>
-        <ul className="flex gap-4">
+        <ul className="flex gap-6">
           {navigation.map((item, index) => (
             <li key={index}>
               <Link href={item.href}>{item.name}</Link>
