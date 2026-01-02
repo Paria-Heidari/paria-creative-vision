@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import pariaLogo from "../../../public/images/paria.png";
 import { navigation } from "@/data/data";
 
 export default function Header() {
@@ -45,7 +44,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
             <Image
-              src={pariaLogo}
+              src={"/images/paria.png"}
               alt="Paria Logo"
               width={200}
               height={50}
