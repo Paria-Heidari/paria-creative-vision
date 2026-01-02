@@ -14,7 +14,7 @@ const Grotesk = localFont({
 
 
 export const metadata: Metadata = {
-  title: "Paria Creative Hub",
+  title: "Paria Creative Vision",
   description: "Personal portfolio of Paria",
   icons: {
     icon: "/images/logo.jpg",
