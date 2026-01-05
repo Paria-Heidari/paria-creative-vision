@@ -130,3 +130,7 @@ Implement Hero component
 implement footer & adjust layout
 fix favicon & public directory
 ```
+
+## Important Notes
+
+- **Do NOT add Claude Code attribution**: Commit messages should NOT include "🤖 Generated with Claude Code" or "Co-Authored-By: Claude" footers

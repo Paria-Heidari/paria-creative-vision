@@ -7,28 +7,34 @@ import LocationPinIcon from '@/components/icons/LocationPinIcon';
 
 interface GalleryItemProps {
   photo: Photo;
+  showFeaturedBadge: boolean;
   onClick: () => void;
+  variant?: 'masonry' | 'grid';
 }
 
-export default function GalleryItem({ photo, onClick }: GalleryItemProps) {
+export default function GalleryItem({ photo, showFeaturedBadge, onClick, variant = 'masonry' }: GalleryItemProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const isGrid = variant === 'grid';
 
   return (
     <div
-      className="break-inside-avoid mb-4 group cursor-pointer"
+      className={`${isGrid ? 'h-full' : 'break-inside-avoid mb-4'} group cursor-pointer`}
       onClick={onClick}
     >
-      <div className="relative overflow-hidden rounded-lg shadow-soft hover:shadow-xl transition-all duration-500 bg-component-beige">
+      <div className={`relative overflow-hidden rounded-lg shadow-soft hover:shadow-xl transition-all duration-500 bg-component-beige ${isGrid ? 'h-full flex flex-col' : ''}`}>
         {/* Image with Next.js optimization */}
-        <div className="relative">
+        <div className={`relative ${isGrid ? 'flex-1 min-h-0' : ''}`}>
           <Image
             src={photo.imageUrl}
             alt={photo.title}
             width={photo.metadata.width}
             height={photo.metadata.height}
-            className={`w-full h-auto transition-all duration-700 ${
-              isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-            } group-hover:scale-105`}
+            className={`w-full transition-all duration-700 ${
+              isGrid ? 'h-full w-full object-cover' : 'h-auto'
+            } ${
+              isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            } ${isGrid ? '' : 'group-hover:scale-105'}`}
             loading="lazy"
             onLoad={() => setIsLoaded(true)}
           />
@@ -63,7 +69,7 @@ export default function GalleryItem({ photo, onClick }: GalleryItemProps) {
         </div>
 
         {/* Featured badge */}
-        {photo.featured && (
+        {photo.featured && showFeaturedBadge && (
           <div className="absolute top-4 right-4 bg-accent-hover/90 backdrop-blur-sm px-3 py-1 rounded-full">
             <span className="text-xs font-inter text-foreground font-medium tracking-wider">
               FEATURED

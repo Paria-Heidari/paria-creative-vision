@@ -61,6 +61,7 @@ export default function GalleryGrid({ photos }: GalleryGridProps) {
           <GalleryItem
             key={photo.id}
             photo={photo}
+            showFeaturedBadge={true}
             onClick={() => handlePhotoClick(photo)}
           />
         ))}

@@ -27,7 +27,7 @@ export function FeaturedGallery() {
           </div>
           <Link
             href="/pages/portfolio"
-            className="hidden md:inline-flex items-center gap-2 text-sm font-inter text-foreground/70 hover:text-foreground transition-colors duration-300"
+            className="hidden md:inline-flex items-center gap-2 text-xl font-inter text-foreground/70 hover:text-foreground transition-colors duration-300"
           >
             View All
             <ChevronRightIcon className="w-4 h-4" />
@@ -37,12 +37,13 @@ export function FeaturedGallery() {
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {featuredPhotos.map((photo) => (
-            <div key={photo.id} className="group cursor-pointer" onClick={() => setSelectedPhoto(photo)}>
-              <GalleryItem
-                photo={photo}
-                onClick={() => setSelectedPhoto(photo)}
-              />
-            </div>
+            <GalleryItem
+              key={photo.id}
+              photo={photo}
+              onClick={() => setSelectedPhoto(photo)}
+              showFeaturedBadge={false}
+              variant="grid"
+            />
           ))}
         </div>
 
