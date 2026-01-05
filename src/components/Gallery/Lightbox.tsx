@@ -3,6 +3,10 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Photo } from '@/types/photo.types';
+import CloseIcon from '@/components/icons/CloseIcon';
+import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon';
+import ChevronRightIcon from '@/components/icons/ChevronRightIcon';
+import LocationPinIcon from '@/components/icons/LocationPinIcon';
 
 interface LightboxProps {
   photo: Photo;
@@ -66,19 +70,7 @@ export default function Lightbox({ photo, photos, onClose }: LightboxProps) {
         className="absolute top-6 right-6 z-50 w-12 h-12 bg-accent/20 hover:bg-accent/30 rounded-full flex items-center justify-center transition-all duration-300 group"
         aria-label="Close lightbox"
       >
-        <svg
-          className="w-6 h-6 text-accent group-hover:rotate-90 transition-transform duration-300"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
+        <CloseIcon className="w-6 h-6 text-accent group-hover:rotate-90 transition-transform duration-300" />
       </button>
 
       {/* Navigation buttons */}
@@ -91,19 +83,7 @@ export default function Lightbox({ photo, photos, onClose }: LightboxProps) {
           className="absolute left-6 z-50 w-12 h-12 bg-accent/20 hover:bg-accent/30 rounded-full flex items-center justify-center transition-all duration-300 group"
           aria-label="Previous photo"
         >
-          <svg
-            className="w-6 h-6 text-accent group-hover:-translate-x-1 transition-transform duration-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+          <ChevronLeftIcon className="w-6 h-6 text-accent group-hover:-translate-x-1 transition-transform duration-300" />
         </button>
       )}
 
@@ -116,19 +96,7 @@ export default function Lightbox({ photo, photos, onClose }: LightboxProps) {
           className="absolute right-6 z-50 w-12 h-12 bg-accent/20 hover:bg-accent/30 rounded-full flex items-center justify-center transition-all duration-300 group"
           aria-label="Next photo"
         >
-          <svg
-            className="w-6 h-6 text-accent group-hover:translate-x-1 transition-transform duration-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
+          <ChevronRightIcon className="w-6 h-6 text-accent group-hover:translate-x-1 transition-transform duration-300" />
         </button>
       )}
 
@@ -175,25 +143,7 @@ export default function Lightbox({ photo, photos, onClose }: LightboxProps) {
 
           {currentPhoto.location.city && (
             <div className="flex items-center justify-center gap-2 mb-3">
-              <svg
-                className="w-5 h-5 text-accent/70"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
+              <LocationPinIcon className="w-5 h-5 text-accent/70" />
               <p className="text-accent/80 font-inter">
                 {currentPhoto.location.city}, {currentPhoto.location.country}
               </p>
@@ -220,17 +170,6 @@ export default function Lightbox({ photo, photos, onClose }: LightboxProps) {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Keyboard hints */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4 text-accent/50 text-xs font-inter tracking-wider">
-        <span className="flex items-center gap-1">
-          <kbd className="px-2 py-1 bg-accent/10 rounded">ESC</kbd> Close
-        </span>
-        <span className="flex items-center gap-1">
-          <kbd className="px-2 py-1 bg-accent/10 rounded">←</kbd>
-          <kbd className="px-2 py-1 bg-accent/10 rounded">→</kbd> Navigate
-        </span>
       </div>
     </div>
   );

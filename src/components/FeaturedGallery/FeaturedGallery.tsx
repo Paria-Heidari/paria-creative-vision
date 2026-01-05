@@ -5,6 +5,7 @@ import { getFeaturedPhotos } from '@/data/mockPhotos';
 import GalleryItem from '@/components/Gallery/GalleryItem';
 import { useState } from 'react';
 import Lightbox from '@/components/Gallery/Lightbox';
+import ChevronRightIcon from '@/components/icons/ChevronRightIcon';
 
 export function FeaturedGallery() {
   const featuredPhotos = getFeaturedPhotos(3); // Get 3 featured photos for compact view
@@ -29,9 +30,7 @@ export function FeaturedGallery() {
             className="hidden md:inline-flex items-center gap-2 text-sm font-inter text-foreground/70 hover:text-foreground transition-colors duration-300"
           >
             View All
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRightIcon className="w-4 h-4" />
           </Link>
         </div>
 
@@ -54,9 +53,7 @@ export function FeaturedGallery() {
             className="inline-flex items-center gap-2 px-6 py-2 bg-foreground text-accent rounded-full text-sm font-inter tracking-wider hover:bg-foreground/90 transition-all duration-300"
           >
             View Full Portfolio
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRightIcon className="w-4 h-4" />
           </Link>
         </div>
       </div>
