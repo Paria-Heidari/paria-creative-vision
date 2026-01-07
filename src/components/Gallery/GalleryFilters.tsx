@@ -1,7 +1,7 @@
 'use client';
-
 import { useState } from 'react';
 import { mockCategories } from '@/data/mockPhotos';
+import Button from '@/components/Button/Button';
 
 interface GalleryFiltersProps {
   onFilterChange: (category?: string, subcategory?: string) => void;
@@ -19,8 +19,8 @@ export default function GalleryFilters({
 
   const handleCategoryClick = (categoryId: string) => {
     setSelectedCategory(categoryId);
-    setSelectedSubcategory(undefined);
-    onFilterChange(categoryId === 'all' ? undefined : categoryId, undefined);
+    setSelectedSubcategory('');
+    onFilterChange(categoryId === 'all' ? '' : categoryId, '');
   };
 
   const handleSubcategoryClick = (categoryId: string, subcategoryId: string) => {
@@ -28,7 +28,7 @@ export default function GalleryFilters({
     onFilterChange(categoryId, subcategoryId);
   };
 
-  const selectedCategoryData = mockCategories.find((cat) => cat.id === selectedCategory);
+  const selectedCategoryData = mockCategories.find((category) => category.id === selectedCategory);
 
   return (
     <div className="px-6 mb-12">
@@ -38,21 +38,18 @@ export default function GalleryFilters({
           const isSelected = selectedCategory === category.id;
 
           return (
-            <button
+            <Button
               key={category.id}
               onClick={() => handleCategoryClick(category.id)}
+              variant={isSelected ? 'primary' : 'secondary'}
               className={`
-                px-6 py-3 rounded-full font-inter text-sm tracking-wider transition-all duration-300
-                ${
-                  isSelected
-                    ? 'bg-foreground text-accent shadow-md scale-105'
-                    : 'bg-accent text-foreground hover:bg-accent-hover hover:shadow-soft'
-                }
+                px-6 py-3 text-base
+                ${isSelected ? 'shadow-md' : 'hover:shadow-soft'}
               `}
             >
               <span className="font-medium">{category.name}</span>
               <span className="ml-2 opacity-60">({category.photoCount})</span>
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -64,32 +61,38 @@ export default function GalleryFilters({
             const isSelected = selectedSubcategory === subcategory.id;
 
             return (
-              <button
+              <Button
                 key={subcategory.id}
-                onClick={() => handleSubcategoryClick(selectedCategory, subcategory.id)}
+                onClick={() =>
+                  handleSubcategoryClick(selectedCategory, subcategory.id)
+                }
+                variant={isSelected ? 'secondary' : 'ghost'}
                 className={`
-                  px-5 py-2 rounded-full font-inter text-xs tracking-wider transition-all duration-300
+                  px-5 py-2 text-sm
                   ${
                     isSelected
-                      ? 'bg-accent-hover text-foreground shadow-sm scale-105 ring-2 ring-foreground/20'
+                      ? 'bg-accent-hover shadow-sm'
                       : 'bg-component-beige text-foreground/80 hover:bg-accent-hover hover:text-foreground'
                   }
                 `}
               >
                 <span>{subcategory.name}</span>
-                <span className="ml-1.5 opacity-50">({subcategory.photoCount})</span>
-              </button>
+                <span className="ml-1.5 opacity-50">
+                  ({subcategory.photoCount})
+                </span>
+              </Button>
             );
           })}
 
           {/* Clear subcategory button */}
           {selectedSubcategory && (
-            <button
+            <Button
               onClick={() => handleCategoryClick(selectedCategory)}
-              className="px-4 py-2 rounded-full font-inter text-xs tracking-wider bg-foreground/10 text-foreground/60 hover:bg-foreground/20 transition-all duration-300"
+              variant="ghost"
+              className="px-4 py-2 text-xs bg-foreground/10 text-foreground/60 hover:bg-foreground/20 transition-all duration-300"
             >
               Clear Filter
-            </button>
+            </Button>
           )}
         </div>
       )}

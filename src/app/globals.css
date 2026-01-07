@@ -2,13 +2,73 @@
 
 :root {
   --background: #F5F0EB;
-  --foreground:  #2E2E2E;
+  --foreground:  #999090;
   --accent: #ece5df;
   --accent-hover: #D4B996;
   --color-layout-beige: #d8cbba;
   --color-component-beige: #e2d5c6;
-  
+
+  /* Typography */
+  /* Font Families */
+  --font-family-syne: 'Syne', sans-serif;
+  --font-family-inter: 'Inter', sans-serif;
+ /* Font Sizes */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.25rem;      /* 20px */
+  --font-size-2xl: 1.5rem;      /* 24px */
+  --font-size-3xl: 1.875rem;    /* 30px */
+  --font-size-4xl: 2.25rem;      /* 36px */
+  --font-size-5xl: 3rem;        /* 48px */
+  --font-size-6xl: 3.75rem;     /* 60px */
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em; 
+
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;   /* Full circle */
+
+  /* Shadows */
+  --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+  --transition-slower: 700ms ease-in-out;
+
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #F5F0EB;
@@ -28,11 +88,52 @@ body {
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
-
-  /* custom tokens*/
   --color-layout-beige: var(--color-layout-beige);
   --color-component-beige: var(--color-component-beige);
-  --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Typography */
+  --font-family-syne: var(--font-family-syne);
+  --font-family-inter: var(--font-family-inter);
+  --font-size-xs: var(--font-size-xs);
+  --font-size-sm: var(--font-size-sm);
+  --font-size-base: var(--font-size-base);
+  --font-size-lg: var(--font-size-lg);
+  --font-size-xl: var(--font-size-xl);
+  --font-size-2xl: var(--font-size-2xl);
+  --font-size-3xl: var(--font-size-3xl);
+  --font-size-4xl: var(--font-size-4xl);
+  --font-size-5xl: var(--font-size-5xl);
+  --font-size-6xl: var(--font-size-6xl);
+  --font-weight-light: var(--font-weight-light);
+  --font-weight-normal: var(--font-weight-normal);
+  --font-weight-medium: var(--font-weight-medium);
+  --font-weight-semibold: var(--font-weight-semibold);
+  --font-weight-bold: var(--font-weight-bold);
+  --line-height-tight: var(--line-height-tight);
+  --line-height-normal: var(--line-height-normal);
+  --line-height-relaxed: var(--line-height-relaxed);
+  --letter-spacing-tight: var(--letter-spacing-tight);
+  --letter-spacing-normal: var(--letter-spacing-normal);
+  --letter-spacing-wide: var(--letter-spacing-wide);
+  --letter-spacing-wider: var(--letter-spacing-wider);
+  /* Shadows */
+  --shadow-soft: var(--shadow-soft);
+  --shadow-medium: var(--shadow-medium);
+  --shadow-large: var(--shadow-large);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+  /* Border Radius */
+  --radius-none: var(--radius-none);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+  --radius-full: var(--radius-full);
+  /* Transitions */
+  --transition-fast: var(--transition-fast);
+  --transition-base: var(--transition-base);
+  --transition-slow: var(--transition-slow);
+  --transition-slower: var(--transition-slower);  
 
   /* custom animations */
   --animate-fadeIn: fadeIn 0.3s ease-in-out;
