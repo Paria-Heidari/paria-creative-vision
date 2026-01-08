@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+
 import { mockCategories } from '@/data/mockPhotos';
 import Button from '@/components/Button/Button';
 
@@ -14,17 +14,17 @@ export default function GalleryFilters({
   currentCategory = 'all',
   currentSubcategory,
 }: GalleryFiltersProps) {
-  const [selectedCategory, setSelectedCategory] = useState(currentCategory);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(currentSubcategory);
+  // Use props directly - controlled component (parent manages state)
+  const selectedCategory = currentCategory;
+  const selectedSubcategory = currentSubcategory;
 
   const handleCategoryClick = (categoryId: string) => {
-    setSelectedCategory(categoryId);
-    setSelectedSubcategory('');
-    onFilterChange(categoryId === 'all' ? '' : categoryId, '');
+    // Only call parent callback - parent updates state
+    onFilterChange(categoryId === 'all' ? undefined : categoryId, undefined);
   };
 
   const handleSubcategoryClick = (categoryId: string, subcategoryId: string) => {
-    setSelectedSubcategory(subcategoryId);
+    // Only call parent callback - parent updates state
     onFilterChange(categoryId, subcategoryId);
   };
 
