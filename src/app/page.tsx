@@ -1,6 +1,6 @@
-import {Hero} from "@/components/Hero/Hero";
-import {TextBlock} from "@/components/TextBlock/TextBlock";
-import {FeaturedGallery} from "@/components/FeaturedGallery/FeaturedGallery";
+import {Hero} from "@/components/Hero";
+import {TextBlock} from "@/components/TextBlock";
+import {FeaturedGallery} from "@/components/FeaturedGallery";
 import {textBlockData} from "@/data/data";
 
 export default function Home() {

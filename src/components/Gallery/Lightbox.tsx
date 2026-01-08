@@ -14,7 +14,7 @@ interface LightboxProps {
   onClose: () => void;
 }
 
-export default function Lightbox({ photo, photos, onClose }: LightboxProps) {
+const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
   const [currentIndex, setCurrentIndex] = useState(
     photos.findIndex((p) => p.id === photo.id)
   );
@@ -174,3 +174,5 @@ export default function Lightbox({ photo, photos, onClose }: LightboxProps) {
     </div>
   );
 }
+
+export default Lightbox;

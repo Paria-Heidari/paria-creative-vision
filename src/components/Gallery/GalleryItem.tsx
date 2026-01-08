@@ -12,7 +12,7 @@ interface GalleryItemProps {
   variant?: 'masonry' | 'grid';
 }
 
-export default function GalleryItem({ photo, showFeaturedBadge, onClick, variant = 'masonry' }: GalleryItemProps) {
+const GalleryItem = ({ photo, showFeaturedBadge, onClick, variant = 'masonry' }: GalleryItemProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const isGrid = variant === 'grid';
@@ -80,3 +80,5 @@ export default function GalleryItem({ photo, showFeaturedBadge, onClick, variant
     </div>
   );
 }
+
+export default GalleryItem;

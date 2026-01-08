@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import GalleryGrid from '@/components/Gallery/GalleryGrid';
-import GalleryFilters from '@/components/Gallery/GalleryFilters';
+import { GalleryGrid } from '@/components/Gallery';
+import { GalleryFilters } from '@/components/Gallery';
 import { getPhotosByCategory } from '@/data/mockPhotos';
 
 export default function PortfolioPage() {

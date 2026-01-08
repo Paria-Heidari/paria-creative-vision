@@ -7,7 +7,8 @@ import { useState } from 'react';
 import Lightbox from '@/components/Gallery/Lightbox';
 import ChevronRightIcon from '@/components/icons/ChevronRightIcon';
 
-export function FeaturedGallery() {
+
+const FeaturedGallery = () => {
   const featuredPhotos = getFeaturedPhotos(3); // Get 3 featured photos for compact view
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedPhoto, setSelectedPhoto] = useState<any>(null);
@@ -70,3 +71,5 @@ export function FeaturedGallery() {
     </section>
   );
 }
+
+export default FeaturedGallery;

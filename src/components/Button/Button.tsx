@@ -2,13 +2,13 @@ import React from 'react';
 import { ButtonHTMLAttributes } from 'react';
 import LoadingSpinner from '@/components/icons/LoadingSpinner';
 
-export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'size'> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   btnText?: string;
   variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link';
   loading?: boolean;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       btnText,

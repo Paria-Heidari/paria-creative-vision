@@ -1,7 +1,6 @@
 'use client';
-
 import { mockCategories } from '@/data/mockPhotos';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button';
 
 interface GalleryFiltersProps {
   onFilterChange: (category?: string, subcategory?: string) => void;
@@ -9,11 +8,11 @@ interface GalleryFiltersProps {
   currentSubcategory?: string;
 }
 
-export default function GalleryFilters({
+const GalleryFilters = ({
   onFilterChange,
   currentCategory = 'all',
   currentSubcategory,
-}: GalleryFiltersProps) {
+}: GalleryFiltersProps) => {
   // Use props directly - controlled component (parent manages state)
   const selectedCategory = currentCategory;
   const selectedSubcategory = currentSubcategory;
@@ -118,3 +117,5 @@ export default function GalleryFilters({
     </div>
   );
 }
+
+export default GalleryFilters;

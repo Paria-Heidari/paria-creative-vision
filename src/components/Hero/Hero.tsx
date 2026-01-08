@@ -1,5 +1,5 @@
 
-export const Hero = () => {
+const Hero = () => {
   return (
     <div className="relative inset-0 w-full h-[90vh] flex text-accent">
       <video
@@ -22,3 +22,5 @@ export const Hero = () => {
     </div>
   );
 }
+
+export default Hero;

@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { Photo } from '@/types/photo.types';
 import GalleryItem from './GalleryItem';
@@ -10,7 +9,7 @@ interface GalleryGridProps {
   photos: Photo[];
 }
 
-export default function GalleryGrid({ photos }: GalleryGridProps) {
+const GalleryGrid = ({ photos }: GalleryGridProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -74,3 +73,5 @@ export default function GalleryGrid({ photos }: GalleryGridProps) {
     </>
   );
 }
+
+export default GalleryGrid;
