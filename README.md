@@ -48,11 +48,21 @@ NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-## Database Setup
+## Generate TypeScript Types
 
-1. Create a new Supabase project
-2. Run SQL migrations from `supabase/` directory
-3. Import data from CSV files in `scripts/supabase-data/`
+After setting up your Supabase database, generate TypeScript types to ensure type safety:
+
+```bash
+npx supabase gen types typescript --project-id your-project-id > src/types/database.types.ts
+```
+
+This command:
+- Connects to your Supabase project
+- Reads your database schema (tables, columns, relationships)
+- Generates TypeScript interfaces matching your database structure
+- Provides autocomplete and type checking for all database queries
+
+Find your project ID in your Supabase dashboard under Project Settings → General.
 
 ## Project Structure
 
