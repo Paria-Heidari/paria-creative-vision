@@ -25,6 +25,10 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
   const hasPrevious = currentIndex > 0;
   const hasNext = currentIndex < photos.length - 1;
 
+  const imageUrl = currentPhoto.storage_path
+    ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${currentPhoto.storage_path}`
+    : "/images/placeholder.jpg";
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -123,10 +127,10 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
 
           {/* Image */}
           <Image
-            src={currentPhoto.imageUrl}
+            src={imageUrl}
             alt={currentPhoto.title}
-            width={currentPhoto.metadata.width}
-            height={currentPhoto.metadata.height}
+            width={currentPhoto.width}
+            height={currentPhoto.height}
             className={`max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-lg shadow-2xl transition-all duration-500 ${
               isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
             } ${direction === 'left' ? 'animate-slideInLeft' : direction === 'right' ? 'animate-slideInRight' : ''}`}
@@ -141,11 +145,11 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
             {currentPhoto.title}
           </h2>
 
-          {currentPhoto.location.city && (
+          {currentPhoto.location_city && currentPhoto.location_country && (
             <div className="flex items-center justify-center gap-2 mb-3">
               <LocationPinIcon className="w-5 h-5 text-accent/70" />
               <p className="text-accent/80 font-inter">
-                {currentPhoto.location.city}, {currentPhoto.location.country}
+                {currentPhoto.location_city}, {currentPhoto.location_country}
               </p>
             </div>
           )}
@@ -157,7 +161,7 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
           )}
 
           {/* Tags */}
-          {currentPhoto.tags.length > 0 && (
+          {currentPhoto.tags && currentPhoto.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 justify-center mt-4">
               {currentPhoto.tags.map((tag) => (
                 <span
