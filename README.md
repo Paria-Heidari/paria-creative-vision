@@ -45,24 +45,35 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=your_supabase_anon_key
 ```
 
-## Generate TypeScript Types
+## TypeScript Type Generation
 
-After setting up your Supabase database, generate TypeScript types to ensure type safety:
+This project uses generated TypeScript types to ensure type safety with Supabase. The types are automatically generated from your database schema and provide full autocomplete and type checking for all database queries.
+
+### Generate Types
+
+Use the provided npm script:
 
 ```bash
-npx supabase gen types typescript --project-id your-project-id > src/types/database.types.ts
+npm run supabase:types
 ```
 
-This command:
-- Connects to your Supabase project
-- Reads your database schema (tables, columns, relationships)
-- Generates TypeScript interfaces matching your database structure
-- Provides autocomplete and type checking for all database queries
+Alternatively, run the command directly:
 
-Find your project ID in your Supabase dashboard under Project Settings → General.
+```bash
+npx supabase gen types typescript --project-id <your-project-id> > src/types/database.types.ts
+```
+
+**Note:** Find your project ID in Supabase Dashboard → Project Settings → General.
+
+### When to Regenerate Types
+
+Regenerate types after any database schema changes:
+- Adding or removing tables
+- Modifying column definitions
+- Updating relationships or constraints
 
 ## Project Structure
 
