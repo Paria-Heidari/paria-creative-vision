@@ -1,23 +1,34 @@
-'use client';
-
-import { useState } from 'react';
 import { GalleryGrid } from '@/components/Gallery';
 import { GalleryFilters } from '@/components/Gallery';
-import { getPhotosByCategory } from '@/data/mockPhotos';
+import {
+  getAllPhotos,
+  getPhotosByCategory,
+  getPhotosBySubcategory,
+  getAllCategories
+} from '@/lib/api/photos';
 
-export default function PortfolioPage() {
-  const [currentCategory, setCurrentCategory] = useState<string>('all');
-  const [currentSubcategory, setCurrentSubcategory] = useState<string | undefined>();
+interface PortfolioPageProps {
+  searchParams: Promise<{
+    category?: string;
+    subcategory?: string;
+  }>;
+}
 
-  const photos = getPhotosByCategory(
-    currentCategory === 'all' ? undefined : currentCategory,
-    currentSubcategory
-  );
+export default async function PortfolioPage({ searchParams }: PortfolioPageProps) {
+  const { category: categorySlug, subcategory: subcategorySlug } = await searchParams;
 
-  const handleFilterChange = (category?: string, subcategory?: string) => {
-    setCurrentCategory(category || 'all');
-    setCurrentSubcategory(subcategory);
-  };
+  // Fetch all categories with nested subcategories (for filter buttons)
+  const categories = await getAllCategories();
+
+  // Fetch photos based on filters
+  let photos;
+  if (subcategorySlug) {
+    photos = await getPhotosBySubcategory(subcategorySlug);
+  } else if (categorySlug && categorySlug !== 'all') {
+    photos = await getPhotosByCategory(categorySlug);
+  } else {
+    photos = await getAllPhotos();
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -36,9 +47,9 @@ export default function PortfolioPage() {
       {/* Filters Section */}
       <section className="py-12">
         <GalleryFilters
-          onFilterChange={handleFilterChange}
-          currentCategory={currentCategory}
-          currentSubcategory={currentSubcategory}
+          currentCategory={categorySlug}
+          currentSubcategory={subcategorySlug}
+          categories={categories}
         />
       </section>
 

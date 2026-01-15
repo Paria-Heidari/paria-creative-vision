@@ -1,17 +1,18 @@
 'use client';
-
 import Link from 'next/link';
-import { getFeaturedPhotos } from '@/data/mockPhotos';
 import GalleryItem from '@/components/Gallery/GalleryItem';
 import { useState } from 'react';
 import Lightbox from '@/components/Gallery/Lightbox';
 import ChevronRightIcon from '@/components/icons/ChevronRightIcon';
+import { Photo } from '@/types/photo.types';
+
+interface FeaturedGalleryProps {
+  featuredPhotos: Photo[];
+}
 
 
-const FeaturedGallery = () => {
-  const featuredPhotos = getFeaturedPhotos(3); // Get 3 featured photos for compact view
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [selectedPhoto, setSelectedPhoto] = useState<any>(null);
+const FeaturedGallery = ({ featuredPhotos } : FeaturedGalleryProps) => {
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   return (
     <section className="py-16 px-6 bg-background">
@@ -70,6 +71,6 @@ const FeaturedGallery = () => {
       )}
     </section>
   );
-}
+};
 
 export default FeaturedGallery;

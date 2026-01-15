@@ -1,53 +1,85 @@
 'use client';
-import { mockCategories } from '@/data/mockPhotos';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/Button';
+import { Category } from '@/types/photo.types';
 
 interface GalleryFiltersProps {
-  onFilterChange: (category?: string, subcategory?: string) => void;
   currentCategory?: string;
   currentSubcategory?: string;
+  categories?: Category[];
 }
 
 const GalleryFilters = ({
-  onFilterChange,
-  currentCategory = 'all',
+  currentCategory,
   currentSubcategory,
+  categories,
 }: GalleryFiltersProps) => {
-  // Use props directly - controlled component (parent manages state)
-  const selectedCategory = currentCategory;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const selectedCategory = currentCategory || 'all';
   const selectedSubcategory = currentSubcategory;
 
-  const handleCategoryClick = (categoryId: string) => {
-    // Only call parent callback - parent updates state
-    onFilterChange(categoryId === 'all' ? undefined : categoryId, undefined);
+  const handleCategoryClick = (categorySlug: string) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (categorySlug === 'all') {
+      params.delete('category');
+      params.delete('subcategory');
+    } else {
+      params.set('category', categorySlug);
+      params.delete('subcategory');
+    }
+
+    const queryString = params.toString();
+    router.push(`/pages/portfolio${queryString ? `?${queryString}` : ''}`);
   };
 
-  const handleSubcategoryClick = (categoryId: string, subcategoryId: string) => {
-    // Only call parent callback - parent updates state
-    onFilterChange(categoryId, subcategoryId);
+  const handleSubcategoryClick = (categorySlug: string, subcategorySlug: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('category', categorySlug);
+    params.set('subcategory', subcategorySlug);
+
+    const queryString = params.toString();
+    router.push(`/pages/portfolio${queryString ? `?${queryString}` : ''}`);
   };
 
-  const selectedCategoryData = mockCategories.find((category) => category.id === selectedCategory);
+  const selectedCategoryData = categories?.find(
+    (category) => category.slug === selectedCategory
+  );
 
   return (
     <div className="px-6 mb-12">
       {/* Main category filters */}
       <div className="flex flex-wrap gap-3 justify-center mb-6">
-        {mockCategories.map((category) => {
-          const isSelected = selectedCategory === category.id;
+        {/* All Photos button */}
+        <Button
+          onClick={() => handleCategoryClick("all")}
+          variant={selectedCategory === "all" ? "primary" : "secondary"}
+          className={`
+            px-6 py-3 text-base
+            ${selectedCategory === "all" ? "shadow-md" : "hover:shadow-soft"}
+          `}
+        >
+          <span className="font-medium">All Photos</span>
+        </Button>
+
+        {/* Category buttons */}
+        {categories?.map((category) => {
+          const isSelected = selectedCategory === category.slug;
 
           return (
             <Button
               key={category.id}
-              onClick={() => handleCategoryClick(category.id)}
-              variant={isSelected ? 'primary' : 'secondary'}
+              onClick={() => handleCategoryClick(category.slug)}
+              variant={isSelected ? "primary" : "secondary"}
               className={`
                 px-6 py-3 text-base
-                ${isSelected ? 'shadow-md' : 'hover:shadow-soft'}
+                ${isSelected ? "shadow-md" : "hover:shadow-soft"}
               `}
             >
               <span className="font-medium">{category.name}</span>
-              <span className="ml-2 opacity-60">({category.photoCount})</span>
+              <span className="ml-2 opacity-60">({category.photo_count})</span>
             </Button>
           );
         })}
@@ -57,27 +89,27 @@ const GalleryFilters = ({
       {selectedCategoryData?.subcategories && selectedCategoryData.subcategories.length > 0 && (
         <div className="flex flex-wrap gap-2 justify-center">
           {selectedCategoryData.subcategories.map((subcategory) => {
-            const isSelected = selectedSubcategory === subcategory.id;
+            const isSelected = selectedSubcategory === subcategory.slug;
 
             return (
               <Button
                 key={subcategory.id}
                 onClick={() =>
-                  handleSubcategoryClick(selectedCategory, subcategory.id)
+                  handleSubcategoryClick(selectedCategory, subcategory.slug)
                 }
-                variant={isSelected ? 'secondary' : 'ghost'}
+                variant={isSelected ? "secondary" : "ghost"}
                 className={`
                   px-5 py-2 text-sm
                   ${
                     isSelected
-                      ? 'bg-accent-hover shadow-sm'
-                      : 'bg-component-beige text-foreground/80 hover:bg-accent-hover hover:text-foreground'
+                      ? "bg-accent-hover shadow-sm"
+                      : "bg-component-beige text-foreground/80 hover:bg-accent-hover hover:text-foreground"
                   }
                 `}
               >
                 <span>{subcategory.name}</span>
                 <span className="ml-1.5 opacity-50">
-                  ({subcategory.photoCount})
+                  ({subcategory.photo_count})
                 </span>
               </Button>
             );
@@ -97,17 +129,19 @@ const GalleryFilters = ({
       )}
 
       {/* Active filter description */}
-      {selectedCategoryData && selectedCategory !== 'all' && (
+      {selectedCategoryData && selectedCategory !== "all" && (
         <div className="mt-8 text-center">
           <p className="text-sm font-inter text-foreground/60 italic max-w-md mx-auto">
-            {selectedCategoryData.description || `Viewing ${selectedCategoryData.name} collection`}
+            {selectedCategoryData.description ||
+              `Viewing ${selectedCategoryData.name} collection`}
             {selectedSubcategory && (
               <>
-                {' '}
-                •{' '}
+                {" "}
+                •{" "}
                 {
-                  selectedCategoryData.subcategories?.find((s) => s.id === selectedSubcategory)
-                    ?.name
+                  selectedCategoryData.subcategories?.find(
+                    (s) => s.slug === selectedSubcategory
+                  )?.name
                 }
               </>
             )}

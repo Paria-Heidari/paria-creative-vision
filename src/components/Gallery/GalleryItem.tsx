@@ -1,40 +1,53 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Photo } from '@/types/photo.types';
-import { useState } from 'react';
-import LocationPinIcon from '@/components/icons/LocationPinIcon';
+import Image from "next/image";
+import { Photo } from "@/types/photo.types";
+import { useState } from "react";
+import LocationPinIcon from "@/components/icons/LocationPinIcon";
 
 interface GalleryItemProps {
   photo: Photo;
   showFeaturedBadge: boolean;
   onClick: () => void;
-  variant?: 'masonry' | 'grid';
+  variant?: "masonry" | "grid";
 }
 
-const GalleryItem = ({ photo, showFeaturedBadge, onClick, variant = 'masonry' }: GalleryItemProps) => {
+const GalleryItem = ({
+  photo,
+  showFeaturedBadge,
+  onClick,
+  variant = "masonry",
+}: GalleryItemProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
-
-  const isGrid = variant === 'grid';
+  const isGrid = variant === "grid";
+  const imageUrl = photo.storage_path
+    ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${photo.storage_path}`
+    : "/images/placeholder.jpg";
 
   return (
     <div
-      className={`${isGrid ? 'h-full' : 'break-inside-avoid mb-4'} group cursor-pointer`}
+      className={`${
+        isGrid ? "h-full" : "break-inside-avoid mb-4"
+      } group cursor-pointer`}
       onClick={onClick}
     >
-      <div className={`relative overflow-hidden rounded-lg shadow-soft hover:shadow-xl transition-all duration-500 bg-component-beige ${isGrid ? 'h-full flex flex-col' : ''}`}>
+      <div
+        className={`relative overflow-hidden rounded-lg shadow-soft hover:shadow-xl transition-all duration-500 bg-component-beige ${
+          isGrid ? "h-full flex flex-col" : ""
+        }`}
+      >
         {/* Image with Next.js optimization */}
-        <div className={`relative ${isGrid ? 'flex-1 min-h-0' : ''}`}>
+        <div className={`relative ${isGrid ? "flex-1 min-h-0" : ""}`}>
           <Image
-            src={photo.imageUrl}
+            src={imageUrl}
             alt={photo.title}
-            width={photo.metadata.width}
-            height={photo.metadata.height}
+            width={photo.width}
+            height={photo.height}
             className={`w-full transition-all duration-700 ${
-              isGrid ? 'h-full w-full object-cover' : 'h-auto'
-            } ${
-              isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
-            } ${isGrid ? '' : 'group-hover:scale-105'}`}
+              isGrid ? "h-full w-full object-cover" : "h-auto"
+            } ${isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"} ${
+              isGrid ? "" : "group-hover:scale-105"
+            }`}
             loading="lazy"
             onLoad={() => setIsLoaded(true)}
           />
@@ -43,7 +56,7 @@ const GalleryItem = ({ photo, showFeaturedBadge, onClick, variant = 'masonry' }:
           {!isLoaded && (
             <div
               className="absolute inset-0 bg-accent animate-pulse"
-              style={{ aspectRatio: photo.metadata.aspectRatio }}
+              style={{ aspectRatio: photo.aspect_ratio }}
             />
           )}
         </div>
@@ -54,10 +67,10 @@ const GalleryItem = ({ photo, showFeaturedBadge, onClick, variant = 'masonry' }:
             <h3 className="text-lg font-syne text-accent mb-1 tracking-wide">
               {photo.title}
             </h3>
-            {photo.location.city && (
+            {photo.location_city && (
               <p className="text-sm font-inter text-accent/90 flex items-center gap-2">
                 <LocationPinIcon className="w-4 h-4" />
-                {photo.location.city}, {photo.location.country}
+                {photo.location_city}, {photo.location_country}
               </p>
             )}
             {photo.description && (
@@ -79,6 +92,6 @@ const GalleryItem = ({ photo, showFeaturedBadge, onClick, variant = 'masonry' }:
       </div>
     </div>
   );
-}
+};
 
 export default GalleryItem;
