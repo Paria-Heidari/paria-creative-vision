@@ -8,8 +8,6 @@ jobs:
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
-    # Only run deploy after CI passes
-    needs: [ci] # Add the name of the job that needs to pass before this job runs
 
     steps:
       - name: Checkout code
