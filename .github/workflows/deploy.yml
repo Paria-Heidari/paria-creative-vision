@@ -1,0 +1,48 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    # Only run deploy after CI passes
+    needs: [ci] # Add the name of the job that needs to pass before this job runs
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+
+# SETUP INSTRUCTIONS:
+#
+# 1. Install Vercel CLI: npm i -g vercel
+# 2. Link your project: vercel link
+# 3. Get your tokens from .vercel/project.json or run: vercel project ls
+# 4. Add these secrets to your GitHub repository:
+#    - VERCEL_TOKEN: Get from https://vercel.com/account/tokens
+#    - VERCEL_ORG_ID: Found in .vercel/project.json
+#    - VERCEL_PROJECT_ID: Found in .vercel/project.json
+#
+# Alternative deployment platforms:
+# - Netlify: Use netlify/actions/cli@master
+# - AWS: Use aws-actions/configure-aws-credentials
+# - Custom: Add your own deployment script
