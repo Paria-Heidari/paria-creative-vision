@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: 'ukemvlgitweejghezgcq.supabase.co',
         pathname: '/storage/v1/object/public/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn-images-1.medium.com',
+        pathname: '/**',
+      },
     ],
   },
 };

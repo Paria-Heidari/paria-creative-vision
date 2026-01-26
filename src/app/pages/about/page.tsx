@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Code2, Camera, MapPin, Mail, ArrowRight, Github, Linkedin } from 'lucide-react';
+import { Code2, Camera, MapPin, Mail, ArrowRight } from 'lucide-react';
+import GitHubIcon from '@/components/icons/GitHubIcon';
 
 // Skills data
 const techSkills = [
@@ -113,7 +114,7 @@ export default function About() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 border-2 border-foreground/20 text-foreground rounded-full font-medium hover:border-accent-gold hover:text-accent-gold transition-all duration-300"
                 >
-                  <Github className="w-4 h-4" />
+                  <GitHubIcon className="w-4 h-4" />
                   GitHub
                 </Link>
               </div>

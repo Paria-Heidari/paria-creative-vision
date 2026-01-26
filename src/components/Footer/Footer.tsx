@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { navigation } from "@/data/data";
-import { Instagram, Github, Linkedin, Mail } from "lucide-react";
+import { Instagram, Linkedin, Mail } from "lucide-react";
+import GitHubIcon from "@/components/icons/GitHubIcon";
 
 // Navigation Links Component
 const NavLinks = ({ className = "" }: { className?: string }) => (
@@ -37,7 +38,7 @@ const SocialIcons = () => (
       className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground-muted hover:bg-accent-gold hover:text-white transition-all duration-300"
       aria-label="GitHub"
     >
-      <Github className="w-5 h-5" />
+      <GitHubIcon className="w-5 h-5" />
     </Link>
     <Link
       href="https://linkedin.com"
