@@ -1,10 +1,20 @@
 @import "tailwindcss";
 
 :root {
+  /* Core Colors - Improved Contrast */
   --background: #F5F0EB;
-  --foreground:  #999090;
+  --foreground: #3D3D3D;           /* Darker for better readability */
+  --foreground-muted: #7A7A7A;     /* Secondary text */
+  --foreground-subtle: #999090;    /* Tertiary/caption text */
+
+  /* Accent Colors - Warm Gold */
   --accent: #ece5df;
   --accent-hover: #D4B996;
+  --accent-gold: #C9A87C;          /* Primary gold accent */
+  --accent-gold-hover: #B8956A;    /* Gold hover state */
+  --accent-gold-light: #E8DBC8;    /* Light gold for backgrounds */
+
+  /* Layout Colors */
   --color-layout-beige: #d8cbba;
   --color-component-beige: #e2d5c6;
 
@@ -84,10 +94,20 @@ body {
 /* tailwind tokens */
 /* stylelint-disable at-rule-no-unknown */
 @theme inline {
+  /* Core Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+
+  /* Accent Colors */
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-gold-hover: var(--accent-gold-hover);
+  --color-accent-gold-light: var(--accent-gold-light);
+
+  /* Layout Colors */
   --color-layout-beige: var(--color-layout-beige);
   --color-component-beige: var(--color-component-beige);
   /* Typography */
@@ -135,10 +155,14 @@ body {
   --transition-slow: var(--transition-slow);
   --transition-slower: var(--transition-slower);  
 
-  /* custom animations */
+  /* Custom Animations */
   --animate-fadeIn: fadeIn 0.3s ease-in-out;
   --animate-slideInLeft: slideInLeft 0.4s ease-out;
   --animate-slideInRight: slideInRight 0.4s ease-out;
+  --animate-bounce-subtle: bounce-subtle 2s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.6s ease-out;
+  --animate-scale-in: scale-in 0.3s ease-out;
+  --animate-underline-slide: underline-slide 0.3s ease-out forwards;
 }
 
 /* Custom Animations */
@@ -170,6 +194,48 @@ body {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes underline-slide {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 }
 
