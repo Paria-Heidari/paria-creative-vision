@@ -1,7 +1,9 @@
-import React from 'react'
+import { getMediumArticles } from '@/lib/api/medium';
+import ArticlesClient from './ArticlesClient';
 
-export default function Articles() {
-  return (
-    <div>Artic</div>
-  )
+// Server component that fetches articles
+export default async function Articles() {
+  const articles = await getMediumArticles('paria-heidari');
+
+  return <ArticlesClient initialArticles={articles} />;
 }

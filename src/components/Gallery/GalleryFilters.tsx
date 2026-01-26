@@ -1,7 +1,8 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Button } from '@/components/Button';
 import { Category } from '@/types/photo.types';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 
 interface GalleryFiltersProps {
   currentCategory?: string;
@@ -49,106 +50,138 @@ const GalleryFilters = ({
   );
 
   return (
-    <div className="px-6 mb-12">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="px-6 sm:px-8 mb-12"
+    >
       {/* Main category filters */}
       <div className="flex flex-wrap gap-3 justify-center mb-6">
         {/* All Photos button */}
-        <Button
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => handleCategoryClick("all")}
-          variant={selectedCategory === "all" ? "primary" : "secondary"}
           className={`
-            px-6 py-3 text-base
-            ${selectedCategory === "all" ? "shadow-md" : "hover:shadow-soft"}
+            px-6 py-2.5 rounded-full text-sm font-medium tracking-wide uppercase transition-all duration-300
+            ${selectedCategory === "all"
+              ? "bg-accent-gold text-white shadow-lg"
+              : "bg-white/80 text-foreground border border-foreground/10 hover:border-accent-gold hover:text-accent-gold"
+            }
           `}
         >
-          <span className="font-medium">All Photos</span>
-        </Button>
+          All Photos
+        </motion.button>
 
         {/* Category buttons */}
         {categories?.map((category) => {
           const isSelected = selectedCategory === category.slug;
 
           return (
-            <Button
+            <motion.button
               key={category.id}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => handleCategoryClick(category.slug)}
-              variant={isSelected ? "primary" : "secondary"}
               className={`
-                px-6 py-3 text-base
-                ${isSelected ? "shadow-md" : "hover:shadow-soft"}
+                px-6 py-2.5 rounded-full text-sm font-medium tracking-wide uppercase transition-all duration-300 flex items-center gap-2
+                ${isSelected
+                  ? "bg-accent-gold text-white shadow-lg"
+                  : "bg-white/80 text-foreground border border-foreground/10 hover:border-accent-gold hover:text-accent-gold"
+                }
               `}
             >
-              <span className="font-medium">{category.name}</span>
-              <span className="ml-2 opacity-60">({category.photo_count})</span>
-            </Button>
+              <span>{category.name}</span>
+              <span className={`text-xs ${isSelected ? "text-white/70" : "text-foreground-muted"}`}>
+                ({category.photo_count})
+              </span>
+            </motion.button>
           );
         })}
       </div>
 
-      {/* Subcategory filters - only show for selected category with subcategories */}
-      {selectedCategoryData?.subcategories && selectedCategoryData.subcategories.length > 0 && (
-        <div className="flex flex-wrap gap-2 justify-center">
-          {selectedCategoryData.subcategories.map((subcategory) => {
-            const isSelected = selectedSubcategory === subcategory.slug;
+      {/* Subcategory filters with animation */}
+      <AnimatePresence>
+        {selectedCategoryData?.subcategories && selectedCategoryData.subcategories.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="flex flex-wrap gap-2 justify-center py-4 border-t border-foreground/5">
+              {selectedCategoryData.subcategories.map((subcategory) => {
+                const isSelected = selectedSubcategory === subcategory.slug;
 
-            return (
-              <Button
-                key={subcategory.id}
-                onClick={() =>
-                  handleSubcategoryClick(selectedCategory, subcategory.slug)
-                }
-                variant={isSelected ? "secondary" : "ghost"}
-                className={`
-                  px-5 py-2 text-sm
-                  ${
-                    isSelected
-                      ? "bg-accent-hover shadow-sm"
-                      : "bg-component-beige text-foreground/80 hover:bg-accent-hover hover:text-foreground"
-                  }
-                `}
-              >
-                <span>{subcategory.name}</span>
-                <span className="ml-1.5 opacity-50">
-                  ({subcategory.photo_count})
-                </span>
-              </Button>
-            );
-          })}
+                return (
+                  <motion.button
+                    key={subcategory.id}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() =>
+                      handleSubcategoryClick(selectedCategory, subcategory.slug)
+                    }
+                    className={`
+                      px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-300 flex items-center gap-1.5
+                      ${isSelected
+                        ? "bg-accent-gold/20 text-accent-gold border border-accent-gold/30"
+                        : "bg-component-beige text-foreground-muted hover:bg-accent-gold/10 hover:text-accent-gold"
+                      }
+                    `}
+                  >
+                    <span>{subcategory.name}</span>
+                    <span className="opacity-60">({subcategory.photo_count})</span>
+                  </motion.button>
+                );
+              })}
 
-          {/* Clear subcategory button */}
-          {selectedSubcategory && (
-            <Button
-              onClick={() => handleCategoryClick(selectedCategory)}
-              variant="ghost"
-              className="px-4 py-2 text-xs bg-foreground/10 text-foreground/60 hover:bg-foreground/20 transition-all duration-300"
-            >
-              Clear Filter
-            </Button>
-          )}
-        </div>
-      )}
+              {/* Clear subcategory button */}
+              {selectedSubcategory && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleCategoryClick(selectedCategory)}
+                  className="px-3 py-1.5 rounded-full text-xs font-medium bg-foreground/10 text-foreground-muted hover:bg-foreground/20 transition-all duration-300 flex items-center gap-1"
+                >
+                  <X className="w-3 h-3" />
+                  <span>Clear</span>
+                </motion.button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Active filter description */}
-      {selectedCategoryData && selectedCategory !== "all" && (
-        <div className="mt-8 text-center">
-          <p className="text-sm font-inter text-foreground/60 italic max-w-md mx-auto">
-            {selectedCategoryData.description ||
-              `Viewing ${selectedCategoryData.name} collection`}
-            {selectedSubcategory && (
-              <>
-                {" "}
-                •{" "}
-                {
-                  selectedCategoryData.subcategories?.find(
+      <AnimatePresence>
+        {selectedCategoryData && selectedCategory !== "all" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mt-6 text-center"
+          >
+            <p className="text-sm font-inter text-foreground-muted max-w-md mx-auto">
+              {selectedCategoryData.description ||
+                `Exploring the ${selectedCategoryData.name} collection`}
+              {selectedSubcategory && (
+                <span className="text-accent-gold">
+                  {" "}— {selectedCategoryData.subcategories?.find(
                     (s) => s.slug === selectedSubcategory
-                  )?.name
-                }
-              </>
-            )}
-          </p>
-        </div>
-      )}
-    </div>
+                  )?.name}
+                </span>
+              )}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 

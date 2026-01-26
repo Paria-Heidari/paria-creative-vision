@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { Photo } from '@/types/photo.types';
+import { motion } from 'framer-motion';
 import GalleryItem from './GalleryItem';
 import Lightbox from './Lightbox';
-import ImageIcon from '@/components/icons/ImageIcon';
+import { ImageOff } from 'lucide-react';
 
 interface GalleryGridProps {
   photos: Photo[];
@@ -31,37 +32,49 @@ const GalleryGrid = ({ photos }: GalleryGridProps) => {
 
   if (photos.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 px-6">
-        <div className="w-20 h-20 bg-accent rounded-full flex items-center justify-center mb-6">
-          <ImageIcon className="w-10 h-10 text-foreground/40" />
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col items-center justify-center py-24 px-6"
+      >
+        <div className="w-24 h-24 bg-accent-gold/10 rounded-full flex items-center justify-center mb-6">
+          <ImageOff className="w-12 h-12 text-accent-gold/60" />
         </div>
-        <h3 className="text-2xl font-syne text-foreground mb-2 tracking-wide">
+        <h3 className="text-2xl font-syne text-foreground mb-3 tracking-wide">
           No Photos Found
         </h3>
-        <p className="text-foreground/60 font-inter text-center max-w-md">
+        <p className="text-foreground-muted font-inter text-center max-w-md leading-relaxed">
           Try selecting a different category or browse all photos to see the collection.
         </p>
-      </div>
+      </motion.div>
     );
   }
 
   return (
     <>
-      {/* Photo count */}
-      <div className="px-6 mb-8">
-        <p className="text-sm font-inter text-foreground/60 tracking-wider uppercase">
-          {photos.length} {photos.length === 1 ? 'Photo' : 'Photos'}
+      {/* Photo count with subtle animation */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="px-6 sm:px-8 mb-8"
+      >
+        <p className="text-sm font-inter text-foreground-muted tracking-wider uppercase">
+          <span className="text-accent-gold font-semibold">{photos.length}</span>{' '}
+          {photos.length === 1 ? 'Photo' : 'Photos'}
         </p>
-      </div>
+      </motion.div>
 
-      {/* Masonry Grid - CSS Columns */}
-      <div className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 px-6 pb-12">
-        {photos.map((photo) => (
+      {/* Masonry Grid - Improved spacing */}
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 px-6 sm:px-8 pb-16">
+        {photos.map((photo, index) => (
           <GalleryItem
             key={photo.id}
             photo={photo}
             showFeaturedBadge={true}
             onClick={() => handlePhotoClick(photo)}
+            index={index}
           />
         ))}
       </div>

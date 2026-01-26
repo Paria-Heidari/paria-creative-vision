@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Photo } from '@/types/photo.types';
 import CloseIcon from '@/components/icons/CloseIcon';
@@ -29,12 +29,28 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
     ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${currentPhoto.storage_path}`
     : "/images/placeholder.jpg";
 
+  const handlePrevious = useCallback(() => {
+    if (hasPrevious) {
+      setDirection('right');
+      setIsLoading(true);
+      setCurrentIndex((prev) => prev - 1);
+    }
+  }, [hasPrevious]);
+
+  const handleNext = useCallback(() => {
+    if (hasNext) {
+      setDirection('left');
+      setIsLoading(true);
+      setCurrentIndex((prev) => prev + 1);
+    }
+  }, [hasNext]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft' && hasPrevious) handlePrevious();
-      if (e.key === 'ArrowRight' && hasNext) handleNext();
+      if (e.key === 'ArrowLeft') handlePrevious();
+      if (e.key === 'ArrowRight') handleNext();
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -45,23 +61,7 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
-  }, [currentIndex]);
-
-  const handlePrevious = () => {
-    if (hasPrevious) {
-      setDirection('right');
-      setIsLoading(true);
-      setCurrentIndex((prev) => prev - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (hasNext) {
-      setDirection('left');
-      setIsLoading(true);
-      setCurrentIndex((prev) => prev + 1);
-    }
-  };
+  }, [handleNext, handlePrevious, onClose]);
 
   return (
     <div
