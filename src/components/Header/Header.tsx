@@ -77,7 +77,7 @@ export default function Header() {
                       className="relative group"
                     >
                       <span
-                        className={`tracking-wider text-sm lg:text-base transition-colors duration-300 uppercase font-medium ${
+                        className={`tracking-wider text-base lg:text-lg transition-colors duration-300 uppercase font-medium ${
                           isActive
                             ? "text-accent-gold"
                             : "text-foreground/70 group-hover:text-foreground"
@@ -170,7 +170,7 @@ export default function Header() {
         {/* Mobile Menu Footer */}
         <div className="absolute bottom-8 left-0 right-0 px-6">
           <div className="border-t border-foreground/10 pt-6">
-            <p className="text-xs text-foreground-muted text-center tracking-wide">
+            <p className="text-sm text-foreground-muted text-center tracking-wide">
               © 2025 Paria Photography
             </p>
           </div>

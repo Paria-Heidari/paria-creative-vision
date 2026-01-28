@@ -10,7 +10,7 @@ const NavLinks = ({ className = "" }: { className?: string }) => (
       <li key={index}>
         <Link
           href={item.href}
-          className="text-foreground-muted hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider text-sm font-medium"
+          className="text-foreground-muted hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider text-base font-medium"
         >
           {item.name}
         </Link>
@@ -89,8 +89,8 @@ export default function Footer() {
                 href="mailto:paria.heidari.ph@gmail.com"
                 className="inline-flex items-center gap-2 text-foreground-muted hover:text-accent-gold transition-colors duration-300"
               >
-                <Mail className="w-4 h-4" />
-                <span className="text-sm">paria.heidari.ph@gmail.com</span>
+                <Mail className="w-5 h-5" />
+                <span className="text-base">paria.heidari.ph@gmail.com</span>
               </Link>
               <p className="mt-4 text-sm text-foreground-muted">
                 Available for freelance projects and collaborations.
@@ -104,10 +104,10 @@ export default function Footer() {
       <div className="border-t border-foreground/10">
         <div className="px-6 sm:px-8 py-6 mx-auto max-w-screen-xl">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-foreground-subtle">
+            <p className="text-sm text-foreground-subtle">
               © {new Date().getFullYear()} Paria Photography. All Rights Reserved.
             </p>
-            <p className="text-xs text-foreground-subtle">
+            <p className="text-sm text-foreground-subtle">
               Crafted with passion in <span className="text-accent-gold">Europe</span>
             </p>
           </div>
