@@ -10,7 +10,7 @@ export default async function Articles() {
   return (
   <main className="min-h-screen bg-background">
     <ArticlePageHero />
-    <ArticleFilter initialArticles={articles} />
+    <ArticleFilter initialArticles={articles} mediumUsername={mediumUsername} />
   </main>
   );
 

@@ -28,9 +28,10 @@ const categories = [
 
 interface ArticleFilterProps {
     initialArticles: MediumArticle[];
+    mediumUsername: string;
 }
 
-const ArticleFilter = ({ initialArticles }: ArticleFilterProps) => {
+const ArticleFilter = ({ initialArticles, mediumUsername }: ArticleFilterProps) => {
 
     const [activeCategory, setActiveCategory] = useState('all');
 
@@ -64,7 +65,7 @@ const ArticleFilter = ({ initialArticles }: ArticleFilterProps) => {
     })}
     </motion.div>
     <ArticleGrid articles={filteredArticles} />
-    <CtaMedium />
+    <CtaMedium mediumUsername={mediumUsername} />
     </div>
     </section>
     );

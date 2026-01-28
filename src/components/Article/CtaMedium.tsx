@@ -5,7 +5,12 @@ import { motion } from 'framer-motion';
 import { ExternalLink } from "lucide-react";
 import Button from "../Button/Button";
 
-const CtaMedium = () => {
+interface CtaMediumProps {
+    mediumUsername: string;
+}
+
+const CtaMedium = ({ mediumUsername }: CtaMediumProps) => {
+    const mediumUrl = `https://medium.com/@${mediumUsername}`;
     return (
         <div className="mt-16 text-center max-w-6xl mx-auto">     
         <motion.div
@@ -19,7 +24,7 @@ const CtaMedium = () => {
               Read more articles on Medium
             </p>
             <Link
-              href="https://medium.com/@paria-heidari"
+              href={mediumUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
