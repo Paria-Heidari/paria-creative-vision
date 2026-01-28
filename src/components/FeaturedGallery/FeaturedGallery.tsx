@@ -24,31 +24,30 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex items-end justify-between mb-12"
+          className="mb-16"
         >
-          <div>
-            {/* Decorative accent line */}
-            <div className="w-12 h-1 bg-accent-gold mb-4 rounded-full" />
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-syne font-bold tracking-wide text-foreground mb-3">
-              Featured Collection
-            </h2>
-            <p className="text-sm font-inter text-foreground-muted tracking-[0.2em] uppercase">
-              Curated Photography Highlights
-            </p>
-          </div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          {/* Decorative accent line - left aligned */}
+          <div className="w-12 h-[2px] bg-accent-gold mb-6" />
+
+          <div className="flex items-end justify-between">
+            <div>
+              <h2 className="font-syne text-4xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">
+                Featured Collection
+              </h2>
+              <p className="text-foreground-muted text-base">
+                Curated photography highlights
+              </p>
+            </div>
+
+            {/* View All Link - desktop */}
             <Link
               href="/pages/portfolio"
-              className="hidden md:inline-flex items-center gap-3 text-base font-medium text-foreground hover:text-accent-gold transition-colors duration-300 group"
+              className="hidden md:flex items-center gap-2 text-base font-medium text-foreground hover:text-accent-gold transition-colors group"
             >
-              <span>View All</span>
-              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              <span>View Full Portfolio</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* Gallery Grid with staggered animation */}
@@ -77,19 +76,19 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
           ))}
         </motion.div>
 
-        {/* Mobile View All Button */}
+        {/* View All Link - mobile only */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center md:hidden"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-8 text-center md:hidden"
         >
           <Link
             href="/pages/portfolio"
-            className="inline-flex items-center gap-3 px-8 py-3 bg-accent-gold text-white rounded-full text-sm font-medium tracking-wider uppercase hover:bg-accent-gold-hover transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 text-base font-medium text-foreground hover:text-accent-gold transition-colors group"
           >
-            View Full Portfolio
-            <ArrowRight className="w-4 h-4" />
+            <span>View Full Portfolio</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
       </div>

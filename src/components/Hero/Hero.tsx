@@ -54,7 +54,7 @@ const Hero = () => {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/70 hover:text-white transition-colors duration-300 cursor-pointer group"
         aria-label="Scroll to content"
       >
-        <span className="text-xs tracking-[0.2em] uppercase font-medium">Scroll</span>
+        <span className="text-sm tracking-[0.2em] uppercase font-medium">Scroll</span>
         <ChevronDown className="w-6 h-6 animate-bounce-subtle" />
       </button>
     </div>

@@ -1,4 +1,4 @@
-import { calculateReadTime, formatDate, MediumArticle } from "@/lib/api/mediumArticles"
+import { formatDate, MediumArticle } from "@/lib/api/mediumArticles"
 import { Calendar, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -10,7 +10,6 @@ interface ArticleCardProps {
 }
 
 const ArticleCard = ({ article, index }: ArticleCardProps) => {
-    const readTime = calculateReadTime(article.description);
 
 
   return (
@@ -18,13 +17,13 @@ const ArticleCard = ({ article, index }: ArticleCardProps) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group"
+      className="group h-full"
     >
     <Link
       href={article.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
+      className="flex h-full flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
     >
         {/* Thumbnail */}
         <div className="relative w-full h-[240px] overflow-hidden bg-white flex items-center justify-center">
@@ -37,18 +36,18 @@ const ArticleCard = ({ article, index }: ArticleCardProps) => {
             />
         </div>
         {/* Content */}
-        <div className="p-6">
-            <h2 className="text-lg font-syne font-bold text-foreground mb-3 line-clamp-2 group-hover:text-accent-gold transition-colors duration-200">{article.title}</h2>
+        <div className="flex flex-1 flex-col p-6">
+            <h2 className="text-xl font-syne font-bold text-foreground mb-3 line-clamp-2 group-hover:text-accent-gold transition-colors duration-200">{article.title}</h2>
             <p className="text-sm text-foreground-muted mb-4 line-clamp-2 leading-relaxed">{article.description}</p>
             {/* Meta */}
-            <div className="flex items-center gap-4 text-xs text-foreground-subtle">
+            <div className="mt-auto flex items-center gap-4 text-sm text-foreground-subtle">
                 <span className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" />
+                    <Calendar className="w-4 h-4" />
                     {formatDate(article.pubDate)}
                 </span>
                 <span className="flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5" />
-                    {readTime} min read
+                    <Clock className="w-4 h-4" />
+                    {article.readTime} min read
                 </span>
             </div>
         </div>

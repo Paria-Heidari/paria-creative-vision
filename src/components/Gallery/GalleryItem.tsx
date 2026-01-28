@@ -88,10 +88,8 @@ const GalleryItem = ({
           className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-5"
         >
           <div
-            
-          
           >
-            <h3 className="text-lg font-syne text-white font-semibold mb-2 tracking-wide">
+            <h3 className="text-xl font-syne text-white font-semibold mb-2 tracking-wide">
               {photo.title}
             </h3>
             {photo.location_city && (
@@ -101,7 +99,7 @@ const GalleryItem = ({
               </p>
             )}
             {photo.description && (
-              <p className="text-xs font-inter text-white/70 line-clamp-2 leading-relaxed">
+              <p className="text-sm font-inter text-white/70 line-clamp-2 leading-relaxed">
                 {photo.description}
               </p>
             )}
@@ -117,7 +115,7 @@ const GalleryItem = ({
             className="absolute top-3 right-3 bg-accent-gold/95 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg"
           >
             <Star className="w-3 h-3 text-white fill-white" />
-            <span className="text-[10px] font-inter text-white font-semibold tracking-wider uppercase">
+            <span className="text-xs font-inter text-white font-semibold tracking-wider uppercase">
               Featured
             </span>
           </motion.div>

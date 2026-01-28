@@ -13,6 +13,7 @@ export interface MediumArticle {
   description: string;
   categories: string[];
   guid: string;
+  readTime: number; // Pre-calculated from full content
 }
 
 export interface RSS2JSONResponse {

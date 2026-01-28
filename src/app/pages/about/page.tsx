@@ -63,8 +63,8 @@ export default function About() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <p className="text-white/90 text-sm flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-accent-gold" />
+                  <p className="text-white/90 text-base flex items-center gap-2">
+                    <MapPin className="w-5 h-5 text-accent-gold" />
                     Based in Europe
                   </p>
                 </div>

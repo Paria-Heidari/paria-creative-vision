@@ -5,7 +5,7 @@
  */
 
 import type { MediumArticle, RSS2JSONResponse } from './types';
-import { extractImageFromContent, cleanDescription } from './utils';
+import { extractImageFromContent, cleanDescription, calculateReadTime } from './utils';
 import { getCategoryConfig, ARTICLE_CATEGORIES } from '@/lib/api/mediumArticles/articleCategories';
 
 // Re-export types and utils for convenience
@@ -51,6 +51,7 @@ export async function getMediumArticles(username: string): Promise<MediumArticle
       description: cleanDescription(item.description),
       categories: item.categories || [],
       guid: item.guid,
+      readTime: calculateReadTime(item.content), // Calculate from full article content
     }));
   } catch (error) {
     console.error('Error fetching Medium articles:', error);
