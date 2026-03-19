@@ -1,6 +1,6 @@
 import React from 'react';
 import { ButtonHTMLAttributes } from 'react';
-import LoadingSpinner from '@/components/icons/LoadingSpinner';
+import LoadingSpinner from '@/components/shared/icons/LoadingSpinner';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   btnText?: string;

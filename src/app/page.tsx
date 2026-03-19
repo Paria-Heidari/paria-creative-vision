@@ -1,5 +1,5 @@
 import {Hero} from "@/components/Hero";
-import {TextBlock} from "@/components/TextBlock";
+import {TextBlock} from "@/components/shared/TextBlock";
 import {FeaturedGallery} from "@/components/FeaturedGallery";
 import {LatestArticles} from "@/components/LatestArticles";
 import {textBlockData} from "@/data/data";

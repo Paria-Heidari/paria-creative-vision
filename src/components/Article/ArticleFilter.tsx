@@ -1,7 +1,7 @@
 'use client';
 
 import { Brain, Code, Newspaper } from "lucide-react";
-import Button from "../Button/Button";
+import Button from "@/components/shared/Button/Button";
 import { motion } from 'framer-motion';
 import { useState } from "react";
 import { filterArticlesByCategory, MediumArticle } from "@/lib/api/mediumArticles";

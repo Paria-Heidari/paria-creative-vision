@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Photo } from "@/types/photo.types";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import LocationPinIcon from "@/components/icons/LocationPinIcon";
+import LocationPinIcon from "@/components/shared/icons/LocationPinIcon";
 import { Star } from "lucide-react";
 
 interface GalleryItemProps {
