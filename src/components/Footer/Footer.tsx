@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { navigation } from "@/data/data";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import GitHubIcon from "@/components/icons/GitHubIcon";
+import GitHubIcon from "@/components/shared/icons/GitHubIcon";
 
 // Navigation Links Component
 const NavLinks = ({ className = "" }: { className?: string }) => (

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from 'framer-motion';
 import { ExternalLink } from "lucide-react";
-import Button from "../Button/Button";
+import Button from "@/components/shared/Button/Button";
 
 interface CtaMediumProps {
     mediumUsername: string;

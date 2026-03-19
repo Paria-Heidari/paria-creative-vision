@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Photo } from '@/types/photo.types';
-import CloseIcon from '@/components/icons/CloseIcon';
-import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon';
-import ChevronRightIcon from '@/components/icons/ChevronRightIcon';
-import LocationPinIcon from '@/components/icons/LocationPinIcon';
+import CloseIcon from '@/components/shared/icons/CloseIcon';
+import ChevronLeftIcon from '@/components/shared/icons/ChevronLeftIcon';
+import ChevronRightIcon from '@/components/shared/icons/ChevronRightIcon';
+import LocationPinIcon from '@/components/shared/icons/LocationPinIcon';
 
 interface LightboxProps {
   photo: Photo;
