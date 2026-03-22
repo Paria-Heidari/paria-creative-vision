@@ -1,52 +1,24 @@
-// Photo Gallery Types
+// Photo gallery types — derived from Supabase schema (database.types.ts).
+// After DB changes: run `npm run supabase:types`, then these aliases update.
 
-export interface Photo {
-  id: string;
-  title: string;
-  description: string | null;
-  category_id: string;
-  subcategory_id: string | null;
-  location_city: string | null;
-  location_country: string | null;
-  captured_at: string | null;
-  storage_path: string | null;
-  width: number;
-  height: number;
-  aspect_ratio: number;
-  tags: string[] | null;
-  featured: boolean;
-  published: boolean;
-  display_order: number;
-  created_by: string | null;
-  created_at: string;
-  updated_at: string;
-  category?: Category;
-  subcategory?: Subcategory;
-}
+import type { Database } from "@/types/database.types";
 
-export interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  description: string | null;
-  photo_count: number;
-  display_order: number;
-  created_at: string;
-  updated_at: string;
-  subcategories?: Subcategory[];
-}
+type Tables = Database["public"]["Tables"];
 
-export interface Subcategory {
-  id: string;
-  category_id: string;
-  name: string;
-  slug: string;
-  description: string | null;
-  photo_count: number;
-  display_order: number;
-  created_at: string;
-  updated_at: string;
-}
+export type PhotoRow = Tables["photos"]["Row"];
+export type CategoryRow = Tables["categories"]["Row"];
+export type SubcategoryRow = Tables["subcategories"]["Row"];
+
+export type Photo = PhotoRow & {
+  category?: CategoryRow;
+  subcategory?: SubcategoryRow;
+};
+
+export type Category = CategoryRow & {
+  subcategories?: SubcategoryRow[];
+};
+
+export type Subcategory = SubcategoryRow;
 
 export interface GalleryFilters {
   category?: string;

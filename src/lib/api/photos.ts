@@ -1,22 +1,19 @@
 import { createClient } from "@/lib/supabase/server";
-import type { Database } from "@/types/database.types";
-import type { Category } from "@/types/photo.types";
+import type { Category, Photo } from "@/types/photo.types";
 
-type Photo = Database["public"]["Tables"]["photos"]["Row"];
-
-// Get all photos
 export async function getAllPhotos() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("photos")
-    .select("*, category:categories(*), subcategory:subcategories(*)")
+    .select("*, subcategory:subcategories(*)")
     .eq("published", true)
     .order("display_order", { ascending: true });
   if (error) {
     console.error("Error fetching photos:", error);
     return [];
   }
-  return (data || []) as Photo[];
+  // No direct photos→categories FK, Using an unknown for those query results in runtime type errors.
+  return (data || []) as unknown as Photo[];
 }
 
 /**
@@ -58,7 +55,7 @@ export async function getPhotosByCategory(categorySlug: string) {
     console.error("Error fetching photos by category:", error);
     return [];
   }
-  return (data || []) as Photo[];
+  return (data || []) as unknown as Photo[];
 }
 
 /**
@@ -78,7 +75,7 @@ export async function getPhotosBySubcategory(subcategorySlug: string) {
     console.error("Error fetching photos by subcategory:", error);
     return [];
   }
-  return (data || []) as Photo[];
+  return (data || []) as unknown as Photo[];
 }
 
 /**
