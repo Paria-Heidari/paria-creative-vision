@@ -51,7 +51,6 @@ export type Database = {
         Row: {
           aspect_ratio: number
           captured_at: string | null
-          category_id: string
           created_at: string
           created_by: string | null
           description: string | null
@@ -72,7 +71,6 @@ export type Database = {
         Insert: {
           aspect_ratio: number
           captured_at?: string | null
-          category_id: string
           created_at?: string
           created_by?: string | null
           description?: string | null
@@ -93,7 +91,6 @@ export type Database = {
         Update: {
           aspect_ratio?: number
           captured_at?: string | null
-          category_id?: string
           created_at?: string
           created_by?: string | null
           description?: string | null
@@ -112,13 +109,6 @@ export type Database = {
           width?: number
         }
         Relationships: [
-          {
-            foreignKeyName: "photos_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "photos_subcategory_id_fkey"
             columns: ["subcategory_id"]
