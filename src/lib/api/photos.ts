@@ -45,12 +45,31 @@ export async function getFeaturedPhotos(limit = 3) {
  */
 export async function getPhotosByCategory(categorySlug: string) {
   const supabase = await createClient();
+
+  // photos has no direct category_id FK — resolve via subcategories
+  const { data: category } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("slug", categorySlug)
+    .single();
+
+  if (!category) return [];
+
+  const { data: subcategories } = await supabase
+    .from("subcategories")
+    .select("id")
+    .eq("category_id", category.id);
+
+  const subcategoryIds = (subcategories || []).map((s) => s.id);
+  if (subcategoryIds.length === 0) return [];
+
   const { data, error } = await supabase
     .from("photos")
-    .select("*, category:categories!inner(*), subcategory:subcategories(*)")
-    .eq("categories.slug", categorySlug)
+    .select("*, subcategory:subcategories(*)")
+    .in("subcategory_id", subcategoryIds)
     .eq("published", true)
     .order("display_order", { ascending: true });
+
   if (error) {
     console.error("Error fetching photos by category:", error);
     return [];
@@ -65,12 +84,22 @@ export async function getPhotosByCategory(categorySlug: string) {
  */
 export async function getPhotosBySubcategory(subcategorySlug: string) {
   const supabase = await createClient();
+
+  const { data: subcategory } = await supabase
+    .from("subcategories")
+    .select("id")
+    .eq("slug", subcategorySlug)
+    .single();
+
+  if (!subcategory) return [];
+
   const { data, error } = await supabase
     .from("photos")
-    .select("*, category:categories(*), subcategory:subcategories!inner(*)")
-    .eq("subcategories.slug", subcategorySlug)
+    .select("*, subcategory:subcategories(*)")
+    .eq("subcategory_id", subcategory.id)
     .eq("published", true)
     .order("display_order", { ascending: true });
+
   if (error) {
     console.error("Error fetching photos by subcategory:", error);
     return [];
