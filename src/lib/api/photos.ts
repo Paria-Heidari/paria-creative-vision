@@ -1,10 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import type { QueryData } from "@supabase/supabase-js";
 
-function logPostgrestError(
+const logPostgrestError = (
   context: string,
   error: { message: string; details?: string; hint?: string; code?: string }
-) {
+) => {
   console.error(context, {
     message: error.message,
     details: error.details,
