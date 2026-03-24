@@ -22,15 +22,15 @@ export async function getAllPhotos() {
     .eq("published", true)
     .order("display_order", { ascending: true });
 
-  type GetAllPhotosResult = QueryData<typeof query>;
-
+  type PhotosType = QueryData<typeof query>;
   const { data, error } = await query;
+  
   if (error) {
     logPostgrestError("Error fetching photos:", error);
-    return [] as GetAllPhotosResult;
+    return [] as PhotosType;
   }
 
-  return (data ?? []) as GetAllPhotosResult;
+  return (data ?? []) as PhotosType;
 }
 
 /**
@@ -49,14 +49,14 @@ export async function getFeaturedPhotos(limit = 3) {
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  type GetFeaturedPhotosResult = QueryData<typeof query>;
+  type FeaturedPhotosType = QueryData<typeof query>;
   const { data, error } = await query;
 
   if (error) {
     logPostgrestError("Error fetching featured photos:", error);
-    return [] as GetFeaturedPhotosResult;
+    return [] as FeaturedPhotosType;
   }
-  return (data ?? []) as GetFeaturedPhotosResult;
+  return (data ?? []) as FeaturedPhotosType;
 }
 
 /**
@@ -72,7 +72,7 @@ export async function getPhotosByCategory(categorySlug: string) {
     .eq("slug", categorySlug)
     .maybeSingle();
 
-  type CategoryResult = QueryData<typeof categoryQuery>;
+  type CategoryType = QueryData<typeof categoryQuery>;
   const { data: category, error: categoryError } = await categoryQuery;
   
   if (categoryError) {
@@ -84,9 +84,9 @@ export async function getPhotosByCategory(categorySlug: string) {
   const subcategoriesQuery = supabase
     .from("subcategories")
     .select("id")
-    .eq("category_id", (category as CategoryResult).id);
+    .eq("category_id", (category as CategoryType).id);
 
-  type SubcategoriesResult = QueryData<typeof subcategoriesQuery>;
+  type SubcategoriesType = QueryData<typeof subcategoriesQuery>;
   const { data: subcategories, error: subcategoriesError } =
     await subcategoriesQuery;
 
@@ -98,7 +98,7 @@ export async function getPhotosByCategory(categorySlug: string) {
     return [];
   }
 
-  const subcategoryIds = ((subcategories ?? []) as SubcategoriesResult).map(
+  const subcategoryIds = ((subcategories ?? []) as SubcategoriesType).map(
     (row) => row.id
   );
   if (subcategoryIds.length === 0) return [];
@@ -110,14 +110,14 @@ export async function getPhotosByCategory(categorySlug: string) {
     .in("subcategory_id", subcategoryIds)
     .order("display_order", { ascending: true });
 
-  type GetPhotosByCategoryResult = QueryData<typeof photosQuery>;
+  type PhotosByCategoryType = QueryData<typeof photosQuery>;
   const { data, error } = await photosQuery;
 
   if (error) {
     logPostgrestError("Error fetching photos by category:", error);
-    return [] as GetPhotosByCategoryResult;
+    return [] as PhotosByCategoryType;
   }
-  return (data ?? []) as GetPhotosByCategoryResult;
+  return (data ?? []) as PhotosByCategoryType;
 }
 
 /**
@@ -152,14 +152,14 @@ export async function getPhotosBySubcategory(subcategorySlug: string) {
     .eq("published", true)
     .order("display_order", { ascending: true });
 
-  type GetPhotosBySubcategoryResult = QueryData<typeof query>;
+  type PhotosBySubcategoryType = QueryData<typeof query>;
 
   const { data, error } = await query;
   if (error) {
     logPostgrestError("Error fetching photos by subcategory:", error);
-    return [] as GetPhotosBySubcategoryResult;
+    return [] as PhotosBySubcategoryType;
   }
-  return (data ?? []) as GetPhotosBySubcategoryResult;
+  return (data ?? []) as PhotosBySubcategoryType;
 }
 
 /**
@@ -174,15 +174,15 @@ export async function getAllCategories() {
     .select("*, subcategories(*)")
     .order("display_order", { ascending: true });
 
-  type GetCategoriesResult = QueryData<typeof query>;
+  type CategoriesType = QueryData<typeof query>;
 
   const { data, error } = await query;
   if (error) {
     logPostgrestError("Error fetching categories:", error);
-    return [] as GetCategoriesResult;
+      return [] as CategoriesType;
   }
 
-  const categoriesWithSortedSubcategories = ((data ?? []) as GetCategoriesResult).map((category) => ({
+  const categoriesWithSortedSubcategories = ((data ?? []) as CategoriesType).map((category) => ({
     ...category,
     subcategories: category.subcategories?.sort(
       (a, b) => a.display_order - b.display_order
