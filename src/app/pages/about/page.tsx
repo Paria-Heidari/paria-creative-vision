@@ -55,7 +55,7 @@ export default function About() {
             <div className="md:col-span-2">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/me.jpg"
+                  src="/images/about-paria.jpg"
                   alt="Paria - Software Developer & Photographer"
                   fill
                   className="object-cover"
