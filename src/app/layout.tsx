@@ -17,7 +17,9 @@ export const metadata: Metadata = {
   title: "Paria Creative Vision",
   description: "Personal portfolio of Paria",
   icons: {
-    icon: "/images/logo.jpg",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 

@@ -90,10 +90,10 @@ export default function Footer() {
                 className="inline-flex items-center gap-2 text-foreground-muted hover:text-accent-gold transition-colors duration-300"
               >
                 <Mail className="w-5 h-5" />
-                <span className="text-base">paria.heidari.ph@gmail.com</span>
+                <span className="text-base">Paria</span>
               </Link>
               <p className="mt-4 text-sm text-foreground-muted">
-                Available for freelance projects and collaborations.
+                Available for collaborations.
               </p>
             </div>
           </div>

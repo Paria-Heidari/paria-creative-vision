@@ -1,0 +1,29 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Article placeholder image">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B0F19"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="260" y1="240" x2="1340" y2="660" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5C16C" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#F5C16C" stop-opacity="0.06"/>
+    </linearGradient>
+    <filter id="soft" x="-20" y="-20" width="1640" height="940" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" rx="64" fill="url(#bg)"/>
+  <rect x="160" y="120" width="1280" height="660" rx="48" fill="white" fill-opacity="0.04"/>
+  <path d="M260 660C400 520 520 560 640 520C760 480 860 380 980 360C1100 340 1200 420 1340 300" stroke="url(#accent)" stroke-width="22" stroke-linecap="round" filter="url(#soft)"/>
+
+  <!-- Minimal "article" glyph -->
+  <g opacity="0.92">
+    <rect x="310" y="280" width="980" height="340" rx="28" fill="white" fill-opacity="0.05"/>
+    <rect x="370" y="340" width="520" height="26" rx="13" fill="#F5C16C" fill-opacity="0.75"/>
+    <rect x="370" y="392" width="780" height="18" rx="9" fill="white" fill-opacity="0.28"/>
+    <rect x="370" y="428" width="720" height="18" rx="9" fill="white" fill-opacity="0.24"/>
+    <rect x="370" y="464" width="760" height="18" rx="9" fill="white" fill-opacity="0.20"/>
+    <rect x="370" y="500" width="540" height="18" rx="9" fill="white" fill-opacity="0.18"/>
+  </g>
+</svg>

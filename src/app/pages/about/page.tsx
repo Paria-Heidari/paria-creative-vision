@@ -5,16 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Code2, Camera, MapPin, Mail, ArrowRight } from 'lucide-react';
 import GitHubIcon from '@/components/shared/icons/GitHubIcon';
-
-// Skills data
-const techSkills = [
-  'TypeScript', 'React', 'Next.js', 'Node.js', 'Azure',
-  'Tailwind CSS', 'PostgreSQL', 'Supabase', 'AI', "SCSS"
-];
-
-const photoSkills = [
-  'Landscape','Street Photography', 'Travel', 'Portrait', 'Architecture'
-];
+import { techSkills, photoSkills } from '@/data/about';
 
 // Animation variants
 const fadeInUp = {
