@@ -5,16 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Code2, Camera, MapPin, Mail, ArrowRight } from 'lucide-react';
 import GitHubIcon from '@/components/shared/icons/GitHubIcon';
-
-// Skills data
-const techSkills = [
-  'TypeScript', 'React', 'Next.js', 'Node.js', 'Azure',
-  'Tailwind CSS', 'PostgreSQL', 'Supabase', 'AI', "SCSS"
-];
-
-const photoSkills = [
-  'Landscape','Street Photography', 'Travel', 'Portrait', 'Architecture'
-];
+import { techSkills, photoSkills } from '@/data/about';
 
 // Animation variants
 const fadeInUp = {
@@ -55,7 +46,7 @@ export default function About() {
             <div className="md:col-span-2">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/me.jpg"
+                  src="/images/about-paria.jpg"
                   alt="Paria - Software Developer & Photographer"
                   fill
                   className="object-cover"

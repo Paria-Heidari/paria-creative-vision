@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/data/data";
+import { Logo } from "@/components/Logo";
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(false);
@@ -53,14 +53,7 @@ export default function Header() {
         <div className="max-w-screen-xl flex items-center justify-between mx-auto px-4 sm:px-6 h-full">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 transition-transform duration-200">
-            <Image
-              src={"/images/paria.png"}
-              alt="Paria Logo"
-              width={200}
-              height={50}
-              className="h-auto transition-all duration-300 w-32 sm:w-40 md:w-48"
-              priority
-            />
+            <Logo className="h-auto transition-all duration-300 w-32 sm:w-40 md:w-48" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -171,7 +164,7 @@ export default function Header() {
         <div className="absolute bottom-8 left-0 right-0 px-6">
           <div className="border-t border-foreground/10 pt-6">
             <p className="text-sm text-foreground-muted text-center tracking-wide">
-              © 2025 Paria Photography
+              © 2025 Paria Creative Vision
             </p>
           </div>
         </div>

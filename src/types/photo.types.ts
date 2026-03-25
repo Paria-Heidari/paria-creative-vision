@@ -10,8 +10,7 @@ export type CategoryRow = Tables["categories"]["Row"];
 export type SubcategoryRow = Tables["subcategories"]["Row"];
 
 export type Photo = PhotoRow & {
-  category?: CategoryRow;
-  subcategory?: SubcategoryRow;
+  subcategory?: SubcategoryRow | null;
 };
 
 export type Category = CategoryRow & {
