@@ -54,7 +54,7 @@ const SocialIcons = () => (
 
 export default function Footer() {
   return (
-    <footer className="mt-auto bg-layout-beige">
+    <footer className="mt-auto bg-surface-alt">
       {/* Top Section */}
       <div className="border-t border-foreground/10">
         <div className="px-6 sm:px-8 py-12 lg:py-16 mx-auto max-w-screen-xl">

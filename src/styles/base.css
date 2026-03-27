@@ -1,0 +1,12 @@
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--sem-background);
+  color: var(--sem-foreground);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}

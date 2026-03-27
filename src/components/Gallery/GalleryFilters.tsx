@@ -127,7 +127,7 @@ const GalleryFilters = ({
                       px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-300 flex items-center gap-1.5
                       ${isSelected
                         ? "bg-accent-gold/20 text-accent-gold border border-accent-gold/30"
-                        : "bg-component-beige text-foreground-muted hover:bg-accent-gold/10 hover:text-accent-gold"
+                        : "bg-surface-raised text-foreground-muted hover:bg-accent-gold/10 hover:text-accent-gold"
                       }
                     `}
                   >

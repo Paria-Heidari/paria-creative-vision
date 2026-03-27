@@ -20,8 +20,6 @@ For product context (problem, goals, user flow), see
 
 **Summary:** Next.js + Supabase keeps the stack modern and scalable with minimal ops; TypeScript + generated DB types keep the codebase maintainable.
 
-### Install shadcn/ui for ready-made components ????
-
 ---
 ## Data Model & Database Design
 **Supabase**
@@ -48,6 +46,15 @@ Entity–Relationship Diagram (ERD) of the portfolio database built on Supabase 
 - Use barrel files (`index.ts`) in component folders for cleaner imports
 - Prefer feature-based folders plus a `shared/` folder for primitives reused across features (buttons, text blocks, icons).
 - Next.js App Router structure with nested routes for portfolio filtering
+
+### How the app works (step by step)
+
+1. The user opens a route such as `/`, `/pages/portfolio`, or `/pages/articles`.
+2. Next.js server components fetch data using `src/lib/api/*` functions.
+3. Supabase returns database rows and image storage paths.
+4. Server-rendered HTML is sent to the browser for fast first paint and SEO.
+5. Client components hydrate for interactions (filter buttons, lightbox, mobile menu).
+6. URL/query changes trigger new server fetches so filtered results stay in sync.
 
 ### Top-level folder structure
 
@@ -107,8 +114,8 @@ High-level view of how the browser, Next.js app, and external services work toge
 ---
 ## Build Tools
 
-- **Turbopack** – Fast incremental builds
+- **Turbopack** - Fast incremental builds used by Next.js for dev and build workflows.
 ---
 ## Deployment
 
-- **Vercel** – Hosting and deployment
+- **Vercel** - Hosting and deployment target for this app.

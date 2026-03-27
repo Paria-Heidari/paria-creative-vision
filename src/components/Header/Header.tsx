@@ -7,6 +7,7 @@ import { Logo } from "@/components/Logo";
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
@@ -17,11 +18,24 @@ export default function Header() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Scroll detection for compact header
+  // Scroll detection - hide header when scrolling down, show when scrolling up
   useEffect(() => {
+    let lastY = window.scrollY;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentY = window.scrollY;
+
+      // Hide when scrolling down, show when scrolling up
+      if (currentY > lastY && currentY > 0) {
+        setIsHeaderHidden(true);
+      } else if (currentY < lastY) {
+        setIsHeaderHidden(false);
+      }
+
+      setIsScrolled(currentY > 50);
+      lastY = currentY;
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -46,14 +60,14 @@ export default function Header() {
   return (
     <>
       <header
-        className={`w-full fixed top-0 left-0 bg-layout-beige z-50 transition-all duration-300 ease-out
-         ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"}
-         ${isScrolled ? "h-14 shadow-medium" : "h-16 shadow-soft"}`}
+        className={`w-full fixed top-0 left-0 bg-surface-alt z-50 transition-all duration-300 ease-out
+         ${isScrolled ? "h-14 shadow-medium" : "h-16 shadow-soft"}
+         ${!isVisible ? "opacity-0 -translate-y-3" : isHeaderHidden ? "-translate-y-full" : "translate-y-0"}`}
       >
         <div className="max-w-screen-xl flex items-center justify-between mx-auto px-4 sm:px-6 h-full">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 transition-transform duration-200">
-            <Logo className="h-auto transition-all duration-300 w-32 sm:w-40 md:w-48" />
+            <Logo className="h-auto transition-all duration-300 w-36 sm:w-44 md:w-52" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -134,7 +148,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <nav
-        className={`fixed top-14 right-0 bottom-0 w-72 bg-layout-beige shadow-2xl z-40 md:hidden transform transition-transform duration-300 ease-out ${
+        className={`fixed top-14 right-0 bottom-0 w-72 bg-surface-alt shadow-2xl z-40 md:hidden transform transition-transform duration-300 ease-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
