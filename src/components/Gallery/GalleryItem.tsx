@@ -44,7 +44,7 @@ const GalleryItem = ({
       <motion.div
         whileHover={{ y: -4 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className={`relative overflow-hidden rounded-xl bg-component-beige ${
+        className={`relative overflow-hidden rounded-xl bg-surface-raised ${
           isGrid ? "h-full flex flex-col" : ""
         }`}
         style={{
@@ -77,7 +77,7 @@ const GalleryItem = ({
           {/* Loading Skeleton */}
           {!isLoaded && (
             <div
-              className="absolute inset-0 bg-gradient-to-br from-accent to-component-beige animate-pulse"
+              className="absolute inset-0 bg-gradient-to-br from-accent to-surface-raised animate-pulse"
               style={{ aspectRatio: photo.aspect_ratio }}
             />
           )}

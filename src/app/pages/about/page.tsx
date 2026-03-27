@@ -71,7 +71,7 @@ export default function About() {
                 <div className="space-y-4 text-foreground-muted leading-relaxed">
                   <p>
                     I&apos;m a software developer who found a second language in photography.
-                    By day, I craft digital experiences through code—building web applications. By heart, I capture the
+                    By day, I craft digital experiences through code—building web applications. Outside of code, I capture the
                     world through my lens, finding poetry in landscapes, architecture, and
                     fleeting moments.
                   </p>
@@ -82,10 +82,7 @@ export default function About() {
                     composition in chaos, and stories in stillness.
                   </p>
                   <p>
-                    This portfolio is where both worlds meet—where technical precision
-                    embraces artistic expression. Whether I&apos;m writing codes or
-                    chasing golden hour light across World landscapes, I&apos;m always
-                    seeking that perfect balance of logic and moments.
+                    This portfolio is where both worlds meet-where coding meets creativity. Whether I’m writing code or exploring golden hour light across landscapes, I’m always looking for the balance between logic and moments.
                   </p>
                 </div>
               </div>

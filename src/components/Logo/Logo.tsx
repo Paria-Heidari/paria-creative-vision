@@ -111,8 +111,8 @@ export default function Logo({ className = "", compact = false }: LogoProps) {
             y="56"
             fontFamily="'Inter', sans-serif"
             fontWeight="400"
-            fontSize="8.6"
-            letterSpacing="3.05"
+            fontSize="9.8"
+            letterSpacing="2.9"
             fill="#68615A"
           >
             CREATIVE VISION
