@@ -1,5 +1,5 @@
-import { GalleryGrid } from '@/components/Gallery';
-import { GalleryFilters } from '@/components/Gallery';
+import { GalleryGrid } from '@/components/features/Gallery';
+import { GalleryFilters } from '@/components/features/Gallery';
 import {
   getAllPhotos,
   getPhotosByCategory,

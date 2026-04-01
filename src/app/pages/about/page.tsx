@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Code2, Camera, MapPin, Mail, ArrowRight } from 'lucide-react';
-import GitHubIcon from '@/components/shared/icons/GitHubIcon';
+import GitHubIcon from '@/components/ui/icons/GitHubIcon';
 import { techSkills, photoSkills } from '@/data/about';
 
 // Animation variants
