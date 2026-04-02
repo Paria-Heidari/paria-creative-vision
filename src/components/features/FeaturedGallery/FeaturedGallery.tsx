@@ -5,6 +5,7 @@ import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Lightbox from '@/components/features/Gallery/Lightbox';
 import { ArrowRight } from 'lucide-react';
+import { Typography } from '@/components/ui/Typography';
 import { Photo } from '@/types/photo.types';
 
 interface FeaturedGalleryProps {
@@ -31,12 +32,12 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
 
           <div className="flex items-end justify-between">
             <div>
-              <h2 className="font-syne text-4xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">
+              <Typography variant="h2" as="h2" className="font-syne mb-3">
                 Featured Collection
-              </h2>
-              <p className="text-foreground-muted text-base">
+              </Typography>
+              <Typography variant="bodySmall" as="p" className="text-foreground-muted">
                 Curated photography highlights
-              </p>
+              </Typography>
             </div>
 
             {/* View All Link - desktop */}

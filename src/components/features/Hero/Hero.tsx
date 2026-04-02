@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDown } from 'lucide-react';
+import { Typography } from '@/components/ui/Typography';
 
 const Hero = () => {
   const scrollToContent = () => {
@@ -30,21 +31,33 @@ const Hero = () => {
       <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 pb-24 sm:pb-32">
         <div className="max-w-4xl animate-fade-up">
           {/* Eyebrow Text */}
-          <p className="text-accent-gold text-sm sm:text-base font-medium tracking-[0.3em] uppercase mb-4">
+          <Typography
+            variant="caption"
+            as="p"
+            className="text-accent-gold text-sm sm:text-base font-medium tracking-[0.3em] uppercase mb-4"
+          >
             Photography & Code
-          </p>
+          </Typography>
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-syne text-white tracking-wide leading-tight mb-6">
+          <Typography
+            variant="h1"
+            as="h1"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-syne text-white tracking-wide leading-tight mb-6"
+          >
             Exploring the World
             <br />
             <span className="text-accent-gold-light">Through Code & Lens</span>
-          </h1>
+          </Typography>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-white/80 font-inter tracking-wide max-w-xl">
+          <Typography
+            variant="body"
+            as="p"
+            className="text-lg sm:text-xl text-white/80 font-inter tracking-wide max-w-xl"
+          >
             Visual Stories by Paria
-          </p>
+          </Typography>
         </div>
       </div>
 

@@ -1,73 +1,124 @@
-import React from 'react';
-import { ButtonHTMLAttributes } from 'react';
-import LoadingSpinner from '@/components/ui/icons/LoadingSpinner';
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
+import Link from 'next/link'
+import LoadingSpinner from '@/components/ui/icons/LoadingSpinner'
+import { cn } from '@/lib/utils/utils'
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  btnText?: string;
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link' | 'gold';
-  size?: 'sm' | 'md' | 'lg';
-  loading?: boolean;
+const buttonClassMap = {
+  primary:
+    'bg-foreground text-white hover:bg-foreground/90 shadow-sm hover:shadow-lg',
+  secondary:
+    'bg-accent text-foreground border border-foreground/10 hover:border-foreground/20 hover:bg-accent-hover/30 shadow-sm hover:shadow-md',
+  tertiary:
+    'bg-transparent border-2 border-foreground/20 text-foreground hover:border-accent-gold hover:text-accent-gold',
+  ghost: 'bg-transparent text-foreground hover:bg-foreground/5 active:bg-foreground/10',
+  link: 'bg-transparent text-foreground hover:text-accent-gold underline-offset-4 hover:underline px-0 py-0 h-auto',
+  gold: 'bg-accent-gold text-white hover:bg-accent-gold-hover shadow-md hover:shadow-lg',
+} as const
+
+const buttonSizeClassMap = {
+  sm: 'text-sm px-3 py-1.5',
+  md: 'text-base px-4 py-2',
+  lg: 'text-lg px-6 py-3',
+} as const
+
+const roundedClassMap = {
+  full: 'rounded-full',
+  lg: 'rounded-lg',
+  md: 'rounded-md',
+  sm: 'rounded-sm',
+} as const
+
+type ButtonVariant = keyof typeof buttonClassMap
+type ButtonSize = keyof typeof buttonSizeClassMap
+type ButtonRounded = keyof typeof roundedClassMap
+
+type BaseProps = {
+  children: ReactNode
+  variant?: ButtonVariant
+  size?: ButtonSize
+  startIcon?: ReactNode
+  endIcon?: ReactNode
+  rounded?: ButtonRounded
+  loading?: boolean
+  disabled?: boolean
+  className?: string
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      btnText,
-      children,
-      variant = 'primary',
-      size = 'md',
-      loading = false,
-      className = '',
-      disabled,
-      ...props
-    },
-    ref
-  ) => {
-    // Variant classes with improved styling
-    const variantClasses = {
-      primary: 'bg-foreground text-white hover:bg-foreground/90 active:scale-[0.98] shadow-sm hover:shadow-lg',
-      secondary: 'bg-accent text-foreground border border-foreground/10 hover:border-foreground/20 hover:bg-accent-hover/30 active:scale-[0.98] shadow-sm hover:shadow-md',
-      tertiary: 'bg-transparent border-2 border-foreground/20 text-foreground hover:border-accent-gold hover:text-accent-gold active:scale-[0.98]',
-      ghost: 'bg-transparent text-foreground hover:bg-foreground/5 active:bg-foreground/10',
-      link: 'bg-transparent text-foreground hover:text-accent-gold underline-offset-4 hover:underline',
-      gold: 'bg-accent-gold text-white hover:bg-accent-gold-hover active:scale-[0.98] shadow-md hover:shadow-lg',
-    };
-
-    // Size classes
-    const sizeClasses = {
-      sm: 'px-5 py-2.5 text-sm',
-      md: 'px-6 py-2.5 text-sm',
-      lg: 'px-8 py-3 text-base',
-    };
-
-    // Base classes
-    const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-wide transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-accent-gold/30 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100';
-
-    // Combine classes
-    const variantClass = variantClasses[variant];
-    const sizeClass = sizeClasses[size];
-    const combinedClassName = `${baseClasses} ${variantClass} ${sizeClass} ${className}`.trim();
-
-    // Determine content to display
-    const content = children ?? btnText ?? null;
-
-    return (
-      <button
-        ref={ref}
-        type="button"
-        className={combinedClassName}
-        disabled={disabled || loading}
-        aria-busy={loading}
-        aria-label={typeof content === 'string' ? content : undefined}
-        {...props}
-      >
-        {loading && <LoadingSpinner />}
-        {content}
-      </button>
-    );
+type ButtonAsButton = BaseProps &
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseProps> & {
+    href?: never
+    external?: never
   }
-);
 
-Button.displayName = 'Button';
+type ButtonAsLink = BaseProps &
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof BaseProps> & {
+    href: string
+    external?: boolean
+  }
 
-export default Button;
+export type ButtonProps = ButtonAsButton | ButtonAsLink
+
+const baseButtonClasses =
+  'inline-flex items-center justify-center gap-2 font-medium tracking-wide transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold/40 focus-visible:ring-offset-2'
+
+export default function Button({
+  children,
+  variant = 'primary',
+  size = 'md',
+  startIcon,
+  endIcon,
+  rounded = 'md',
+  loading = false,
+  disabled = false,
+  className,
+  href,
+  ...props
+}: ButtonProps) {
+  const isDisabled = disabled || loading
+
+  const classes = cn(
+    baseButtonClasses,
+    buttonClassMap[variant],
+    buttonSizeClassMap[size],
+    roundedClassMap[rounded],
+    isDisabled && 'pointer-events-none opacity-60',
+    className,
+  )
+
+  const content = (
+    <>
+      {loading ? <LoadingSpinner className="w-4 h-4" aria-hidden="true" /> : null}
+      {startIcon ? <span className="shrink-0" aria-hidden="true">{startIcon}</span> : null}
+      <span>{children}</span>
+      {endIcon ? <span className="shrink-0" aria-hidden="true">{endIcon}</span> : null}
+    </>
+  )
+
+  if (href) {
+    const { external, ...linkProps } = props as Omit<ButtonAsLink, keyof BaseProps | 'href'>
+    return (
+      <Link
+        href={href}
+        aria-disabled={isDisabled || undefined}
+        className={classes}
+        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        {...linkProps}
+      >
+        {content}
+      </Link>
+    )
+  }
+
+  const { type = 'button', ...buttonProps } = props as Omit<ButtonAsButton, keyof BaseProps>
+  return (
+    <button
+      type={type}
+      disabled={isDisabled}
+      aria-busy={loading || undefined}
+      className={classes}
+      {...buttonProps}
+    >
+      {content}
+    </button>
+  )
+}

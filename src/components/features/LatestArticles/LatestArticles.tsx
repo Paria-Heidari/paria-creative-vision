@@ -2,6 +2,7 @@
 
 import { MediumArticle, formatDate } from '@/lib/api/mediumArticles';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
+import { Typography } from '@/components/ui/Typography';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -25,15 +26,15 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
           className="mb-20 text-center"
         >
           <div className="w-12 h-[2px] bg-accent-gold mx-auto mb-6"></div>
-          <h2 className="font-syne text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
+          <Typography variant="h2" as="h2" className="font-syne mb-6">
             Latest Insights
-          </h2>
-          <p className="text-foreground-muted text-lg max-w-2xl mx-auto leading-relaxed mb-4">
+          </Typography>
+          <Typography variant="body" as="p" className="text-foreground-muted max-w-2xl mx-auto leading-relaxed mb-4">
             Exploring the intersection of code and creativity. From web development techniques to AI innovations, I share practical insights and reflections on building digital experiences.
-          </p>
-          <p className="text-foreground-subtle text-base max-w-xl mx-auto">
+          </Typography>
+          <Typography variant="bodySmall" as="p" className="text-foreground-subtle max-w-xl mx-auto">
             Each article is a deep dive into topics that fascinate me—written for developers, and curious minds.
-          </p>
+          </Typography>
         </motion.div>
 
         {/* Articles List - Typography-Focused */}
@@ -70,14 +71,14 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-syne text-3xl md:text-4xl font-bold text-foreground mb-5 leading-tight group-hover:text-accent-gold transition-colors duration-300">
+                  <Typography variant="h3" as="h3" className="font-syne mb-5 group-hover:text-accent-gold transition-colors duration-300">
                     {article.title}
-                  </h3>
+                  </Typography>
 
                   {/* Description - Always visible */}
-                  <p className="text-foreground-muted text-base leading-relaxed mb-5 max-w-3xl">
+                  <Typography variant="body" as="p" className="text-foreground-muted leading-relaxed mb-5 max-w-3xl">
                     {article.description}
-                  </p>
+                  </Typography>
 
                   {/* Categories */}
                   {article.categories && article.categories.length > 0 && (
