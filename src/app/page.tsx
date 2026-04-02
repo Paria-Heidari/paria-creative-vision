@@ -1,7 +1,7 @@
-import {Hero} from "@/components/features/Hero";
+import Hero from "@/components/features/home/Hero";
+import FeaturedGallery from "@/components/features/home/FeaturedGallery";
+import LatestArticles from "@/components/features/home/LatestArticles";
 import {TextBlock} from "@/components/ui/TextBlock";
-import {FeaturedGallery} from "@/components/features/FeaturedGallery";
-import {LatestArticles} from "@/components/features/LatestArticles";
 import {textBlockData} from "@/data/data";
 import { getFeaturedPhotos } from "@/lib/api/photos";
 import { getMediumArticles } from "@/lib/api/mediumArticles";

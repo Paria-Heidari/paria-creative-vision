@@ -1,5 +1,5 @@
 import { getMediumArticles } from '@/lib/api/mediumArticles/index';
-import { ArticleFilter, ArticlePageHero } from '@/components/features/Article';
+import { ArticleFilter, ArticlePageHero } from '@/components/features/articles';
 
 const mediumUsername = process.env.MEDIUM_USERNAME as string;
 

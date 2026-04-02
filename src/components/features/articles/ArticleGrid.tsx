@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { MediumArticle } from '@/lib/api/mediumArticles';
 import ArticleCard from './ArticleCard';
 import { Newspaper } from 'lucide-react';
+import { Typography } from '@/components/ui/Typography';
 
 interface ArticleGridProps {
     articles: MediumArticle[];
@@ -30,11 +31,12 @@ const ArticleGrid = ({articles}:ArticleGridProps) => {
       className="text-center py-16"
     >
         <Newspaper className="w-16 h-16 text-foreground-muted/30 mx-auto mb-4" />
-        <h3 className="text-xl font-syne text-foreground mb-2">No articles found</h3>
-        <p className="text-foreground-muted">
-            Try selecting a different category
-        </p>
+        <Typography variant="h3" as="h3" className="text-foreground-muted">No articles found</Typography>
+        <Typography variant="lead" as="p" className="text-foreground-muted">
+          Try selecting a different category
+        </Typography>
     </motion.div>
+    
 )}
     </AnimatePresence>
 );

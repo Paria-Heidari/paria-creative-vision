@@ -3,6 +3,7 @@ import { Calendar, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from 'framer-motion';
+import { Typography } from "@/components/ui/Typography";
 
 interface ArticleCardProps {
     article: MediumArticle
@@ -41,14 +42,14 @@ const ArticleCard = ({ article, index }: ArticleCardProps) => {
             <p className="text-sm text-foreground-muted mb-4 line-clamp-2 leading-relaxed">{article.description}</p>
             {/* Meta */}
             <div className="mt-auto flex items-center gap-4 text-sm text-foreground-subtle">
-                <span className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4" />
-                    {formatDate(article.pubDate)}
-                </span>
-                <span className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4" />
-                    {article.readTime} min read
-                </span>
+              <Typography variant="paragraph" as="span" className="flex items-center gap-1.5">
+                <Calendar className="w-4 h-4" />
+                {formatDate(article.pubDate)}
+              </Typography>
+              <Typography variant="paragraph" as="span" className="flex items-center gap-1.5">
+                <Clock className="w-4 h-4" />
+                {article.readTime} min read
+              </Typography>
             </div>
         </div>
 

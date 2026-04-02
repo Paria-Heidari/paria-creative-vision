@@ -2,39 +2,67 @@ import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils/utils'
 
 const gapMap = {
-  4: 'gap-4',
-  8: 'gap-8',
+  0:  'gap-0',
+  1:  'gap-1',
+  2:  'gap-2',
+  3:  'gap-3',
+  4:  'gap-4',
+  6:  'gap-6',
+  8:  'gap-8',
+  10: 'gap-10',
   12: 'gap-12',
   16: 'gap-16',
   20: 'gap-20',
 } as const
 
-type GapPreset = keyof typeof gapMap
-
-const directionClassMap = {
-  vertical: 'flex-col',
+const directionMap = {
+  vertical:   'flex-col',
   horizontal: 'flex-row',
 } as const
 
+const alignMap = {
+  start:   'items-start',
+  center:  'items-center',
+  end:     'items-end',
+  stretch: 'items-stretch',
+} as const
+
+const justifyMap = {
+  start:   'justify-start',
+  center:  'justify-center',
+  end:     'justify-end',
+  between: 'justify-between',
+} as const
+
+type GapPreset     = keyof typeof gapMap
+type AlignPreset   = keyof typeof alignMap
+type JustifyPreset = keyof typeof justifyMap
+
 interface StackProps {
   children: ReactNode
-  direction: keyof typeof directionClassMap
+  direction?: keyof typeof directionMap
   gap?: GapPreset
+  align?: AlignPreset
+  justify?: JustifyPreset
   className?: string
 }
 
 export default function Stack({
   children,
-  direction,
+  direction = 'vertical',
   gap = 4,
+  align,
+  justify,
   className,
 }: StackProps) {
   return (
     <div
       className={cn(
         'flex',
-        directionClassMap[direction],
+        directionMap[direction],
         gapMap[gap],
+        align && alignMap[align],
+        justify && justifyMap[justify],
         className,
       )}
     >

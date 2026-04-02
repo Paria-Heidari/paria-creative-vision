@@ -23,7 +23,7 @@ const TextBlock = ({ title, content, className }: TextBlockProps) => {
           </div>
         ) : null}
         <Typography
-          variant="body"
+          variant="paragraph"
           as="p"
           className="text-foreground-muted leading-relaxed max-w-prose"
         >

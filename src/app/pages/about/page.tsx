@@ -6,6 +6,10 @@ import { motion } from 'framer-motion';
 import { Code2, Camera, MapPin, Mail, ArrowRight } from 'lucide-react';
 import { GitHubIcon } from '@/components/ui/icons';
 import { techSkills, photoSkills } from '@/data/about';
+import { ROUTES } from '@/data/routes';
+import { Container } from '@/components/layout/Container';
+import { Stack } from '@/components/layout/Stack';
+import { Typography } from '@/components/ui/Typography';
 
 // Animation variants
 const fadeInUp = {
@@ -18,21 +22,22 @@ export default function About() {
   return (
     <main className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative pt-24 pb-16 px-6 sm:px-8">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative pt-24 pb-16">
+        <Container maxWidth="xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-16"
           >
-            <div className="w-12 h-1 bg-accent-gold mx-auto mb-6 rounded-full" />
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-syne font-bold text-foreground mb-4">
-              About Me
-            </h1>
-            <p className="text-lg text-foreground-muted max-w-2xl mx-auto">
-              A software developer with a passion for visual storytelling
-            </p>
+            <Stack direction="vertical" gap={4} align="center" className="text-center mb-16">
+              <div className="w-12 h-1 bg-accent-gold rounded-full" />
+              <Typography variant="h1" as="h1" className="font-syne">
+                About Me
+              </Typography>
+              <Typography variant="paragraph" as="p" className="text-foreground-muted max-w-2xl">
+                A software developer with a passion for visual storytelling
+              </Typography>
+            </Stack>
           </motion.div>
 
           {/* Profile Card */}
@@ -54,77 +59,80 @@ export default function About() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <p className="text-white/90 text-base flex items-center gap-2">
+                  <Typography variant="paragraphSmall" as="p" className="text-white/90 flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-accent-gold" />
                     Based in Europe
-                  </p>
+                  </Typography>
                 </div>
               </div>
             </div>
 
             {/* Bio Content */}
-            <div className="md:col-span-3 space-y-6">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-syne font-bold text-foreground mb-4">
-                  Hi, I&apos;m Paria
-                </h2>
-                <div className="space-y-4 text-foreground-muted leading-relaxed">
-                  <p>
-                    I&apos;m a software developer who found a second language in photography.
-                    By day, I craft digital experiences through code—building web applications. Outside of code, I capture the
-                    world through my lens, finding poetry in landscapes, architecture, and
-                    fleeting moments.
-                  </p>
-                  <p>
-                    My journey began with curiosity about how things work, which led me to
-                    programming. But somewhere along the way, I discovered that the same
-                    analytical mind that debugs code also sees patterns in light and shadow,
-                    composition in chaos, and stories in stillness.
-                  </p>
-                  <p>
-                    This portfolio is where both worlds meet-where coding meets creativity. Whether I’m writing code or exploring golden hour light across landscapes, I’m always looking for the balance between logic and moments.
-                  </p>
+            <div className="md:col-span-3">
+              <Stack direction="vertical" gap={6}>
+                <div>
+                  <Typography variant="h3" as="h2" className="font-syne mb-4">
+                    Hi, I&apos;m Paria
+                  </Typography>
+                  <Stack direction="vertical" gap={4}>
+                    <Typography variant="paragraph" as="p" className="text-foreground-muted">
+                      I&apos;m a software developer who found a second language in photography.
+                      By day, I craft digital experiences through code—building web applications. Outside of code, I capture the
+                      world through my lens, finding poetry in landscapes, architecture, and
+                      fleeting moments.
+                    </Typography>
+                    <Typography variant="paragraph" as="p" className="text-foreground-muted">
+                      My journey began with curiosity about how things work, which led me to
+                      programming. But somewhere along the way, I discovered that the same
+                      analytical mind that debugs code also sees patterns in light and shadow,
+                      composition in chaos, and stories in stillness.
+                    </Typography>
+                    <Typography variant="paragraph" as="p" className="text-foreground-muted">
+                      This portfolio is where both worlds meet-where coding meets creativity. Whether I’m writing code or exploring golden hour light across landscapes, I’m always looking for the balance between logic and moments.
+                    </Typography>
+                  </Stack>
                 </div>
-              </div>
 
-              {/* Quick Links */}
-              <div className="flex flex-wrap gap-4 pt-4">
-                <Link
-                  href="mailto:paria.heidari.ph@gmail.com"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-accent-gold text-white rounded-full font-medium hover:bg-accent-gold-hover transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  <Mail className="w-4 h-4" />
-                  Get in Touch
-                </Link>
-                <Link
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-foreground/20 text-foreground rounded-full font-medium hover:border-accent-gold hover:text-accent-gold transition-all duration-300"
-                >
-                  <GitHubIcon className="w-4 h-4" />
-                  GitHub
-                </Link>
-              </div>
+                {/* Quick Links */}
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <Link
+                    href="mailto:paria.heidari.ph@gmail.com"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-accent-gold text-white rounded-full font-medium hover:bg-accent-gold-hover transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Get in Touch
+                  </Link>
+                  <Link
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 border-2 border-foreground/20 text-foreground rounded-full font-medium hover:border-accent-gold hover:text-accent-gold transition-all duration-300"
+                  >
+                    <GitHubIcon className="w-4 h-4" />
+                    GitHub
+                  </Link>
+                </div>
+              </Stack>
             </div>
           </motion.div>
-        </div>
+        </Container>
       </section>
 
       {/* Two Worlds Section */}
-      <section className="py-20 px-6 sm:px-8 bg-accent/30">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 bg-accent/30">
+        <Container maxWidth="xl">
           <motion.div
             {...fadeInUp}
             viewport={{ once: true }}
-            className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-syne font-bold text-foreground mb-4">
-              Two Worlds, One Vision
-            </h2>
-            <p className="text-foreground-muted max-w-2xl mx-auto">
-              Where analytical thinking meets creative expression
-            </p>
+            <Stack direction="vertical" gap={4} align="center" className="text-center mb-16">
+              <Typography variant="h2" as="h2" className="font-syne">
+                Two Worlds, One Vision
+              </Typography>
+              <Typography variant="paragraph" as="p" className="text-foreground-muted max-w-2xl">
+                Where analytical thinking meets creative expression
+              </Typography>
+            </Stack>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
@@ -139,18 +147,18 @@ export default function About() {
               <div className="w-14 h-14 bg-accent-gold/10 rounded-xl flex items-center justify-center mb-6">
                 <Code2 className="w-7 h-7 text-accent-gold" />
               </div>
-              <h3 className="text-2xl font-syne font-bold text-foreground mb-4">
+              <Typography variant="h4" as="h3" className="font-syne mb-4">
                 The Developer
-              </h3>
-              <p className="text-foreground-muted mb-6 leading-relaxed">
+              </Typography>
+              <Typography variant="paragraph" as="p" className="text-foreground-muted mb-6">
                 Building modern web applications with a focus on clean code,
                 performance, and user experience. I believe in writing code
                 that&apos;s not just functional, but elegant and maintainable.
-              </p>
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
+              </Typography>
+              <Stack direction="vertical" gap={3}>
+                <Typography variant="caption" as="h4" className="font-semibold text-foreground uppercase tracking-wider">
                   Tech Stack
-                </h4>
+                </Typography>
                 <div className="flex flex-wrap gap-2">
                   {techSkills.map((skill) => (
                     <span
@@ -161,7 +169,7 @@ export default function About() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </Stack>
             </motion.div>
 
             {/* Photographer Side */}
@@ -175,18 +183,18 @@ export default function About() {
               <div className="w-14 h-14 bg-accent-gold/10 rounded-xl flex items-center justify-center mb-6">
                 <Camera className="w-7 h-7 text-accent-gold" />
               </div>
-              <h3 className="text-2xl font-syne font-bold text-foreground mb-4">
+              <Typography variant="h4" as="h3" className="font-syne mb-4">
                 The Photographer
-              </h3>
-              <p className="text-foreground-muted mb-6 leading-relaxed">
+              </Typography>
+              <Typography variant="paragraph" as="p" className="text-foreground-muted mb-6">
                 Capturing moments that tell stories. From sweeping landscapes
                 to intimate street scenes, I seek the extraordinary in the
                 ordinary and the timeless in the fleeting.
-              </p>
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
+              </Typography>
+              <Stack direction="vertical" gap={3}>
+                <Typography variant="caption" as="h4" className="font-semibold text-foreground uppercase tracking-wider">
                   Specialties
-                </h4>
+                </Typography>
                 <div className="flex flex-wrap gap-2">
                   {photoSkills.map((skill) => (
                     <span
@@ -197,46 +205,48 @@ export default function About() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </Stack>
             </motion.div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 sm:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-20">
+        <Container maxWidth="md">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-syne font-bold text-foreground mb-6">
-              Let&apos;s Create Something Together
-            </h2>
-            <p className="text-lg text-foreground-muted mb-8 max-w-2xl mx-auto">
-              Whether you need a web application built, want to collaborate on
-              a photography project, or just want to say hello—I&apos;d love to
-              hear from you.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="mailto:paria.heidari.ph@gmail.com"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent-gold text-white rounded-full font-medium text-lg hover:bg-accent-gold-hover transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                Start a Conversation
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                href="/pages/portfolio"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-foreground/20 text-foreground rounded-full font-medium text-lg hover:border-accent-gold hover:text-accent-gold transition-all duration-300"
-              >
-                View Portfolio
-              </Link>
-            </div>
+            <Stack direction="vertical" gap={6} align="center" className="text-center">
+              <Typography variant="h2" as="h2" className="font-syne">
+                Let&apos;s Create Something Together
+              </Typography>
+              <Typography variant="paragraph" as="p" className="text-foreground-muted max-w-2xl">
+                Whether you need a web application built, want to collaborate on
+                a photography project, or just want to say hello—I&apos;d love to
+                hear from you.
+              </Typography>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="mailto:paria.heidari.ph@gmail.com"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent-gold text-white rounded-full font-medium text-lg hover:bg-accent-gold-hover transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  Start a Conversation
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  href={ROUTES.portfolio}
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-foreground/20 text-foreground rounded-full font-medium text-lg hover:border-accent-gold hover:text-accent-gold transition-all duration-300"
+                >
+                  View Portfolio
+                </Link>
+              </div>
+            </Stack>
           </motion.div>
-        </div>
+        </Container>
       </section>
     </main>
   );

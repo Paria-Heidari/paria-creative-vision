@@ -6,7 +6,9 @@ import { motion, useInView } from 'framer-motion';
 import Lightbox from '@/components/features/Gallery/Lightbox';
 import { ArrowRight } from 'lucide-react';
 import { Typography } from '@/components/ui/Typography';
+import { Container } from '@/components/layout/Container';
 import { Photo } from '@/types/photo.types';
+import { ROUTES } from '@/data/routes';
 
 interface FeaturedGalleryProps {
   featuredPhotos: Photo[];
@@ -18,8 +20,8 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   return (
-    <section ref={sectionRef} className="py-20 px-6 sm:px-8 bg-background">
-      <div className="max-w-6xl mx-auto">
+    <section ref={sectionRef} className="py-20 bg-background">
+      <Container maxWidth="xl">
         {/* Section Header with animation */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -35,17 +37,17 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
               <Typography variant="h2" as="h2" className="font-syne mb-3">
                 Featured Collection
               </Typography>
-              <Typography variant="bodySmall" as="p" className="text-foreground-muted">
+              <Typography variant="lead" className="text-foreground-muted">
                 Curated photography highlights
               </Typography>
             </div>
 
             {/* View All Link - desktop */}
             <Link
-              href="/pages/portfolio"
-              className="hidden md:flex items-center gap-2 text-base font-medium text-foreground hover:text-accent-gold transition-colors group"
+              href={ROUTES.portfolio}
+              className="hidden md:flex items-center gap-2 text-lg font-medium text-foreground hover:text-accent-gold transition-colors group"
             >
-              <span>View Full Portfolio</span>
+              <Typography variant="paragraph" as="span" className="text-foreground-muted">View Full Portfolio</Typography>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -85,14 +87,14 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
           className="mt-8 text-center md:hidden"
         >
           <Link
-            href="/pages/portfolio"
-            className="inline-flex items-center gap-2 text-base font-medium text-foreground hover:text-accent-gold transition-colors group"
+            href={ROUTES.portfolio}
+            className="inline-flex items-center gap-2 text-lg font-medium text-foreground hover:text-accent-gold transition-colors group"
           >
-            <span>View Full Portfolio</span>
+            <Typography variant="paragraphSmall">View Full Portfolio</Typography>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
-      </div>
+      </Container>
 
       {/* Lightbox */}
       {selectedPhoto && (

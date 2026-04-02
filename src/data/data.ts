@@ -1,12 +1,14 @@
+import { ROUTES } from '@/data/routes'
+
 export const navigation = [
   {
     name: "HOME",
-    href: "/",
+    href: ROUTES.home,
     current: true,
   },
-  { name: "PORTFOLIO", href: "/pages/portfolio" },
-  { name: "ARTICLES", href: "/pages/articles" },
-  { name: "ABOUT", href: "/pages/about" },
+  { name: "PORTFOLIO", href: ROUTES.portfolio },
+  { name: "ARTICLES", href: ROUTES.articles },
+  { name: "ABOUT", href: ROUTES.about },
 ];
 
 

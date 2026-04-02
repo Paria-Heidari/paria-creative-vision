@@ -5,6 +5,7 @@ import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Typography } from '@/components/ui/Typography';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { ROUTES } from '@/data/routes';
 
 interface LatestArticlesProps {
   articles: MediumArticle[];
@@ -29,10 +30,10 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
           <Typography variant="h2" as="h2" className="font-syne mb-6">
             Latest Insights
           </Typography>
-          <Typography variant="body" as="p" className="text-foreground-muted max-w-2xl mx-auto leading-relaxed mb-4">
+          <Typography variant="paragraph" as="p" className="text-foreground-muted max-w-2xl mx-auto leading-relaxed mb-4">
             Exploring the intersection of code and creativity. From web development techniques to AI innovations, I share practical insights and reflections on building digital experiences.
           </Typography>
-          <Typography variant="bodySmall" as="p" className="text-foreground-subtle max-w-xl mx-auto">
+          <Typography variant="paragraphSmall" as="p" className="text-foreground-subtle max-w-xl mx-auto">
             Each article is a deep dive into topics that fascinate me—written for developers, and curious minds.
           </Typography>
         </motion.div>
@@ -58,7 +59,7 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
                   className="block py-12 relative"
                 >
                   {/* Meta Info */}
-                  <div className="flex items-center gap-4 text-sm text-foreground-subtle mb-4 font-medium tracking-wider uppercase">
+                  <div className="flex items-center gap-4 text-base text-foreground-subtle mb-4 font-medium tracking-wider uppercase">
                     <span className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       {formatDate(article.pubDate)}
@@ -76,7 +77,7 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
                   </Typography>
 
                   {/* Description - Always visible */}
-                  <Typography variant="body" as="p" className="text-foreground-muted leading-relaxed mb-5 max-w-3xl">
+                  <Typography variant="paragraph" as="p" className="text-foreground-muted leading-relaxed mb-5 max-w-3xl">
                     {article.description}
                   </Typography>
 
@@ -95,7 +96,7 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
                   )}
 
                   {/* Read More Arrow */}
-                  <div className="flex items-center gap-2 text-base font-medium text-accent-gold group-hover:gap-3 transition-all duration-300">
+                  <div className="flex items-center gap-2 text-lg font-medium text-accent-gold group-hover:gap-3 transition-all duration-300">
                     <span className="tracking-wide">Read Full Article</span>
                     <ArrowRight className="w-5 h-5 transition-transform" />
                   </div>
@@ -119,8 +120,8 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
           className="mt-16 text-center"
         >
           <Link
-            href="/pages/articles"
-            className="inline-flex items-center gap-3 text-base font-medium text-foreground hover:text-accent-gold transition-colors group border-b border-foreground/20 hover:border-accent-gold pb-1"
+            href={ROUTES.articles}
+            className="inline-flex items-center gap-3 text-lg font-medium text-foreground hover:text-accent-gold transition-colors group border-b border-foreground/20 hover:border-accent-gold pb-1"
           >
             <span className="tracking-wider uppercase">Explore All Articles</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />

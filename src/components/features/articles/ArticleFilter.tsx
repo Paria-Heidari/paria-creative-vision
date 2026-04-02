@@ -55,10 +55,11 @@ const ArticleFilter = ({ initialArticles, mediumUsername }: ArticleFilterProps) 
           key={category.id}
           variant={isActive ? "gold" : "secondary"}
           size="sm"
+          startIcon={<Icon className="w-4 h-4" />}
           onClick={() => setActiveCategory(category.id)}
           className={!isActive ? "bg-white/80 border-foreground/10 hover:border-accent-gold hover:text-accent-gold hover:bg-white/90" : ""}
         >
-          <Icon className="w-4 h-4" />
+         
           {category.label}
         </Button>
     );

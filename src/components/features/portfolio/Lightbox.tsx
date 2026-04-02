@@ -3,7 +3,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Photo } from '@/types/photo.types';
-import {CloseIcon, ChevronLeftIcon, ChevronRightIcon, LocationPinIcon} from '@/components/ui/icons';
+import { CloseIcon, ChevronLeftIcon, ChevronRightIcon, LocationPinIcon } from '@/components/ui/icons';
+import { Typography } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/Button';
 
 interface LightboxProps {
   photo: Photo;
@@ -62,51 +64,33 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-foreground/97 backdrop-blur-sm flex items-center justify-center animate-fadeIn"
-      onClick={onClose}
+      className="fixed inset-0 z-50 bg-surface-strong/70 backdrop-blur-sm flex items-center justify-center animate-fadeIn"
     >
       {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-6 right-6 z-50 w-12 h-12 bg-accent/20 hover:bg-accent/30 rounded-full flex items-center justify-center transition-all duration-300 group"
-        aria-label="Close lightbox"
-      >
-        <CloseIcon className="w-6 h-6 text-accent group-hover:rotate-90 transition-transform duration-300" />
-      </button>
+
+      <Button variant="gold" onClick={onClose} aria-label="Close lightbox" className="absolute top-6 right-6 z-50 w-12 h-12 bg-accent-gold hover:bg-accent-gold-hover rounded-full flex items-center justify-center transition-all duration-300 group">
+        <CloseIcon className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />
+      </Button>
 
       {/* Navigation buttons */}
       {hasPrevious && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handlePrevious();
-          }}
-          className="absolute left-6 z-50 w-12 h-12 bg-accent/20 hover:bg-accent/30 rounded-full flex items-center justify-center transition-all duration-300 group"
-          aria-label="Previous photo"
-        >
-          <ChevronLeftIcon className="w-6 h-6 text-accent group-hover:-translate-x-1 transition-transform duration-300" />
-        </button>
+        <Button variant="gold" onClick={handlePrevious} aria-label="Previous photo" className="absolute left-6 z-50 w-12 h-12 bg-accent-gold hover:bg-accent-gold-hover rounded-full flex items-center justify-center transition-all duration-300 group">
+          <ChevronLeftIcon className="w-6 h-6 text-white group-hover:-translate-x-1 transition-transform duration-300" />
+        </Button>
       )}
 
       {hasNext && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleNext();
-          }}
-          className="absolute right-6 z-50 w-12 h-12 bg-accent/20 hover:bg-accent/30 rounded-full flex items-center justify-center transition-all duration-300 group"
-          aria-label="Next photo"
-        >
-          <ChevronRightIcon className="w-6 h-6 text-accent group-hover:translate-x-1 transition-transform duration-300" />
-        </button>
+        <Button variant="gold" onClick={handleNext} aria-label="Next photo" className="absolute right-6 z-50 w-12 h-12 bg-accent-gold hover:bg-accent-gold-hover rounded-full flex items-center justify-center transition-all duration-300 group">
+          <ChevronRightIcon className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform duration-300" />
+        </Button>
       )}
 
       {/* Image counter */}
-      <div className="absolute top-6 left-6 z-50 bg-accent/20 backdrop-blur-sm px-4 py-2 rounded-full">
-        <span className="text-accent font-inter text-sm tracking-wider">
+      {/* <div className="absolute top-6 left-6 z-50 bg-accent-gold backdrop-blur-sm px-4 py-2 rounded-full">
+        <span className="text-accent-gold font-inter text-sm tracking-wider">
           {currentIndex + 1} / {photos.length}
         </span>
-      </div>
+      </div> */}
 
       {/* Main content container */}
       <div
@@ -118,7 +102,7 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
           {/* Loading spinner */}
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-12 h-12 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
+              <div className="w-12 h-12 border-4 border-accent-gold border-t-accent-gold rounded-full animate-spin" />
             </div>
           )}
 
@@ -128,33 +112,32 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
             alt={currentPhoto.title}
             width={currentPhoto.width}
             height={currentPhoto.height}
-            className={`max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-lg shadow-2xl transition-all duration-500 ${
-              isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-            } ${direction === 'left' ? 'animate-slideInLeft' : direction === 'right' ? 'animate-slideInRight' : ''}`}
+            className={`max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-lg shadow-2xl transition-all duration-500 ${isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+              } ${direction === 'left' ? 'animate-slideInLeft' : direction === 'right' ? 'animate-slideInRight' : ''}`}
             priority
             onLoad={() => setIsLoading(false)}
           />
         </div>
 
         {/* Photo info */}
-        <div className="text-center bg-accent/10 backdrop-blur-sm rounded-lg p-6 max-w-2xl mx-auto">
-          <h2 className="text-3xl font-syne text-accent mb-3 tracking-wide">
+        <div className="text-center bg-accent-gold backdrop-blur-sm rounded-lg p-6 max-w-2xl mx-auto">
+          <Typography variant="h3" as="h3" className="text-foreground mb-3 tracking-wide">
             {currentPhoto.title}
-          </h2>
+          </Typography>
 
           {currentPhoto.location_city && currentPhoto.location_country && (
             <div className="flex items-center justify-center gap-2 mb-3">
-              <LocationPinIcon className="w-5 h-5 text-accent/70" />
-              <p className="text-accent/80 font-inter">
+              <LocationPinIcon className="w-5 h-5 text-foreground-muted" />
+              <Typography variant="paragraph" as="span" className="text-foreground-muted">
                 {currentPhoto.location_city}, {currentPhoto.location_country}
-              </p>
+              </Typography>
             </div>
           )}
 
           {currentPhoto.description && (
-            <p className="text-accent/70 font-inter text-sm leading-relaxed max-w-xl mx-auto mb-3">
+            <Typography variant="paragraph" as="p" className="text-foreground-muted">
               {currentPhoto.description}
-            </p>
+            </Typography>
           )}
 
           {/* Tags */}
@@ -163,7 +146,7 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
               {currentPhoto.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 bg-accent/20 text-accent/70 rounded-full text-xs font-inter tracking-wider uppercase"
+                  className="px-3 py-1 bg-accent-gold-light rounded-full text-xs font-inter tracking-wider uppercase"
                 >
                   {tag}
                 </span>
