@@ -9,6 +9,7 @@ import { Typography } from '@/components/ui/Typography';
 const HERO_HEADING_ID = 'hero-heading';
 
 const Hero = () => {
+  
   const scrollToContent = useCallback(() => {
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -36,8 +37,6 @@ const Hero = () => {
         <source src="/videos/IMG_1174.mov" type="video/mp4" />
       </video>
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
-
       <div className="relative z-10 w-full px-6 pb-24 sm:px-12 sm:pb-32 lg:px-20">
         <Stack
           direction="vertical"
@@ -54,7 +53,6 @@ const Hero = () => {
           <Typography
             variant="h1"
             as="h1"
-            id={HERO_HEADING_ID}
             className="text-white tracking-wide drop-shadow-[0_1px_12px_rgba(0,0,0,0.45)]"
           >
             Exploring the World
@@ -75,26 +73,17 @@ const Hero = () => {
         type="button"
         variant="ghost"
         size="md"
-        rounded="sm"
         onClick={scrollToContent}
         aria-label="Scroll to main content"
         className="group absolute bottom-8 left-1/2 z-10 min-h-[3.25rem] min-w-[4.5rem] -translate-x-1/2 flex-col gap-2 border-0 px-4 py-3 shadow-none ring-offset-0 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
       >
-        <span
-          className="h-px w-10 bg-white/50 transition-colors duration-200 group-hover:bg-white"
-          aria-hidden
-        />
-        <span
-          className="text-sm font-medium uppercase tracking-[0.32em] text-white/85 transition-[color,font-size] duration-200 group-hover:text-white group-hover:text-base motion-reduce:transition-colors motion-reduce:group-hover:text-sm"
-          aria-hidden
-        >
-          Scroll
-        </span>
-        <ChevronDown
-          className="h-5 w-5 text-white/75 transition-[color,transform] duration-200 group-hover:text-white group-hover:scale-110 motion-reduce:animate-none motion-reduce:group-hover:scale-100 animate-bounce-subtle"
-          aria-hidden
-          strokeWidth={1.35}
-        />
+        <Typography variant="caption" as="span" className="text-sm font-medium uppercase tracking-[0.32em] text-white/85 transition-[color,font-size] duration-200 group-hover:text-white group-hover:text-base motion-reduce:transition-colors motion-reduce:group-hover:text-sm">Scroll
+          <ChevronDown
+            className="h-5 w-5 text-white/75 transition-[color,transform] duration-200 group-hover:text-white group-hover:scale-110 motion-reduce:animate-none motion-reduce:group-hover:scale-100 animate-bounce-subtle"
+            aria-hidden
+            strokeWidth={1.35}
+          />
+        </Typography>
       </Button>
     </section>
   );

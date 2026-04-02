@@ -1,9 +1,9 @@
 'use client';
 import Link from 'next/link';
-import GalleryItem from '@/components/features/Gallery/GalleryItem';
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import Lightbox from '@/components/features/Gallery/Lightbox';
+import GalleryItem from '@/components/features/portfolio/GalleryItem';
+import Lightbox from '@/components/features/portfolio/Lightbox';
 import { ArrowRight } from 'lucide-react';
 import { Typography } from '@/components/ui/Typography';
 import { Container } from '@/components/layout/Container';
