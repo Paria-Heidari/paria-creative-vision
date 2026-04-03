@@ -40,8 +40,8 @@
   --pri-info-500: #2d669f;
 
   /* typography */
-  --pri-font-sans: "Inter", sans-serif;
-  --pri-font-display: "Syne", sans-serif;
+  --pri-font-sans: var(--font-inter), sans-serif;
+  --pri-font-display: var(--font-syne), sans-serif;
   --pri-font-grotesk: var(--font-grotesk);
   /* font-size */
   --pri-font-size-xs: 0.75rem;
