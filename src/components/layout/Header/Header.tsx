@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
-import { navigation } from '@/data/data';
+import { navigation } from '@/data/staticData';
 import { Logo } from '@/components/branding/Logo';
 import { Stack } from '@/components/layout/Stack';
 import { cn } from '@/lib/utils/utils';
@@ -54,7 +54,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center md:flex">
-            <Stack direction="horizontal" gap={6} className="lg:gap-8">
+            <Stack direction="horizontal" gap={{ base: 6, lg: 8 }}>
               <ul className="contents">
                 {navigation.map((item) => (
                   <li key={item.href}>

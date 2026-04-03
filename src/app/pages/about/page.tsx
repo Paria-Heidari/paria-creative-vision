@@ -29,7 +29,12 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Stack direction="vertical" gap={4} align="center" className="text-center mb-16">
+            <Stack
+              direction="vertical"
+              gap={{ base: 4, md: 6 }}
+              align="center"
+              className="mb-16 text-center"
+            >
               <div className="w-12 h-1 bg-accent-gold rounded-full" />
               <Typography variant="h1" as="h1" className="font-syne">
                 About Me
@@ -69,12 +74,12 @@ export default function About() {
 
             {/* Bio Content */}
             <div className="md:col-span-3">
-              <Stack direction="vertical" gap={6}>
+              <Stack direction="vertical" gap={{ base: 6, md: 8 }}>
                 <div>
                   <Typography variant="h3" as="h2" className="font-syne mb-4">
                     Hi, I&apos;m Paria
                   </Typography>
-                  <Stack direction="vertical" gap={4}>
+                  <Stack direction="vertical" gap={{ base: 4, md: 6 }}>
                     <Typography variant="paragraph" as="p" className="text-foreground-muted">
                       I&apos;m a software developer who found a second language in photography.
                       By day, I craft digital experiences through code—building web applications. Outside of code, I capture the
@@ -125,7 +130,12 @@ export default function About() {
             {...fadeInUp}
             viewport={{ once: true }}
           >
-            <Stack direction="vertical" gap={4} align="center" className="text-center mb-16">
+            <Stack
+              direction="vertical"
+              gap={{ base: 4, md: 6 }}
+              align="center"
+              className="mb-16 text-center"
+            >
               <Typography variant="h2" as="h2" className="font-syne">
                 Two Worlds, One Vision
               </Typography>
@@ -155,7 +165,10 @@ export default function About() {
                 performance, and user experience. I believe in writing code
                 that&apos;s not just functional, but elegant and maintainable.
               </Typography>
-              <Stack direction="vertical" gap={3}>
+              <Stack
+                direction="vertical"
+                gap={{ base: 3, md: 4 }}
+              >
                 <Typography variant="caption" as="h4" className="font-semibold text-foreground uppercase tracking-wider">
                   Tech Stack
                 </Typography>
@@ -191,7 +204,10 @@ export default function About() {
                 to intimate street scenes, I seek the extraordinary in the
                 ordinary and the timeless in the fleeting.
               </Typography>
-              <Stack direction="vertical" gap={3}>
+              <Stack
+                direction="vertical"
+                gap={{ base: 3, md: 4 }}
+              >
                 <Typography variant="caption" as="h4" className="font-semibold text-foreground uppercase tracking-wider">
                   Specialties
                 </Typography>
@@ -220,7 +236,12 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Stack direction="vertical" gap={6} align="center" className="text-center">
+            <Stack
+              direction="vertical"
+              gap={{ base: 6, md: 8 }}
+              align="center"
+              className="text-center"
+            >
               <Typography variant="h2" as="h2" className="font-syne">
                 Let&apos;s Create Something Together
               </Typography>

@@ -26,9 +26,22 @@ export const metadataInfo = {
 // HomePage data
 export const homePageHeroInfo = {
   subTitle: 'Photography & Code',
-  heading: 'Exploring the world through code and lens!',
+  heading: 'Exploring the world',
+  heading2: 'through code and lens!',
   subHeading: 'Visual Stories by Paria',
   scrollLabel: 'Scroll',
+};
+
+export const featuredGalleryInfo = {
+  title: 'Featured Collection',
+  subTitle: 'Curated photography highlights',
+  viewAllLink: 'View Full Portfolio',
+};
+
+export const latestArticlesInfo = {
+  title: 'Latest Insights',
+  content:
+    'Exploring the intersection of code and creativity. From web development techniques to AI innovations, I share practical insights and reflections on building digital experiences.',
 };
 
 // Footer data

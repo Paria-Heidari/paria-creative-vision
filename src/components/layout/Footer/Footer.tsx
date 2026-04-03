@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { Container } from '../Container';
 import { Grid, GridItem } from '../Grid';
-import { Stack } from '../Stack';
+import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
-import { MailIcon } from '@/components/ui/icons';
+import { Mail } from 'lucide-react';
 import { SocialIcons } from './SocialIcons';
-import { footerInfo, navigation } from '@/data/data';
+import { footerInfo, navigation } from '@/data/staticData';
 
 const NavLinks = () => (
   <ul className="flex flex-col gap-3 mt-4">
@@ -27,13 +27,17 @@ const NavLinks = () => (
 
 export default function Footer() {
   return (
-    <footer className="bg-surface-alt border-t border-foreground/10">
+    <footer className="mt-16 border-t border-foreground/10">
       {/* Main Section */}
       <Container maxWidth="xl" className="py-8 lg:py-12">
-        <Grid cols="footer" gap={8}>
+        <Grid gap={8} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <GridItem className="md:col-span-2">
-            <Stack direction="vertical" gap={4} className="max-w-md">
+            <Stack
+              direction="vertical"
+              gap={{ base: 4, md: 6 }}
+              className="max-w-md"
+            >
               <Typography variant="h5" as="h3" className="font-syne">
                 {footerInfo.title}
               </Typography>
@@ -57,13 +61,17 @@ export default function Footer() {
             <Typography variant="caption" as="h4" className="font-semibold text-foreground tracking-widest uppercase">
               {footerInfo.contactTitle}
             </Typography>
-            <Stack direction="vertical" gap={3} className="mt-4">
+            <Stack
+              direction="vertical"
+              gap={{ base: 3, md: 4 }}
+              className="mt-4"
+            >
               <Link
                 href={`mailto:${footerInfo.contactEmail}`}
                 className="inline-flex items-center gap-2 text-foreground-muted hover:text-accent-gold transition-colors duration-300"
                 aria-label={`Email ${footerInfo.contactName}`}
               >
-                <MailIcon aria-hidden="true" />
+                <Mail className="w-4 h-4" aria-hidden="true" />
                 <Typography variant="caption" as="span">
                   {footerInfo.contactName}
                 </Typography>

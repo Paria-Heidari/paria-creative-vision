@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Syne, Inter } from "next/font/google";
 import localFont from 'next/font/local';
 import { BodyLayout } from "@/components/layout/Body";
-import {metadataInfo} from "@/data/data";
+import {metadataInfo} from "@/data/staticData";
 import "./globals.css";
 
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });

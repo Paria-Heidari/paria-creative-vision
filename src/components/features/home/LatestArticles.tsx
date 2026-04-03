@@ -5,7 +5,11 @@ import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Typography } from '@/components/ui/Typography';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils/utils';
 import { ROUTES } from '@/data/routes';
+import { TextBlock } from '@/components/ui/TextBlock';
+import { latestArticlesInfo } from '@/data/staticData';
+import { Stack } from '@/components/layout/Stack';
 
 interface LatestArticlesProps {
   articles: MediumArticle[];
@@ -16,118 +20,147 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
   const latestArticles = articles.slice(0, 3);
 
   return (
-    <section className="py-24 px-6 sm:px-8 bg-background">
-      <div className="max-w-4xl mx-auto">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-20 text-center"
-        >
-          <div className="w-12 h-[2px] bg-accent-gold mx-auto mb-6"></div>
-          <Typography variant="h2" as="h2" className="font-syne mb-6">
-            Latest Insights
-          </Typography>
-          <Typography variant="paragraph" as="p" className="text-foreground-muted max-w-2xl mx-auto leading-relaxed mb-4">
-            Exploring the intersection of code and creativity. From web development techniques to AI innovations, I share practical insights and reflections on building digital experiences.
-          </Typography>
-          <Typography variant="paragraphSmall" as="p" className="text-foreground-subtle max-w-xl mx-auto">
-            Each article is a deep dive into topics that fascinate me—written for developers, and curious minds.
-          </Typography>
-        </motion.div>
+    <section className="border-foreground/10 border-t pt-10 md:pt-14">
+      {/* Section Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <TextBlock
+          title={latestArticlesInfo.title}
+          content={latestArticlesInfo.content}
+        />
+      </motion.div>
 
-        {/* Articles List - Typography-Focused */}
-        <div className="space-y-0">
-          {latestArticles.map((article, index) => {
-            const isLast = index === latestArticles.length - 1;
-
-            return (
-              <motion.article
-                key={article.guid}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="group"
+      {/* Articles List - Typography-Focused */}
+      <Stack direction="vertical" gap={0} className="mt-20">
+        {latestArticles.map((article, index) => {
+          return (
+            <motion.article
+              key={article.guid}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              className={cn(
+                'group',
+                index > 0 &&
+                  'border-foreground/10 mt-12 border-t pt-12 md:mt-16 md:pt-16',
+              )}
+            >
+              <Link
+                href={article.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block py-6"
               >
-                <Link
-                  href={article.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block py-12 relative"
-                >
+                <Stack direction="vertical" gap={{ base: 6, md: 4 }}>
                   {/* Meta Info */}
-                  <div className="flex items-center gap-4 text-base text-foreground-subtle mb-4 font-medium tracking-wider uppercase">
-                    <span className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
+                  <Stack direction="horizontal" gap={{ base: 2, md: 4 }}>
+                    <Typography
+                      variant="caption"
+                      as="span"
+                      className="text-foreground-subtle flex items-center gap-2 tracking-wider uppercase"
+                    >
+                      <Calendar className="h-4 w-4" aria-hidden />
                       {formatDate(article.pubDate)}
-                    </span>
-                    <span className="w-1 h-1 rounded-full bg-accent-gold"></span>
-                    <span className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
+                    </Typography>
+                    <span
+                      className="bg-accent-gold h-1 w-1 rounded-full"
+                      aria-hidden
+                    />
+                    <Typography
+                      variant="caption"
+                      as="span"
+                      className="text-foreground-subtle flex items-center gap-2 tracking-wider uppercase"
+                    >
+                      <Clock className="h-4 w-4" aria-hidden />
                       {article.readTime} min read
-                    </span>
-                  </div>
-
+                    </Typography>
+                  </Stack>
                   {/* Title */}
-                  <Typography variant="h3" as="h3" className="font-syne mb-5 group-hover:text-accent-gold transition-colors duration-300">
+                  <Typography
+                    variant="h4"
+                    as="h3"
+                    className="group-hover:text-accent-gold transition-colors duration-300"
+                  >
                     {article.title}
                   </Typography>
 
                   {/* Description - Always visible */}
-                  <Typography variant="paragraph" as="p" className="text-foreground-muted leading-relaxed mb-5 max-w-3xl">
+                  <Typography
+                    variant="paragraph"
+                    as="p"
+                    className="text-foreground-muted max-w-3xl"
+                  >
                     {article.description}
                   </Typography>
 
                   {/* Categories */}
                   {article.categories && article.categories.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-5">
+                    <Stack direction="horizontal" gap={{ base: 2, md: 4 }}>
                       {article.categories.slice(0, 3).map((category, i) => (
-                        <span
+                        <Typography
                           key={i}
-                          className="text-xs px-3 py-1 bg-accent-gold/10 text-accent-gold rounded-full font-medium tracking-wide"
+                          variant="caption"
+                          as="span"
+                          className="bg-accent-gold/30 text-foreground-subtle rounded-full px-3 py-1 font-semibold tracking-widest"
                         >
                           {category}
-                        </span>
+                        </Typography>
                       ))}
-                    </div>
+                    </Stack>
                   )}
 
                   {/* Read More Arrow */}
-                  <div className="flex items-center gap-2 text-lg font-medium text-accent-gold group-hover:gap-3 transition-all duration-300">
-                    <span className="tracking-wide">Read Full Article</span>
-                    <ArrowRight className="w-5 h-5 transition-transform" />
-                  </div>
-                </Link>
+                  <Stack
+                    direction="horizontal"
+                    gap={2}
+                    className="text-accent-gold flex items-center font-medium transition-all duration-300 group-hover:gap-3"
+                  >
+                    <Typography
+                      variant="paragraph"
+                      as="span"
+                      className="tracking-wide text-inherit"
+                    >
+                      Read Full Article
+                    </Typography>
+                    <ArrowRight
+                      className="h-5 w-5 transition-transform"
+                      aria-hidden
+                    />
+                  </Stack>
+                </Stack>
+              </Link>
+            </motion.article>
+          );
+        })}
+      </Stack>
+      
 
-                {/* Gold Divider Line */}
-                {!isLast && (
-                  <div className="h-[1px] bg-gradient-to-r from-transparent via-accent-gold/30 to-transparent"></div>
-                )}
-              </motion.article>
-            );
-          })}
-        </div>
-
-        {/* View All Link */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 text-center"
+      {/* View All Link */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="mt-12 text-center"
+      >
+        <Link
+          href={ROUTES.articles}
+          className="text-foreground hover:text-accent-gold group border-foreground/30 hover:border-accent-gold inline-flex items-center gap-3 border-b pb-1 font-medium transition-colors"
         >
-          <Link
-            href={ROUTES.articles}
-            className="inline-flex items-center gap-3 text-lg font-medium text-foreground hover:text-accent-gold transition-colors group border-b border-foreground/20 hover:border-accent-gold pb-1"
-          >
-            <span className="tracking-wider uppercase">Explore All Articles</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-          </Link>
-        </motion.div>
-      </div>
+          <Typography variant="navLink" as="span">
+            Explore All Articles
+          </Typography>
+          <ArrowRight
+            className="h-5 w-5 transition-transform group-hover:translate-x-2"
+            aria-hidden
+          />
+        </Link>
+      </motion.div>
     </section>
   );
 };
