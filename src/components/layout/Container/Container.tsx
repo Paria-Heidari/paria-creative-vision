@@ -7,7 +7,6 @@ const maxWidthMap = {
   lg: 'max-w-screen-lg',
   xl: 'max-w-screen-xl',
   '2xl': 'max-w-screen-2xl',
-  prose: 'max-w-prose',
   full: 'max-w-none',
 } as const
 
@@ -17,6 +16,7 @@ interface ContainerProps {
   children: ReactNode
   maxWidth?: MaxWidthPreset | (string & {})
   noPadding?: boolean
+  paddingMdOnly?: boolean
   className?: string
 }
 
@@ -29,14 +29,21 @@ export default function Container({
   children,
   maxWidth = 'xl',
   noPadding = false,
+  paddingMdOnly = false,
   className,
 }: ContainerProps) {
+  const horizontalPadding = !noPadding
+    ? 'px-4 sm:px-6 lg:px-8'
+    : paddingMdOnly
+      ? 'px-4 md:px-0'
+      : undefined
+
   return (
     <div
       className={cn(
         'mx-auto',
         resolveMaxWidthClass(maxWidth),
-        !noPadding && 'px-4 sm:px-6 lg:px-8',
+        horizontalPadding,
         className,
       )}
     >

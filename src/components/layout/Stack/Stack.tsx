@@ -1,19 +1,9 @@
 import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils/utils'
-
-const gapMap = {
-  0:  'gap-0',
-  1:  'gap-1',
-  2:  'gap-2',
-  3:  'gap-3',
-  4:  'gap-4',
-  6:  'gap-6',
-  8:  'gap-8',
-  10: 'gap-10',
-  12: 'gap-12',
-  16: 'gap-16',
-  20: 'gap-20',
-} as const
+import {
+  stackGapClassName,
+  type StackGap,
+} from './stackGap'
 
 const directionMap = {
   vertical:   'flex-col',
@@ -41,18 +31,28 @@ const itemsMap = {
   stretch: 'items-stretch',
 } as const
 
-type GapPreset     = keyof typeof gapMap
-type AlignPreset   = keyof typeof alignMap
+const textCenterMap = {
+  center: 'text-center',
+  left: 'text-left',
+  right: 'text-right',
+} as const
+
+type AlignPreset = keyof typeof alignMap
 type JustifyPreset = keyof typeof justifyMap
 type ItemsPreset = keyof typeof itemsMap
+type TextCenterPreset = keyof typeof textCenterMap
+
+export type { GapPreset, GapBreakpoints, ResponsiveGap, StackGap } from './stackGap'
 
 interface StackProps {
   children: ReactNode
   direction?: keyof typeof directionMap
-  gap?: GapPreset
+  /** Uniform gap, or mobile-first `{ base, sm, md, lg, xl }` using the same scale */
+  gap?: StackGap
   align?: AlignPreset
   items?: ItemsPreset
   justify?: JustifyPreset
+  textCenter?: TextCenterPreset
   className?: string
 }
 
@@ -61,7 +61,9 @@ export default function Stack({
   direction = 'vertical',
   gap = 4,
   align,
+  items,
   justify,
+  textCenter,
   className,
 }: StackProps) {
   return (
@@ -69,9 +71,11 @@ export default function Stack({
       className={cn(
         'flex',
         directionMap[direction],
-        gapMap[gap],
+        stackGapClassName(gap),
         align && alignMap[align],
+        items && itemsMap[items],
         justify && justifyMap[justify],
+        textCenter && textCenterMap[textCenter],
         className,
       )}
     >
