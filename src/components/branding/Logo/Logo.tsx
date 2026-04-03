@@ -3,7 +3,7 @@ interface LogoProps {
   compact?: boolean;
 }
 
-export default function Logo({ className = "", compact = false }: LogoProps) {
+export default function Logo({ className = '', compact = false }: LogoProps) {
   return (
     <svg
       viewBox="0 0 264 72"
@@ -35,7 +35,6 @@ export default function Logo({ className = "", compact = false }: LogoProps) {
           />
           <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.42" />
         </filter>
-
       </defs>
 
       {/* Geometric-organic monogram: aperture + structured P */}
@@ -111,7 +110,7 @@ export default function Logo({ className = "", compact = false }: LogoProps) {
             y="56"
             fontFamily="'Inter', sans-serif"
             fontWeight="400"
-            fontSize="9.8"
+            fontSize="10"
             letterSpacing="2.9"
             fill="#68615A"
           >

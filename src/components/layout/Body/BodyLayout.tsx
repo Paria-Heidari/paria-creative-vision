@@ -1,5 +1,6 @@
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
+import { Footer } from '@/components/layout/Footer';
+import { Header } from '@/components/layout/Header';
+import { Stack } from '../Stack';
 
 export default function BodyLayout({
   children,
@@ -7,12 +8,10 @@ export default function BodyLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col min-h-screen">
+    <Stack direction="vertical" className="min-h-screen">
       <Header />
-      <main className="flex-grow pt-16">
-        <div className="mx-auto w-full">{children}</div>
-      </main>
+      <main className="flex-grow">{children}</main>
       <Footer />
-    </div>
+    </Stack>
   );
 }

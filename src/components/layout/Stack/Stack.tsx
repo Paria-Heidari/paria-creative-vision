@@ -34,15 +34,24 @@ const justifyMap = {
   between: 'justify-between',
 } as const
 
+const itemsMap = {
+  start:   'items-start',
+  center:  'items-center',
+  end:     'items-end',
+  stretch: 'items-stretch',
+} as const
+
 type GapPreset     = keyof typeof gapMap
 type AlignPreset   = keyof typeof alignMap
 type JustifyPreset = keyof typeof justifyMap
+type ItemsPreset = keyof typeof itemsMap
 
 interface StackProps {
   children: ReactNode
   direction?: keyof typeof directionMap
   gap?: GapPreset
   align?: AlignPreset
+  items?: ItemsPreset
   justify?: JustifyPreset
   className?: string
 }

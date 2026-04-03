@@ -4,7 +4,7 @@ interface MailIconProps {
   className?: string;
 }
 
-export default function MailIcon({ className = 'w-6 h-6' }: MailIconProps) {
+export default function MailIcon({ className = 'size-5' }: MailIconProps) {
   return (
     <svg
       className={className}

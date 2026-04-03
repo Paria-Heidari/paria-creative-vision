@@ -1,116 +1,95 @@
-import Link from "next/link";
-import { navigation } from "@/data/data";
-import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon } from "@/components/ui/icons";
+import Link from 'next/link';
+import { Container } from '../Container';
+import { Grid, GridItem } from '../Grid';
+import { Stack } from '../Stack';
+import { Typography } from '@/components/ui/Typography';
+import { MailIcon } from '@/components/ui/icons';
+import { SocialIcons } from './SocialIcons';
+import { footerInfo, navigation } from '@/data/data';
 
-// Navigation Links Component
-const NavLinks = ({ className = "" }: { className?: string }) => (
-  <ul className={className}>
-    {navigation.map((item, index) => (
-      <li key={index}>
-        <Link
-          href={item.href}
-          className="text-foreground-muted hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider text-base font-medium"
-        >
-          {item.name}
+const NavLinks = () => (
+  <ul className="flex flex-col gap-3 mt-4">
+    {navigation.map((item) => (
+      <li key={item.href}>
+        <Link href={item.href}>
+          <Typography
+            variant="navLink"
+            as="span"
+            className="text-foreground-muted hover:text-accent-gold transition-colors duration-300"
+          >
+            {item.name}
+          </Typography>
         </Link>
       </li>
     ))}
   </ul>
 );
 
-// Social Icons Component
-const SocialIcons = () => (
-  <div className="flex items-center gap-4">
-    <Link
-      href="https://www.instagram.com/oceanus.photography/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground-muted hover:bg-accent-gold hover:text-white transition-all duration-300"
-      aria-label="Instagram"
-    >
-      <InstagramIcon className="w-5 h-5" />
-    </Link>
-    <Link
-      href="https://github.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground-muted hover:bg-accent-gold hover:text-white transition-all duration-300"
-      aria-label="GitHub"
-    >
-      <GitHubIcon className="w-5 h-5" />
-    </Link>
-    <Link
-      href="https://linkedin.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground-muted hover:bg-accent-gold hover:text-white transition-all duration-300"
-      aria-label="LinkedIn"
-    >
-      <LinkedInIcon className="w-5 h-5" />
-    </Link>
-  </div>
-);
-
 export default function Footer() {
   return (
-    <footer className="mt-auto bg-surface-alt">
-      {/* Top Section */}
-      <div className="border-t border-foreground/10">
-        <div className="px-6 sm:px-8 py-12 lg:py-16 mx-auto max-w-screen-xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-            {/* Brand Section */}
-            <div className="lg:col-span-2">
-              <h3 className="text-2xl font-syne font-bold text-foreground mb-4">
-                Paria Creative Vision
-              </h3>
-              <p className="text-foreground-muted leading-relaxed mb-6 max-w-md">
-                Where code inspires creativity and photography captures emotion.
-                Merging the digital and visual worlds to create stories that reflect
-                both structure and soul.
-              </p>
+    <footer className="bg-surface-alt border-t border-foreground/10">
+      {/* Main Section */}
+      <Container maxWidth="xl" className="py-8 lg:py-12">
+        <Grid cols="footer" gap={8}>
+          {/* Brand */}
+          <GridItem className="md:col-span-2">
+            <Stack direction="vertical" gap={4} className="max-w-md">
+              <Typography variant="h5" as="h3" className="font-syne">
+                {footerInfo.title}
+              </Typography>
+              <Typography variant="paragraphSmall" as="p" className="text-foreground-muted">
+                {footerInfo.content}
+              </Typography>
               <SocialIcons />
-            </div>
+            </Stack>
+          </GridItem>
 
-            {/* Navigation */}
-            <div>
-              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
-                Navigation
-              </h4>
-              <NavLinks className="flex flex-col gap-3" />
-            </div>
+          {/* Navigation */}
+          <GridItem>
+            <Typography variant="caption" as="h4" className="font-semibold text-foreground tracking-widest uppercase">
+              {footerInfo.navigationTitle}
+            </Typography>
+            <NavLinks />
+          </GridItem>
 
-            {/* Contact */}
-            <div>
-              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
-                Get in Touch
-              </h4>
+          {/* Contact */}
+          <GridItem>
+            <Typography variant="caption" as="h4" className="font-semibold text-foreground tracking-widest uppercase">
+              {footerInfo.contactTitle}
+            </Typography>
+            <Stack direction="vertical" gap={3} className="mt-4">
               <Link
-                href="mailto:paria.heidari.ph@gmail.com"
+                href={`mailto:${footerInfo.contactEmail}`}
                 className="inline-flex items-center gap-2 text-foreground-muted hover:text-accent-gold transition-colors duration-300"
+                aria-label={`Email ${footerInfo.contactName}`}
               >
-                <MailIcon className="w-5 h-5" />
-                <span className="text-base">Paria</span>
+                <MailIcon aria-hidden="true" />
+                <Typography variant="caption" as="span">
+                  {footerInfo.contactName}
+                </Typography>
               </Link>
-              <p className="mt-4 text-sm text-foreground-muted">
-                Available for collaborations.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+              <Typography variant="caption" as="p" className="text-foreground-subtle">
+                {footerInfo.contactMessage}
+              </Typography>
+            </Stack>
+          </GridItem>
 
-      {/* Bottom Section */}
+        </Grid>
+      </Container>
+
+      {/* Bottom Bar */}
       <div className="border-t border-foreground/10">
-        <div className="px-6 sm:px-8 py-6 mx-auto max-w-screen-xl">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-foreground-subtle">
-              © {new Date().getFullYear()} Paria Photography. All Rights Reserved.
-            </p>
-            <p className="text-sm text-foreground-subtle">
-              Crafted with passion in <span className="text-accent-gold">Europe</span>
-            </p>
+        <Container maxWidth="xl" className="py-6">
+          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+            <Typography variant="caption" as="p" className="text-foreground-subtle">
+              {footerInfo.copyright}
+            </Typography>
+            <Typography variant="caption" as="p" className="text-foreground-subtle">
+              {footerInfo.craftedWith}
+              <span className="text-accent-gold ml-1">{footerInfo.location}</span>
+            </Typography>
           </div>
-        </div>
+        </Container>
       </div>
     </footer>
   );

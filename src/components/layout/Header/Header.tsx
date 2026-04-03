@@ -1,191 +1,181 @@
-"use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { navigation } from "@/data/data";
-import { Logo } from "@/components/branding/Logo";
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
+import { navigation } from '@/data/data';
+import { Logo } from '@/components/branding/Logo';
+import { Stack } from '@/components/layout/Stack';
+import { cn } from '@/lib/utils/utils';
+import { Typography } from '@/components/ui/Typography';
+import { useHeaderScroll } from '@/hooks/useHeaderScroll';
 
 export default function Header() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const { isVisible, isHidden, isScrolled } = useHeaderScroll();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const currentYear = new Date().getFullYear();
 
-  // Initial visibility animation
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 200);
-    return () => clearTimeout(timer);
-  }, []);
+  const isActive = (href: string) =>
+    pathname === href || (href !== '/' && pathname.startsWith(href));
 
-  // Scroll detection - hide header when scrolling down, show when scrolling up
-  useEffect(() => {
-    let lastY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-
-      // Hide when scrolling down, show when scrolling up
-      if (currentY > lastY && currentY > 0) {
-        setIsHeaderHidden(true);
-      } else if (currentY < lastY) {
-        setIsHeaderHidden(false);
-      }
-
-      setIsScrolled(currentY > 50);
-      lastY = currentY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset';
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     };
   }, [isMobileMenuOpen]);
 
   return (
     <>
       <header
-        className={`w-full fixed top-0 left-0 bg-surface-alt z-50 transition-all duration-300 ease-out
-         ${isScrolled ? "h-14 shadow-medium" : "h-16 shadow-soft"}
-         ${!isVisible ? "opacity-0 -translate-y-3" : isHeaderHidden ? "-translate-y-full" : "translate-y-0"}`}
+        className={cn(
+          'bg-surface-alt fixed top-0 left-0 z-50 w-full transition-all duration-300 ease-out',
+          isScrolled ? 'h-14 shadow-md' : 'h-16 shadow-sm',
+          !isVisible
+            ? '-translate-y-3 opacity-0'
+            : isHidden
+              ? '-translate-y-full'
+              : 'translate-y-0',
+        )}
       >
-        <div className="max-w-screen-xl flex items-center justify-between mx-auto px-4 sm:px-6 h-full">
-          {/* Logo */}
-          <Link href="/" className="flex-shrink-0 transition-transform duration-200">
-            <Logo className="h-auto transition-all duration-300 w-36 sm:w-44 md:w-52" />
+        <div className="mx-auto flex h-full max-w-screen-xl items-center justify-between px-4 sm:px-6">
+          <Link
+            href="/"
+            className="flex-shrink-0 transition-transform duration-200"
+          >
+            <Logo className="h-auto w-36 transition-all duration-300 sm:w-44 md:w-52" />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center">
-            <ul className="flex flex-row gap-6 lg:gap-8">
-              {navigation.map((item, index) => {
-                const isActive = pathname === item.href ||
-                  (item.href !== '/' && pathname.startsWith(item.href));
-
-                return (
-                  <li key={index}>
-                    <Link
-                      href={item.href}
-                      className="relative group"
-                    >
-                      <span
-                        className={`tracking-wider text-base lg:text-lg transition-colors duration-300 uppercase font-medium ${
-                          isActive
-                            ? "text-accent-gold"
-                            : "text-foreground/70 group-hover:text-foreground"
-                        }`}
+          <nav className="hidden items-center md:flex">
+            <Stack direction="horizontal" gap={6} className="lg:gap-8">
+              <ul className="contents">
+                {navigation.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="group relative">
+                      <Typography
+                        variant="navLink"
+                        as="span"
+                        className={cn(
+                          isActive(item.href)
+                            ? 'text-accent-gold'
+                            : 'text-foreground/70 group-hover:text-foreground',
+                        )}
                       >
                         {item.name}
-                      </span>
-                      {/* Animated Underline */}
+                      </Typography>
                       <span
-                        className={`absolute -bottom-1 left-0 h-0.5 bg-accent-gold transition-all duration-200 ease-out ${
-                          isActive ? "w-full" : "w-0 group-hover:w-full"
-                        }`}
+                        className={cn(
+                          'bg-accent-gold absolute -bottom-1 left-0 h-0.5 transition-all duration-200 ease-out',
+                          isActive(item.href)
+                            ? 'w-full'
+                            : 'w-0 group-hover:w-full',
+                        )}
                       />
                     </Link>
                   </li>
-                );
-              })}
-            </ul>
+                ))}
+              </ul>
+            </Stack>
           </nav>
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none focus:ring-2 focus:ring-accent-gold/30 rounded-md"
-            aria-label="Toggle menu"
+            className="focus:ring-accent-gold/30 relative flex h-10 w-10 items-center justify-center rounded-md focus:ring-2 focus:outline-none md:hidden"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
           >
-            <span
-              className={`block w-6 h-0.5 bg-foreground transition-all duration-300 ${
-                isMobileMenuOpen
-                  ? "rotate-45 translate-y-1.5"
-                  : "rotate-0 translate-y-0"
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-foreground my-1.5 transition-all duration-300 ${
-                isMobileMenuOpen ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-foreground transition-all duration-300 ${
-                isMobileMenuOpen
-                  ? "-rotate-45 -translate-y-1.5"
-                  : "rotate-0 translate-y-0"
-              }`}
-            />
+            <span className="relative flex h-6 w-6 items-center justify-center" aria-hidden>
+              <Menu
+                className={cn(
+                  'text-foreground absolute size-6 transition-opacity duration-300',
+                  isMobileMenuOpen
+                    ? 'pointer-events-none opacity-0'
+                    : 'opacity-100',
+                )}
+                strokeWidth={2}
+              />
+              <X
+                className={cn(
+                  'text-foreground absolute size-6 transition-opacity duration-300',
+                  isMobileMenuOpen
+                    ? 'opacity-100'
+                    : 'pointer-events-none opacity-0',
+                )}
+                strokeWidth={2}
+              />
+            </span>
           </button>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Overlay */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300 ${
+        className={cn(
+          'fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden',
           isMobileMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
+            ? 'pointer-events-auto opacity-100'
+            : 'pointer-events-none opacity-0',
+        )}
         onClick={() => setIsMobileMenuOpen(false)}
         aria-hidden="true"
       />
 
       {/* Mobile Menu */}
       <nav
-        className={`fixed top-14 right-0 bottom-0 w-72 bg-surface-alt shadow-2xl z-40 md:hidden transform transition-transform duration-300 ease-out ${
-          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={cn(
+          'bg-surface-alt fixed top-14 right-0 bottom-0 z-40 w-72 transform shadow-2xl transition-transform duration-300 ease-out md:hidden',
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full',
+        )}
       >
         <ul className="flex flex-col gap-2 p-6 pt-8">
-          {navigation.map((item, index) => {
-            const isActive = pathname === item.href ||
-              (item.href !== '/' && pathname.startsWith(item.href));
-
-            return (
-              <li key={index}>
-                <Link
-                  href={item.href}
-                  className={`block py-3 px-4 rounded-lg tracking-wider text-base transition-all duration-200 uppercase font-medium ${
-                    isActive
-                      ? "bg-accent-gold/15 text-accent-gold border-l-4 border-accent-gold"
-                      : "text-foreground/70 hover:bg-foreground/5 hover:text-foreground hover:translate-x-1"
-                  }`}
+          {navigation.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className={cn(
+                  'block rounded-lg px-4 py-3 transition-all duration-200',
+                  isActive(item.href)
+                    ? 'bg-accent-gold/15 border-accent-gold border-l-5'
+                    : 'hover:bg-foreground/5 hover:translate-x-1',
+                )}
+              >
+                <Typography
+                  variant="navLink"
+                  as="span"
+                  className={cn(
+                    isActive(item.href)
+                      ? 'text-accent-gold'
+                      : 'text-foreground/70 group-hover:text-foreground',
+                  )}
                 >
                   {item.name}
-                </Link>
-              </li>
-            );
-          })}
+                </Typography>
+              </Link>
+            </li>
+          ))}
         </ul>
 
-        {/* Mobile Menu Footer */}
-        <div className="absolute bottom-8 left-0 right-0 px-6">
-          <div className="border-t border-foreground/10 pt-6">
-            <p className="text-sm text-foreground-muted text-center tracking-wide">
-              © 2025 Paria Creative Vision
-            </p>
+        <div className="absolute right-0 bottom-8 left-0 px-6">
+          <div className="border-foreground/10 border-t pt-6">
+            <Typography
+              variant="caption"
+              as="p"
+              className="text-center tracking-wide"
+            >
+              © {currentYear} Paria Creative Vision
+            </Typography>
           </div>
         </div>
       </nav>
     </>
   );
 }
-
-
-

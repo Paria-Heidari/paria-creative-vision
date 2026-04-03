@@ -14,17 +14,27 @@ const gapClassMap = {
     9: 'gap-9',
 } as const
 
+const colsClassMap = {
+    '1': 'grid-cols-1',
+    '12': 'grid-cols-12',
+    footer: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+} as const
+
 type GapPreset = keyof typeof gapClassMap
+type ColsPreset = keyof typeof colsClassMap
 
 interface GridProps {
     children: ReactNode
     gap: GapPreset
+    cols?: ColsPreset
     className?: string
 }
 
-export default function Grid({ children, gap, className }: GridProps) {
+export default function Grid({ children, gap, cols, className }: GridProps) {
   return (
-    <div className={cn('grid', gapClassMap[gap], className)}>
+    <div
+      className={cn('grid', gapClassMap[gap], cols && colsClassMap[cols], className)}
+    >
         {children}
     </div>
   )
