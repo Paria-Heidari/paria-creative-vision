@@ -14,7 +14,12 @@ const ArticlePageHero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Stack direction="vertical" gap={4} align="center" className="text-center mb-12">
+              <Stack
+                direction="vertical"
+                gap={{ base: 4, md: 6 }}
+                align="center"
+                className="mb-12 text-center"
+              >
                 <div className="w-12 h-1 bg-accent-gold rounded-full" />
                 <Typography variant="h1" as="h1" className="font-syne">
                   Articles

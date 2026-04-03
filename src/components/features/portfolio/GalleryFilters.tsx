@@ -1,5 +1,6 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Typography } from '@/components/ui/Typography';
 import { Category } from '@/types/photo.types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
@@ -63,6 +64,7 @@ const GalleryFilters = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => handleCategoryClick("all")}
+          aria-pressed={selectedCategory === "all"}
           className={`
             px-6 py-2.5 rounded-full text-sm font-medium tracking-wide uppercase transition-all duration-300
             ${selectedCategory === "all"
@@ -84,6 +86,7 @@ const GalleryFilters = ({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => handleCategoryClick(category.slug)}
+              aria-pressed={isSelected}
               className={`
                 px-6 py-2.5 rounded-full text-sm font-medium tracking-wide uppercase transition-all duration-300 flex items-center gap-2
                 ${isSelected
@@ -123,6 +126,7 @@ const GalleryFilters = ({
                     onClick={() =>
                       handleSubcategoryClick(selectedCategory, subcategory.slug)
                     }
+                    aria-pressed={isSelected}
                     className={`
                       px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-300 flex items-center gap-1.5
                       ${isSelected
@@ -148,7 +152,7 @@ const GalleryFilters = ({
                   onClick={() => handleCategoryClick(selectedCategory)}
                   className="px-3 py-1.5 rounded-full text-xs font-medium bg-foreground/10 text-foreground-muted hover:bg-foreground/20 transition-all duration-300 flex items-center gap-1"
                 >
-                  <X className="w-3 h-3" />
+                  <X className="w-3 h-3" aria-hidden="true" />
                   <span>Clear</span>
                 </motion.button>
               )}
@@ -167,17 +171,17 @@ const GalleryFilters = ({
             transition={{ duration: 0.3 }}
             className="mt-6 text-center"
           >
-            <p className="text-sm font-inter text-foreground-muted max-w-md mx-auto">
+            <Typography variant="paragraphSmall" as="p" className="text-foreground-muted max-w-md mx-auto">
               {selectedCategoryData.description ||
                 `Exploring the ${selectedCategoryData.name} collection`}
               {selectedSubcategory && (
                 <span className="text-accent-gold">
-                  {" "}— {selectedCategoryData.subcategories?.find(
+                  {' '}— {selectedCategoryData.subcategories?.find(
                     (s) => s.slug === selectedSubcategory
                   )?.name}
                 </span>
               )}
-            </p>
+            </Typography>
           </motion.div>
         )}
       </AnimatePresence>

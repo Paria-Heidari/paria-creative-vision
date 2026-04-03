@@ -4,8 +4,8 @@ import Image from "next/image";
 import { Photo } from "@/types/photo.types";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import LocationPinIcon from "@/components/ui/icons/LocationPinIcon";
-import { Star } from "lucide-react";
+import { Star, MapPin } from "lucide-react";
+import { Typography } from "@/components/ui/Typography";
 
 interface GalleryItemProps {
   photo: Photo;
@@ -85,23 +85,23 @@ const GalleryItem = ({
 
         {/* Hover Overlay */}
         <div
-          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-5"
+          className="absolute inset-0 bg-gradient-to-t to-transparent flex flex-col justify-end p-5"
         >
           <div
           >
-            <h3 className="text-xl font-syne text-white font-semibold mb-2 tracking-wide">
+            <Typography variant="h5" as="h3" className="text-white mb-2 tracking-wide">
               {photo.title}
-            </h3>
+            </Typography>
             {photo.location_city && (
-              <p className="text-sm font-inter text-white/80 flex items-center gap-2 mb-2">
-                <LocationPinIcon className="w-4 h-4 text-accent-gold" />
+              <Typography variant="caption" as="p" className="text-white/80 flex items-center gap-2 mb-2">
+                <MapPin className="w-4 h-4 text-accent-gold" />
                 {photo.location_city}, {photo.location_country}
-              </p>
+              </Typography>
             )}
             {photo.description && (
-              <p className="text-sm font-inter text-white/70 line-clamp-2 leading-relaxed">
+              <Typography variant="caption" as="p" className="text-white/70 line-clamp-2">
                 {photo.description}
-              </p>
+              </Typography>
             )}
           </div>
         </div>

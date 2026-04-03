@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
-import { homePageHeroInfo } from '@/data/data';
+import { homePageHeroInfo } from '@/data/staticData';
 
 const Hero = () => {
   const scrollToContent = useCallback(() => {
@@ -19,7 +19,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative flex h-[90vh] items-end overflow-hidden">
+    <section className="relative flex h-[90vh] items-end overflow-hidden mb-16">
       <video
         autoPlay
         muted
@@ -36,16 +36,20 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 w-full px-6 pb-24 sm:px-12 sm:pb-32 lg:px-20">
-        <Stack direction="vertical" gap={6} className="max-w-3xl animate-fade-up motion-reduce:animate-none">
-          <Typography variant="caption" as="span" className="text-accent-gold tracking-[0.3em] uppercase">
+        <Stack
+          direction="vertical"
+          gap={{ base: 6, md: 8 }}
+          className="max-w-3xl animate-fade-up motion-reduce:animate-none"
+        >
+          <Typography variant="caption" as="span" className="text-accent-gold font-semibold tracking-[0.3em] uppercase">
             {homePageHeroInfo.subTitle}
           </Typography>
-          <Typography variant="h1" as="h1" className="text-white tracking-wide">
+          <Typography variant="h2" as="h1" className="text-white tracking-wide">
             {homePageHeroInfo.heading}
             <br />
-            <span className="text-accent-gold-light">Through Code & Lens</span>
+            <span className="text-accent-gold-light">{homePageHeroInfo.heading2}</span>
           </Typography>
-          <Typography variant="paragraph" as="p" className="text-white/90 tracking-wide">
+          <Typography variant="paragraph" as="p" className="text-white/90 tracking-[0.1em] ">
             {homePageHeroInfo.subHeading}
           </Typography>
         </Stack>
