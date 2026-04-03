@@ -1,36 +1,51 @@
-import { Typography } from "../Typography";
+import { Stack } from '@/components/layout/Stack';
+import { Typography } from '../Typography';
+import { cn } from '@/lib/utils/utils';
 
 interface TextBlockProps {
   title?: string;
   content: string;
+  description?: string;
   className?: string;
 }
 
-const TextBlock = ({ title, content, className }: TextBlockProps) => {
+const TextBlock = ({
+  title,
+  content,
+  description,
+  className,
+}: TextBlockProps) => {
   return (
-    <section className={`w-full py-16 px-6 ${className ?? ''}`}>
-      <div className="max-w-2xl mx-auto flex flex-col items-center gap-6 text-center">
-        {title ? (
-          <div className="flex flex-col items-center gap-3">
-            <Typography
-              variant="h2"
-              as="h2"
-              className="text-foreground tracking-tight"
-            >
-              {title}
-            </Typography>
-            <span className="block w-12 h-0.5 bg-accent-gold rounded-full" />
-          </div>
-        ) : null}
+    <Stack
+      direction="vertical"
+      gap={{ base: 4, md: 6 }}
+      textCenter="center" 
+      className={cn('mx-auto max-w-4xl', className)}
+    >
+      <Typography
+        variant="h2"
+        as="h2"
+        className="text-foreground tracking-tight"
+      >
+        {title}
+      </Typography>
+      <Typography
+        variant="lead"
+        as="p"
+        className="text-foreground-muted leading-relaxed"
+      >
+        {content}
+      </Typography>
+      {description ? (
         <Typography
-          variant="paragraph"
+          variant="leadSmall"
           as="p"
-          className="text-foreground-muted leading-relaxed max-w-prose"
+          className="text-foreground-subtle leading-relaxed"
         >
-          {content}
+          {description}
         </Typography>
-      </div>
-    </section>
+      ) : null}
+    </Stack>
   );
 };
 
