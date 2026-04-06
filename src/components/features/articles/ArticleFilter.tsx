@@ -49,7 +49,7 @@ const ArticleFilter = ({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="mb-20 flex flex-wrap justify-center gap-3"
+          className="mb-20 grid w-full max-w-2xl grid-cols-1 gap-3 sm:mx-auto sm:grid-cols-3"
         >
           {categories.map((category) => {
             const Icon = category.icon;
@@ -62,12 +62,12 @@ const ArticleFilter = ({
                 size="sm"
                 btnText={category.label}
                 btnTextVariant="paragraphSmall"
-                startIcon={<Icon className="h-4 w-4" />}
+                startIcon={<Icon className="h-4 w-4 shrink-0" />}
                 onClick={() => setActiveCategory(category.id)}
                 className={
                   !isActive
-                    ? 'border-foreground/10 hover:border-accent-gold hover:text-accent-gold bg-white/80 hover:bg-white/90'
-                    : ''
+                    ? 'w-full border-foreground/10 bg-white/80 hover:border-accent-gold hover:bg-white/90 hover:text-accent-gold'
+                    : 'w-full'
                 }
               >
                 {category.label}
