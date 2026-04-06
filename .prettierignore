@@ -20,3 +20,8 @@ next-env.d.ts
 
 # Tooling output
 coverage
+
+# Documentation
+docs
+
+CLAUDE.md
