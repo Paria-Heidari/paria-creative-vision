@@ -86,16 +86,20 @@
   --pri-radius-xl: 1rem;
   --pri-radius-full: 9999px;
   /* border */
-  --pri-border-sm: 1px solid var(--pri-stone-300);
-  --pri-border-md: 2px solid var(--pri-stone-300);
-  --pri-border-lg: 3px solid var(--pri-stone-300);
-  --pri-border-xl: 4px solid var(--pri-stone-300);
+  --pri-border-sm: 1px solid var(--pri-stone-200);
+  --pri-border-md: 2px solid var(--pri-stone-200);
+  --pri-border-lg: 3px solid var(--pri-stone-200);
+  --pri-border-xl: 4px solid var(--pri-stone-200);
   --pri-border-none: 0;
+
   /* box-shadow */
   --pri-box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --pri-box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --pri-box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --pri-box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --pri-box-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --pri-box-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --pri-box-shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
   --pri-box-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --pri-box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   --pri-box-shadow-outline: 0 0 0 3px rgba(59, 130, 246, 0.5);
@@ -131,21 +135,28 @@
   --semi-foreground: var(--pri-stone-800);
   --semi-foreground-muted: var(--pri-stone-600);
   --semi-foreground-subtle: var(--pri-stone-500);
+
   --semi-surface: var(--pri-white);
   --semi-surface-muted: var(--pri-stone-50);
   --semi-surface-strong: var(--pri-stone-200);
-  --semi-border: var(--pri-stone-300);
+
   --semi-accent: var(--pri-gold-200);
   --semi-accent-hover: var(--pri-gold-300);
   --semi-accent-gold: var(--pri-gold-400);
   --semi-accent-gold-hover: var(--pri-gold-500);
   --semi-accent-gold-light: var(--pri-gold-100);
+
   --semi-surface-alt: var(--pri-surface-alt);
   --semi-surface-raised: var(--pri-surface-raised);
   --semi-success: var(--pri-success-500);
   --semi-warning: var(--pri-warning-500);
   --semi-danger: var(--pri-danger-500);
   --semi-info: var(--pri-info-500);
+
+  --semi-border: var(--pri-stone-200);
+  --semi-border-muted: var(--pri-stone-100);
+  --semi-border-subtle: var(--pri-stone-50);
+
   --semi-box-shadow-sm: var(--pri-box-shadow-sm);
   --semi-box-shadow-md: var(--pri-box-shadow-md);
   --semi-box-shadow-lg: var(--pri-box-shadow-lg);
@@ -154,6 +165,7 @@
   --semi-box-shadow-inner: var(--pri-box-shadow-inner);
   --semi-box-shadow-outline: var(--pri-box-shadow-outline);
   --semi-box-shadow-none: var(--pri-box-shadow-none);
+
   --semi-transition-base: var(--pri-transition-base);
   --semi-transition-duration: var(--pri-transition-duration);
   --semi-transition-timing-function: var(--pri-transition-timing-function);
@@ -169,7 +181,6 @@
   --semi-font-family-inter: var(--pri-font-sans);
   --semi-font-family-syne: var(--pri-font-display);
   --semi-font-family-grotesk: var(--pri-font-grotesk);
-
 }
 
 @theme inline {
@@ -196,6 +207,8 @@
   --color-info: var(--semi-info);
 
   --color-border: var(--semi-border);
+  --color-border-muted: var(--semi-border-muted);
+  --color-border-subtle: var(--semi-border-subtle);
 
   --font-family-inter: var(--semi-font-family-inter);
   --font-family-syne: var(--semi-font-family-syne);
@@ -222,8 +235,4 @@
   --animate-fade-up: var(--semi-animate-fade-up);
   --animate-scale-in: var(--semi-animate-scale-in);
   --animate-underline-slide: var(--semi-animate-underline-slide);
-
-
-
-
 }
