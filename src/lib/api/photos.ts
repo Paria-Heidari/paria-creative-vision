@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
-import type { QueryData } from "@supabase/supabase-js";
+import { createClient } from '@/lib/supabase/server';
+import type { QueryData } from '@supabase/supabase-js';
 
 const logPostgrestError = (
   context: string,
-  error: { message: string; details?: string; hint?: string; code?: string }
+  error: { message: string; details?: string; hint?: string; code?: string },
 ) => {
   console.error(context, {
     message: error.message,
@@ -11,22 +11,22 @@ const logPostgrestError = (
     hint: error.hint,
     code: error.code,
   });
-}
+};
 
 export async function getAllPhotos() {
   const supabase = await createClient();
 
   const query = supabase
-    .from("photos")
-    .select("*, subcategory:subcategories(*)")
-    .eq("published", true)
-    .order("display_order", { ascending: true });
+    .from('photos')
+    .select('*, subcategory:subcategories(*)')
+    .eq('published', true)
+    .order('display_order', { ascending: true });
 
   type PhotosType = QueryData<typeof query>;
   const { data, error } = await query;
-  
+
   if (error) {
-    logPostgrestError("Error fetching photos:", error);
+    logPostgrestError('Error fetching photos:', error);
     return [] as PhotosType;
   }
 
@@ -40,20 +40,20 @@ export async function getAllPhotos() {
  */
 export async function getFeaturedPhotos(limit = 3) {
   const supabase = await createClient();
-  
+
   const query = supabase
-    .from("photos")
-    .select("*")
-    .eq("featured", true)
-    .order("display_order", { ascending: true })
-    .order("created_at", { ascending: false })
+    .from('photos')
+    .select('*')
+    .eq('featured', true)
+    .order('display_order', { ascending: true })
+    .order('created_at', { ascending: false })
     .limit(limit);
 
   type FeaturedPhotosType = QueryData<typeof query>;
   const { data, error } = await query;
 
   if (error) {
-    logPostgrestError("Error fetching featured photos:", error);
+    logPostgrestError('Error fetching featured photos:', error);
     return [] as FeaturedPhotosType;
   }
   return (data ?? []) as FeaturedPhotosType;
@@ -67,24 +67,24 @@ export async function getPhotosByCategory(categorySlug: string) {
   const supabase = await createClient();
 
   const categoryQuery = supabase
-    .from("categories")
-    .select("id")
-    .eq("slug", categorySlug)
+    .from('categories')
+    .select('id')
+    .eq('slug', categorySlug)
     .maybeSingle();
 
   type CategoryType = QueryData<typeof categoryQuery>;
   const { data: category, error: categoryError } = await categoryQuery;
-  
+
   if (categoryError) {
-    logPostgrestError("Error resolving category by slug:", categoryError);
+    logPostgrestError('Error resolving category by slug:', categoryError);
     return [];
   }
   if (!category) return [];
 
   const subcategoriesQuery = supabase
-    .from("subcategories")
-    .select("id")
-    .eq("category_id", (category as CategoryType).id);
+    .from('subcategories')
+    .select('id')
+    .eq('category_id', (category as CategoryType).id);
 
   type SubcategoriesType = QueryData<typeof subcategoriesQuery>;
   const { data: subcategories, error: subcategoriesError } =
@@ -92,29 +92,29 @@ export async function getPhotosByCategory(categorySlug: string) {
 
   if (subcategoriesError) {
     logPostgrestError(
-      "Error fetching subcategories for category:",
-      subcategoriesError
+      'Error fetching subcategories for category:',
+      subcategoriesError,
     );
     return [];
   }
 
   const subcategoryIds = ((subcategories ?? []) as SubcategoriesType).map(
-    (row) => row.id
+    (row) => row.id,
   );
   if (subcategoryIds.length === 0) return [];
 
   const photosQuery = supabase
-    .from("photos")
-    .select("*, subcategory:subcategories(*)")
-    .eq("published", true)
-    .in("subcategory_id", subcategoryIds)
-    .order("display_order", { ascending: true });
+    .from('photos')
+    .select('*, subcategory:subcategories(*)')
+    .eq('published', true)
+    .in('subcategory_id', subcategoryIds)
+    .order('display_order', { ascending: true });
 
   type PhotosByCategoryType = QueryData<typeof photosQuery>;
   const { data, error } = await photosQuery;
 
   if (error) {
-    logPostgrestError("Error fetching photos by category:", error);
+    logPostgrestError('Error fetching photos by category:', error);
     return [] as PhotosByCategoryType;
   }
   return (data ?? []) as PhotosByCategoryType;
@@ -129,34 +129,31 @@ export async function getPhotosBySubcategory(subcategorySlug: string) {
   const supabase = await createClient();
 
   const subcategoryQuery = supabase
-    .from("subcategories")
-    .select("id")
-    .eq("slug", subcategorySlug)
+    .from('subcategories')
+    .select('id')
+    .eq('slug', subcategorySlug)
     .maybeSingle();
 
   const { data: subcategory, error: subcategoryError } = await subcategoryQuery;
   if (subcategoryError) {
-    logPostgrestError(
-      "Error resolving subcategory by slug:",
-      subcategoryError
-    );
+    logPostgrestError('Error resolving subcategory by slug:', subcategoryError);
     return [];
   }
 
   if (!subcategory) return [];
 
   const query = supabase
-    .from("photos")
-    .select("*, subcategory:subcategories(*)")
-    .eq("subcategory_id", subcategory.id)
-    .eq("published", true)
-    .order("display_order", { ascending: true });
+    .from('photos')
+    .select('*, subcategory:subcategories(*)')
+    .eq('subcategory_id', subcategory.id)
+    .eq('published', true)
+    .order('display_order', { ascending: true });
 
   type PhotosBySubcategoryType = QueryData<typeof query>;
 
   const { data, error } = await query;
   if (error) {
-    logPostgrestError("Error fetching photos by subcategory:", error);
+    logPostgrestError('Error fetching photos by subcategory:', error);
     return [] as PhotosBySubcategoryType;
   }
   return (data ?? []) as PhotosBySubcategoryType;
@@ -170,23 +167,26 @@ export async function getAllCategories() {
   const supabase = await createClient();
 
   const query = supabase
-    .from("categories")
-    .select("*, subcategories(*)")
-    .order("display_order", { ascending: true });
+    .from('categories')
+    .select('*, subcategories(*)')
+    .order('display_order', { ascending: true });
 
   type CategoriesType = QueryData<typeof query>;
 
   const { data, error } = await query;
   if (error) {
-    logPostgrestError("Error fetching categories:", error);
-      return [] as CategoriesType;
+    logPostgrestError('Error fetching categories:', error);
+    return [] as CategoriesType;
   }
 
-  const categoriesWithSortedSubcategories = ((data ?? []) as CategoriesType).map((category) => ({
+  const categoriesWithSortedSubcategories = (
+    (data ?? []) as CategoriesType
+  ).map((category) => ({
     ...category,
-    subcategories: category.subcategories?.sort(
-      (a, b) => a.display_order - b.display_order
-    ) || [],
+    subcategories:
+      category.subcategories?.sort(
+        (a, b) => a.display_order - b.display_order,
+      ) || [],
   }));
 
   return categoriesWithSortedSubcategories;

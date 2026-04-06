@@ -3,12 +3,18 @@
  */
 
 import type { MediumArticle, RSS2JSONResponse } from './types';
-import { extractImageFromContent, cleanDescription, calculateReadTime } from './utils';
+import {
+  extractImageFromContent,
+  cleanDescription,
+  calculateReadTime,
+} from './utils';
 
 /**
  * @param username - Medium username (without @)
  */
-export async function getMediumArticles(username: string): Promise<MediumArticle[]> {
+export async function getMediumArticles(
+  username: string,
+): Promise<MediumArticle[]> {
   try {
     const rssUrl = `https://medium.com/feed/@${username}`;
     const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;

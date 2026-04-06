@@ -1,0 +1,129 @@
+import Link from 'next/link';
+import { Container } from '../Container';
+import { Grid, GridItem } from '../Grid';
+import { Stack } from '@/components/layout/Stack';
+import { Typography } from '@/components/ui/Typography';
+import { Mail } from 'lucide-react';
+import { SocialIcons } from './SocialIcons';
+import { footerInfo, navigation } from '@/data/staticData';
+
+const NavLinks = () => (
+  <ul className="mt-4 flex flex-col gap-3">
+    {navigation.map((item) => (
+      <li key={item.href}>
+        <Link href={item.href}>
+          <Typography
+            variant="navLink"
+            as="span"
+            className="text-foreground-muted hover:text-accent-gold transition-colors duration-300"
+          >
+            {item.name}
+          </Typography>
+        </Link>
+      </li>
+    ))}
+  </ul>
+);
+
+export default function Footer() {
+  return (
+    <footer className="border-foreground/10 mt-16 border-t">
+      {/* Main Section */}
+      <Container maxWidth="xl" className="py-8 lg:py-12">
+        <Grid gap={8} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+          {/* Brand */}
+          <GridItem className="md:col-span-2">
+            <Stack
+              direction="vertical"
+              gap={{ base: 4, md: 6 }}
+              className="max-w-md"
+            >
+              <Typography variant="h5" as="h3" className="font-syne">
+                {footerInfo.title}
+              </Typography>
+              <Typography
+                variant="paragraphSmall"
+                as="p"
+                className="text-foreground-muted"
+              >
+                {footerInfo.content}
+              </Typography>
+              <SocialIcons />
+            </Stack>
+          </GridItem>
+
+          {/* Navigation */}
+          <GridItem>
+            <Typography
+              variant="caption"
+              as="h4"
+              className="text-foreground font-semibold tracking-widest uppercase"
+            >
+              {footerInfo.navigationTitle}
+            </Typography>
+            <NavLinks />
+          </GridItem>
+
+          {/* Contact */}
+          <GridItem>
+            <Typography
+              variant="caption"
+              as="h4"
+              className="text-foreground font-semibold tracking-widest uppercase"
+            >
+              {footerInfo.contactTitle}
+            </Typography>
+            <Stack
+              direction="vertical"
+              gap={{ base: 3, md: 4 }}
+              className="mt-4"
+            >
+              <Link
+                href={`mailto:${footerInfo.contactEmail}`}
+                className="text-foreground-muted hover:text-accent-gold inline-flex items-center gap-2 transition-colors duration-300"
+                aria-label={`Email ${footerInfo.contactName}`}
+              >
+                <Mail className="h-4 w-4" aria-hidden="true" />
+                <Typography variant="caption" as="span">
+                  {footerInfo.contactName}
+                </Typography>
+              </Link>
+              <Typography
+                variant="caption"
+                as="p"
+                className="text-foreground-subtle"
+              >
+                {footerInfo.contactMessage}
+              </Typography>
+            </Stack>
+          </GridItem>
+        </Grid>
+      </Container>
+
+      {/* Bottom Bar */}
+      <div className="border-foreground/10 border-t">
+        <Container maxWidth="xl" className="py-6">
+          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+            <Typography
+              variant="caption"
+              as="p"
+              className="text-foreground-subtle"
+            >
+              {footerInfo.copyright}
+            </Typography>
+            <Typography
+              variant="caption"
+              as="p"
+              className="text-foreground-subtle"
+            >
+              {footerInfo.craftedWith}
+              <span className="text-accent-gold ml-1">
+                {footerInfo.location}
+              </span>
+            </Typography>
+          </div>
+        </Container>
+      </div>
+    </footer>
+  );
+}

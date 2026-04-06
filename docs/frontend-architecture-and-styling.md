@@ -134,12 +134,12 @@ Use the generated class/variable on `html` or `body` (depending on your layout c
 
 In `tokens.css`:
 - `--pri-font-grotesk: var(--font-grotesk);`
-- `--sem-font-family-grotesk: var(--pri-font-grotesk);`
+- `--semi-font-family-grotesk: var(--pri-font-grotesk);`
 
 ### 5) Expose to Tailwind when needed
 
 Inside your Tailwind token mapping layer:
-- `--font-family-grotesk: var(--sem-font-family-grotesk);`
+- `--font-family-grotesk: var(--semi-font-family-grotesk);`
 
 Then use either:
 - Tailwind utility class like `font-grotesk`, or

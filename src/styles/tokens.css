@@ -1,181 +1,238 @@
 /* Primitive tokens: raw values */
 :root {
-    --pri-white: #ffffff;
-    --pri-black: #000000;
-    /* gray */
-    --pri-gray-50: #f5f5f5;
-    --pri-gray-100: #e5e5e5;
-    --pri-gray-200: #d4d4d4;
-    --pri-gray-300: #a3a3a3;
-    --pri-gray-400: #737373;
-    --pri-gray-500: #525252;
-    --pri-gray-600: #404040;
+  --pri-white: #ffffff;
+  --pri-black: #000000;
+  /* gray */
+  --pri-gray-50: #f5f5f5;
+  --pri-gray-100: #e5e5e5;
+  --pri-gray-200: #d4d4d4;
+  --pri-gray-300: #a3a3a3;
+  --pri-gray-400: #737373;
+  --pri-gray-500: #525252;
+  --pri-gray-600: #404040;
 
-    /* neutrals */
-    --pri-stone-50: #f7f3ee;
-    --pri-stone-100: #f0e9e0;
-    --pri-stone-200: #e2d5c6;
-    --pri-stone-300: #d8cbba;
-    --pri-stone-400: #b8a693;
-    --pri-stone-500: #8e7d6b;
-    --pri-stone-600: #6a5d50;
-    --pri-stone-700: #4d443b;
-    --pri-stone-800: #3d3630;
-    --pri-stone-900: #2a2521;
+  /* neutrals */
+  --pri-stone-50: #f7f3ee;
+  --pri-stone-100: #f0e9e0;
+  --pri-stone-200: #e2d5c6;
+  --pri-stone-300: #d8cbba;
+  --pri-stone-400: #b8a693;
+  --pri-stone-500: #8e7d6b;
+  --pri-stone-600: #6a5d50;
+  --pri-stone-700: #4d443b;
+  --pri-stone-800: #3d3630;
+  --pri-stone-900: #2a2521;
 
-    /* accents */
-    --pri-gold-100: #f4ebde;
-    --pri-gold-200: #e8dbc8;
-    --pri-gold-300: #d4b996;
-    --pri-gold-400: #c9a87c;
-    --pri-gold-500: #b8956a;
-    --pri-gold-600: #9a7a53;
+  /* accents */
+  --pri-gold-100: #f4ebde;
+  --pri-gold-200: #e8dbc8;
+  --pri-gold-300: #d4b996;
+  --pri-gold-400: #c9a87c;
+  --pri-gold-500: #b8956a;
+  --pri-gold-600: #9a7a53;
   --pri-surface-alt: #d8cbba;
   --pri-surface-raised: #e2d5c6;
 
-    /* feedback */
-    --pri-success-500: #2f7a4b;
-    --pri-warning-500: #a86d1d;
-    --pri-danger-500: #b13c3c;
-    --pri-info-500: #2d669f;
+  /* feedback */
+  --pri-success-500: #2f7a4b;
+  --pri-warning-500: #a86d1d;
+  --pri-danger-500: #b13c3c;
+  --pri-info-500: #2d669f;
 
-    /* typography */
-    --pri-font-sans: "Inter", sans-serif;
-    --pri-font-display: "Syne", sans-serif;
-    --pri-font-grotesk: var(--font-grotesk);
-    /* font-size */
-    --pri-font-size-xs: 0.75rem;
-    --pri-font-size-sm: 0.875rem;
-    --pri-font-size-base: 1rem;
-    --pri-font-size-lg: 1.125rem;
-    --pri-font-size-xl: 1.25rem;
-    --pri-font-size-2xl: 1.5rem;
-    --pri-font-size-3xl: 1.875rem;
-    --pri-font-size-4xl: 2.25rem;
-    --pri-font-size-5xl: 3rem;
-    --pri-font-size-6xl: 3.75rem;
-    /* font weights */
-    --pri-font-weight-light: 300;
-    --pri-font-weight-normal: 400;
-    --pri-font-weight-medium: 500;
-    --pri-font-weight-semibold: 600;
-    --pri-font-weight-bold: 700;
-    /* line heights */
-    --pri-line-height-tight: 1.25;
-    --pri-line-height-normal: 1.5;
-    --pri-line-height-relaxed: 1.75;
-    /* letter spacing */
-    --pri-letter-spacing-tight: -0.025em;
-    --pri-letter-spacing-normal: 0;
-    --pri-letter-spacing-wide: 0.025em;
-    --pri-letter-spacing-wider: 0.05em;
+  /* typography */
+  --pri-font-sans: var(--font-inter), sans-serif;
+  --pri-font-display: var(--font-syne), sans-serif;
+  --pri-font-grotesk: var(--font-grotesk);
+  /* font-size */
+  --pri-font-size-xs: 0.75rem;
+  --pri-font-size-sm: 0.875rem;
+  --pri-font-size-base: 1rem;
+  --pri-font-size-lg: 1.125rem;
+  --pri-font-size-xl: 1.25rem;
+  --pri-font-size-2xl: 1.5rem;
+  --pri-font-size-3xl: 1.875rem;
+  --pri-font-size-4xl: 2.25rem;
+  --pri-font-size-5xl: 3rem;
+  --pri-font-size-6xl: 3.75rem;
+  /* font weights */
+  --pri-font-weight-light: 300;
+  --pri-font-weight-normal: 400;
+  --pri-font-weight-medium: 500;
+  --pri-font-weight-semibold: 600;
+  --pri-font-weight-bold: 700;
+  /* line heights */
+  --pri-line-height-tight: 1.25;
+  --pri-line-height-normal: 1.5;
+  --pri-line-height-relaxed: 1.75;
+  /* letter spacing */
+  --pri-letter-spacing-tight: -0.025em;
+  --pri-letter-spacing-normal: 0;
+  --pri-letter-spacing-wide: 0.025em;
+  --pri-letter-spacing-wider: 0.05em;
 
-    /* layout */
-    --pri-space-1: 0.25rem;
-    --pri-space-2: 0.5rem;
-    --pri-space-3: 0.75rem;
-    --pri-space-4: 1rem;
-    --pri-space-6: 1.5rem;
-    --pri-space-8: 2rem;
-    --pri-space-12: 3rem;
-    --pri-space-16: 4rem;
-    /* radius */
-    --pri-radius-sm: 0.25rem;
-    --pri-radius-md: 0.5rem;
-    --pri-radius-lg: 0.75rem;
-    --pri-radius-xl: 1rem;
-    --pri-radius-full: 9999px;
-    /* border */
-    --pri-border-sm: 1px solid var(--pri-stone-300);
-    --pri-border-md: 2px solid var(--pri-stone-300);
-    --pri-border-lg: 3px solid var(--pri-stone-300);
-    --pri-border-xl: 4px solid var(--pri-stone-300);
-    --pri-border-none: 0;
+  /* layout */
+  --pri-space-1: 0.25rem;
+  --pri-space-2: 0.5rem;
+  --pri-space-3: 0.75rem;
+  --pri-space-4: 1rem;
+  --pri-space-6: 1.5rem;
+  --pri-space-8: 2rem;
+  --pri-space-12: 3rem;
+  --pri-space-16: 4rem;
+  /* radius */
+  --pri-radius-sm: 0.25rem;
+  --pri-radius-md: 0.5rem;
+  --pri-radius-lg: 0.75rem;
+  --pri-radius-xl: 1rem;
+  --pri-radius-full: 9999px;
+  /* border */
+  --pri-border-sm: 1px solid var(--pri-stone-200);
+  --pri-border-md: 2px solid var(--pri-stone-200);
+  --pri-border-lg: 3px solid var(--pri-stone-200);
+  --pri-border-xl: 4px solid var(--pri-stone-200);
+  --pri-border-none: 0;
 
-    /* motion */
-    --pri-transition-fast: 150ms ease-in-out;
-    --pri-transition-base: 300ms ease-in-out;
-    --pri-transition-slow: 500ms ease-in-out;
-    --pri-transition-slower: 700ms ease-in-out;
-    /* animations */
-    --pri-animate-fade-in: fadeIn 0.3s ease-in-out;
-    --pri-animate-slide-in-left: slideInLeft 0.4s ease-out;
-    --pri-animate-slide-in-right: slideInRight 0.4s ease-out;
-    --pri-animate-bounce-subtle: bounce-subtle 2s ease-in-out infinite;
-    --pri-animate-fade-up: fade-up 0.6s ease-out;
-    --pri-animate-scale-in: scale-in 0.3s ease-out;
-    --pri-animate-underline-slide: underline-slide 0.3s ease-out forwards;
-    /* breakpoints */
-    --pri-breakpoint-sm: 640px;
-    --pri-breakpoint-md: 768px;
-    --pri-breakpoint-lg: 1024px;
-    --pri-breakpoint-xl: 1280px;
-    --pri-breakpoint-2xl: 1536px;
+  /* box-shadow */
+  --pri-box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --pri-box-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --pri-box-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --pri-box-shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --pri-box-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --pri-box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --pri-box-shadow-outline: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  --pri-box-shadow-none: none;
+
+  /* motion */
+  --pri-transition-fast: 150ms ease-in-out;
+  --pri-transition-base: 300ms ease-in-out;
+  --pri-transition-slow: 500ms ease-in-out;
+  --pri-transition-slower: 700ms ease-in-out;
+  --pri-transition-duration: 300ms;
+  --pri-transition-timing-function: ease-in-out;
+  --pri-transition-delay: 0ms;
+  /* animations */
+  --pri-animate-fade-in: fadeIn 0.3s ease-in-out;
+  --pri-animate-slide-in-left: slideInLeft 0.4s ease-out;
+  --pri-animate-slide-in-right: slideInRight 0.4s ease-out;
+  --pri-animate-bounce-subtle: bounce-subtle 2s ease-in-out infinite;
+  --pri-animate-fade-up: fade-up 0.6s ease-out;
+  --pri-animate-scale-in: scale-in 0.3s ease-out;
+  --pri-animate-underline-slide: underline-slide 0.3s ease-out forwards;
+  /* breakpoints */
+  --pri-breakpoint-sm: 640px;
+  --pri-breakpoint-md: 768px;
+  --pri-breakpoint-lg: 1024px;
+  --pri-breakpoint-xl: 1280px;
+  --pri-breakpoint-2xl: 1536px;
 }
 
 /* Semantic tokens: usage roles */
 :root {
-    --sem-background: var(--pri-stone-300);
-    --sem-foreground: var(--pri-stone-800);
-    --sem-foreground-muted: var(--pri-stone-600);
-    --sem-foreground-subtle: var(--pri-stone-500);
-    --sem-surface: var(--pri-white);
-    --sem-surface-muted: var(--pri-stone-50);
-    --sem-surface-strong: var(--pri-stone-200);
-    --sem-border: var(--pri-stone-300);
-    --sem-accent: var(--pri-gold-200);
-    --sem-accent-hover: var(--pri-gold-300);
-    --sem-accent-gold: var(--pri-gold-400);
-    --sem-accent-gold-hover: var(--pri-gold-500);
-    --sem-accent-gold-light: var(--pri-gold-100);
-    --sem-surface-alt: var(--pri-surface-alt);
-    --sem-surface-raised: var(--pri-surface-raised);
-    --sem-success: var(--pri-success-500);
-    --sem-warning: var(--pri-warning-500);
-    --sem-danger: var(--pri-danger-500);
-    --sem-info: var(--pri-info-500);
+  --semi-background: var(--pri-stone-300);
+  --semi-foreground: var(--pri-stone-800);
+  --semi-foreground-muted: var(--pri-stone-600);
+  --semi-foreground-subtle: var(--pri-stone-500);
 
-    --sem-font-family-inter: var(--pri-font-sans);
-    --sem-font-family-syne: var(--pri-font-display);
-    --sem-font-family-grotesk: var(--pri-font-grotesk);
+  --semi-surface: var(--pri-white);
+  --semi-surface-muted: var(--pri-stone-50);
+  --semi-surface-strong: var(--pri-stone-200);
 
+  --semi-accent: var(--pri-gold-200);
+  --semi-accent-hover: var(--pri-gold-300);
+  --semi-accent-gold: var(--pri-gold-400);
+  --semi-accent-gold-hover: var(--pri-gold-500);
+  --semi-accent-gold-light: var(--pri-gold-100);
+
+  --semi-surface-alt: var(--pri-surface-alt);
+  --semi-surface-raised: var(--pri-surface-raised);
+  --semi-success: var(--pri-success-500);
+  --semi-warning: var(--pri-warning-500);
+  --semi-danger: var(--pri-danger-500);
+  --semi-info: var(--pri-info-500);
+
+  --semi-border: var(--pri-stone-200);
+  --semi-border-muted: var(--pri-stone-100);
+  --semi-border-subtle: var(--pri-stone-50);
+
+  --semi-box-shadow-sm: var(--pri-box-shadow-sm);
+  --semi-box-shadow-md: var(--pri-box-shadow-md);
+  --semi-box-shadow-lg: var(--pri-box-shadow-lg);
+  --semi-box-shadow-xl: var(--pri-box-shadow-xl);
+  --semi-box-shadow-2xl: var(--pri-box-shadow-2xl);
+  --semi-box-shadow-inner: var(--pri-box-shadow-inner);
+  --semi-box-shadow-outline: var(--pri-box-shadow-outline);
+  --semi-box-shadow-none: var(--pri-box-shadow-none);
+
+  --semi-transition-base: var(--pri-transition-base);
+  --semi-transition-duration: var(--pri-transition-duration);
+  --semi-transition-timing-function: var(--pri-transition-timing-function);
+  --semi-transition-delay: var(--pri-transition-delay);
+  --semi-animate-fade-in: var(--pri-animate-fade-in);
+  --semi-animate-slide-in-left: var(--pri-animate-slide-in-left);
+  --semi-animate-slide-in-right: var(--pri-animate-slide-in-right);
+  --semi-animate-bounce-subtle: var(--pri-animate-bounce-subtle);
+  --semi-animate-fade-up: var(--pri-animate-fade-up);
+  --semi-animate-scale-in: var(--pri-animate-scale-in);
+  --semi-animate-underline-slide: var(--pri-animate-underline-slide);
+
+  --semi-font-family-inter: var(--pri-font-sans);
+  --semi-font-family-syne: var(--pri-font-display);
+  --semi-font-family-grotesk: var(--pri-font-grotesk);
 }
 
 @theme inline {
-    --color-background: var(--sem-background);
-    --color-foreground: var(--sem-foreground);
-    --color-foreground-muted: var(--sem-foreground-muted);
-    --color-foreground-subtle: var(--sem-foreground-subtle);
+  --color-background: var(--semi-background);
+  --color-foreground: var(--semi-foreground);
+  --color-foreground-muted: var(--semi-foreground-muted);
+  --color-foreground-subtle: var(--semi-foreground-subtle);
 
-    --color-surface: var(--sem-surface);
-    --color-surface-muted: var(--sem-surface-muted);
-    --color-surface-strong: var(--sem-surface-strong);
+  --color-surface: var(--semi-surface);
+  --color-surface-muted: var(--semi-surface-muted);
+  --color-surface-strong: var(--semi-surface-strong);
 
-    --color-accent: var(--sem-accent);
-    --color-accent-hover: var(--sem-accent-hover);
-    --color-accent-gold: var(--sem-accent-gold);
-    --color-accent-gold-hover: var(--sem-accent-gold-hover);
-    --color-accent-gold-light: var(--sem-accent-gold-light);
-    --color-surface-alt: var(--sem-surface-alt);
-    --color-surface-raised: var(--sem-surface-raised);
+  --color-accent: var(--semi-accent);
+  --color-accent-hover: var(--semi-accent-hover);
+  --color-accent-gold: var(--semi-accent-gold);
+  --color-accent-gold-hover: var(--semi-accent-gold-hover);
+  --color-accent-gold-light: var(--semi-accent-gold-light);
+  --color-surface-alt: var(--semi-surface-alt);
+  --color-surface-raised: var(--semi-surface-raised);
 
-    --color-success: var(--sem-success);
-    --color-warning: var(--sem-warning);
-    --color-danger: var(--sem-danger);
-    --color-info: var(--sem-info);
+  --color-success: var(--semi-success);
+  --color-warning: var(--semi-warning);
+  --color-danger: var(--semi-danger);
+  --color-info: var(--semi-info);
 
-    --color-border: var(--sem-border);
+  --color-border: var(--semi-border);
+  --color-border-muted: var(--semi-border-muted);
+  --color-border-subtle: var(--semi-border-subtle);
 
-    --font-family-inter: var(--sem-font-family-inter);
-    --font-family-syne: var(--sem-font-family-syne);
-    --font-family-grotesk: var(--sem-font-family-grotesk);
+  --font-family-inter: var(--semi-font-family-inter);
+  --font-family-syne: var(--semi-font-family-syne);
+  --font-family-grotesk: var(--semi-font-family-grotesk);
 
-  /* Bridge custom animation utilities used in components */
-  --animate-fadeIn: var(--pri-animate-fade-in);
-  --animate-slideInLeft: var(--pri-animate-slide-in-left);
-  --animate-slideInRight: var(--pri-animate-slide-in-right);
-  --animate-bounce-subtle: var(--pri-animate-bounce-subtle);
-  --animate-fade-up: var(--pri-animate-fade-up);
-  --animate-scale-in: var(--pri-animate-scale-in);
-  --animate-underline-slide: var(--pri-animate-underline-slide);
+  --box-shadow-sm: var(--semi-box-shadow-sm);
+  --box-shadow-md: var(--semi-box-shadow-md);
+  --box-shadow-lg: var(--semi-box-shadow-lg);
+  --box-shadow-xl: var(--semi-box-shadow-xl);
+  --box-shadow-2xl: var(--semi-box-shadow-2xl);
+  --box-shadow-inner: var(--semi-box-shadow-inner);
+  --box-shadow-outline: var(--semi-box-shadow-outline);
+  --box-shadow-none: var(--semi-box-shadow-none);
+
+  --transition-base: var(--semi-transition-base);
+  --transition-duration: var(--semi-transition-duration);
+  --transition-timing-function: var(--semi-transition-timing-function);
+  --transition-delay: var(--semi-transition-delay);
+
+  --animate-fadeIn: var(--semi-animate-fade-in);
+  --animate-slideInLeft: var(--semi-animate-slide-in-left);
+  --animate-slideInRight: var(--semi-animate-slide-in-right);
+  --animate-bounce-subtle: var(--semi-animate-bounce-subtle);
+  --animate-fade-up: var(--semi-animate-fade-up);
+  --animate-scale-in: var(--semi-animate-scale-in);
+  --animate-underline-slide: var(--semi-animate-underline-slide);
 }

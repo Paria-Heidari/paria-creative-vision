@@ -71,6 +71,7 @@ npx supabase gen types typescript --project-id <your-project-id> > src/types/dat
 ### When to Regenerate Types
 
 Regenerate types after any database schema changes:
+
 - Adding or removing tables
 - Modifying column definitions
 - Updating relationships or constraints
