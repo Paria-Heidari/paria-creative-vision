@@ -93,7 +93,10 @@ export default function Header() {
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
           >
-            <span className="relative flex h-6 w-6 items-center justify-center" aria-hidden>
+            <span
+              className="relative flex h-6 w-6 items-center justify-center"
+              aria-hidden
+            >
               <Menu
                 className={cn(
                   'text-foreground absolute size-6 transition-opacity duration-300',

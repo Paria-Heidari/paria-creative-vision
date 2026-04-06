@@ -2,13 +2,7 @@ import { Stack } from '@/components/layout/Stack';
 import { Typography } from '../Typography';
 import { cn } from '@/lib/utils/utils';
 
-const textAlignMap = {
-  center: 'text-center',
-  left: 'text-left',
-  right: 'text-right',
-} as const;
-
-type TextAlignPreset = keyof typeof textAlignMap;
+type TextAlignPreset = 'center' | 'left' | 'right';
 
 interface TextBlockProps {
   title?: string;

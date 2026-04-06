@@ -61,16 +61,14 @@ const GalleryGrid = ({ photos, featuredBadgeLabel }: GalleryGridProps) => {
       {/* Masonry Grid - Improved spacing */}
       <div className="columns-1 space-y-6 sm:columns-2 sm:space-y-6 md:columns-3 lg:columns-4 xl:columns-5">
         {photos.map((photo, index) => (
-         
-            <GalleryItem
-              key={photo.id}
-              photo={photo}
-              featuredBadgeLabel={featuredBadgeLabel}
-              onClick={() => handlePhotoClick(photo)}
-              index={index}
-              priority={index < 5}
-            />
-
+          <GalleryItem
+            key={photo.id}
+            photo={photo}
+            featuredBadgeLabel={featuredBadgeLabel}
+            onClick={() => handlePhotoClick(photo)}
+            index={index}
+            priority={index < 5}
+          />
         ))}
       </div>
 

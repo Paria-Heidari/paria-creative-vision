@@ -25,7 +25,6 @@ export default function ArticleGrid({ articles }: ArticleGridProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="flex justify-center"
-         
         >
           <Grid
             gap={8}
@@ -42,9 +41,7 @@ export default function ArticleGrid({ articles }: ArticleGridProps) {
                     isLast &&
                       lastIn2Col &&
                       'sm:col-span-2 sm:flex sm:w-full sm:justify-center',
-                    isLast &&
-                      lastIn3Col &&
-                      'lg:col-span-1 lg:col-start-2',
+                    isLast && lastIn3Col && 'lg:col-span-1 lg:col-start-2',
                   )}
                 >
                   <ArticleCard article={article} index={index} />
@@ -82,4 +79,4 @@ export default function ArticleGrid({ articles }: ArticleGridProps) {
       )}
     </AnimatePresence>
   );
-};
+}

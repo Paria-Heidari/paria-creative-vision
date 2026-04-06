@@ -1,5 +1,5 @@
-import type { ElementType, ReactNode } from 'react'
-import { cn } from '@/lib/utils/utils'
+import type { ElementType, ReactNode } from 'react';
+import { cn } from '@/lib/utils/utils';
 
 const typographyVariants = {
   // Display headings — Syne for editorial impact
@@ -14,7 +14,8 @@ const typographyVariants = {
 
   // Body text — Inter for readability
   lead: 'text-lg sm:text-xl md:text-2xl font-inter leading-relaxed tracking-wide',
-  leadSmall: 'text-lg sm:text-xl md:text-2xl font-inter font-light leading-relaxed tracking-wide',
+  leadSmall:
+    'text-lg sm:text-xl md:text-2xl font-inter font-light leading-relaxed tracking-wide',
   paragraph: 'text-base sm:text-lg font-inter leading-relaxed',
   paragraphSmall: 'text-sm sm:text-base font-inter leading-relaxed',
 
@@ -22,16 +23,17 @@ const typographyVariants = {
   caption: 'text-xs sm:text-sm font-inter text-foreground-muted leading-normal',
 
   // Nav labels
-  navLink: 'text-sm md:text-base font-medium font-grotesk tracking-widest uppercase',
-} as const
+  navLink:
+    'text-sm md:text-base font-medium font-grotesk tracking-widest uppercase',
+} as const;
 
-type TypographyPreset = keyof typeof typographyVariants
+type TypographyPreset = keyof typeof typographyVariants;
 
 interface TypographyProps {
-  children: ReactNode
-  variant?: TypographyPreset
-  as?: ElementType
-  className?: string
+  children: ReactNode;
+  variant?: TypographyPreset;
+  as?: ElementType;
+  className?: string;
 }
 
 export default function Typography({
@@ -44,5 +46,5 @@ export default function Typography({
     <Component className={cn(typographyVariants[variant], className)}>
       {children}
     </Component>
-  )
+  );
 }

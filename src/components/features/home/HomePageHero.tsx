@@ -19,7 +19,7 @@ const HomePageHero = () => {
   }, []);
 
   return (
-    <section className="relative flex h-[90vh] items-end overflow-hidden mb-16">
+    <section className="relative mb-16 flex h-[90vh] items-end overflow-hidden">
       <video
         autoPlay
         muted
@@ -39,17 +39,27 @@ const HomePageHero = () => {
         <Stack
           direction="vertical"
           gap={{ base: 6, md: 8 }}
-          className="max-w-3xl animate-fade-up motion-reduce:animate-none"
+          className="animate-fade-up max-w-3xl motion-reduce:animate-none"
         >
-          <Typography variant="caption" as="span" className="text-accent-gold font-semibold tracking-[0.3em] uppercase">
+          <Typography
+            variant="caption"
+            as="span"
+            className="text-accent-gold font-semibold tracking-[0.3em] uppercase"
+          >
             {homePageHeroInfo.subTitle}
           </Typography>
-          <Typography variant="h2" as="h1" className="text-white tracking-wide">
+          <Typography variant="h2" as="h1" className="tracking-wide text-white">
             {homePageHeroInfo.heading}
             <br />
-            <span className="text-accent-gold-light">{homePageHeroInfo.heading2}</span>
+            <span className="text-accent-gold-light">
+              {homePageHeroInfo.heading2}
+            </span>
           </Typography>
-          <Typography variant="paragraph" as="p" className="text-white/90 tracking-[0.1em] ">
+          <Typography
+            variant="paragraph"
+            as="p"
+            className="tracking-[0.1em] text-white/90"
+          >
             {homePageHeroInfo.subHeading}
           </Typography>
         </Stack>
@@ -60,13 +70,17 @@ const HomePageHero = () => {
         type="button"
         onClick={scrollToContent}
         aria-label="Scroll to main content"
-        className="group absolute bottom-8 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2 rounded-md px-2 py-1 text-white/70 transition-colors duration-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        className="group absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 rounded-md px-2 py-1 text-white/70 transition-colors duration-300 hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
       >
-        <Typography variant="caption" as="span" className="tracking-[0.3em] uppercase text-inherit">
+        <Typography
+          variant="caption"
+          as="span"
+          className="tracking-[0.3em] text-inherit uppercase"
+        >
           {homePageHeroInfo.scrollLabel}
         </Typography>
         <ChevronDown
-          className="h-5 w-5 animate-bounce-subtle motion-reduce:animate-none"
+          className="animate-bounce-subtle h-5 w-5 motion-reduce:animate-none"
           aria-hidden
           strokeWidth={1.35}
         />

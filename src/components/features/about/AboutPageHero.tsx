@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
-import { DecorativeLine } from "@/components/ui/DecorativeLine";
+import { DecorativeLine } from '@/components/ui/DecorativeLine';
 
 interface AboutPageHeroInfo {
   title: string;
@@ -21,11 +21,7 @@ export default function AboutPageHero({ info }: AboutPageHeroProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Stack
-          direction="vertical"
-          gap={{ base: 4, md: 6 }}
-          align="center"
-        >
+        <Stack direction="vertical" gap={{ base: 4, md: 6 }} align="center">
           <DecorativeLine />
           <Typography variant="h1" as="h1" className="font-syne">
             {info.title}

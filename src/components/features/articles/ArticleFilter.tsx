@@ -32,9 +32,7 @@ interface ArticleFilterProps {
   initialArticles: MediumArticle[];
 }
 
-const ArticleFilter = ({
-  initialArticles,
-}: ArticleFilterProps) => {
+const ArticleFilter = ({ initialArticles }: ArticleFilterProps) => {
   const [activeCategory, setActiveCategory] = useState('all');
 
   const filteredArticles = filterArticlesByCategory(
@@ -66,7 +64,7 @@ const ArticleFilter = ({
                 onClick={() => setActiveCategory(category.id)}
                 className={
                   !isActive
-                    ? 'w-full border-foreground/10 bg-white/80 hover:border-accent-gold hover:bg-white/90 hover:text-accent-gold'
+                    ? 'border-foreground/10 hover:border-accent-gold hover:text-accent-gold w-full bg-white/80 hover:bg-white/90'
                     : 'w-full'
                 }
               >

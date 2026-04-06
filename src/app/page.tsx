@@ -8,7 +8,6 @@ import { getFeaturedPhotos } from '@/lib/api/photos';
 import { getMediumArticles } from '@/lib/api/mediumArticles';
 import { featuredGalleryInfo, textBlockData } from '@/data/staticData';
 
-
 const mediumUsername = process.env.MEDIUM_USERNAME as string;
 
 export default async function Home() {

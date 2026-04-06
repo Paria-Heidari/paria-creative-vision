@@ -8,7 +8,7 @@ import { SocialIcons } from './SocialIcons';
 import { footerInfo, navigation } from '@/data/staticData';
 
 const NavLinks = () => (
-  <ul className="flex flex-col gap-3 mt-4">
+  <ul className="mt-4 flex flex-col gap-3">
     {navigation.map((item) => (
       <li key={item.href}>
         <Link href={item.href}>
@@ -27,7 +27,7 @@ const NavLinks = () => (
 
 export default function Footer() {
   return (
-    <footer className="mt-16 border-t border-foreground/10">
+    <footer className="border-foreground/10 mt-16 border-t">
       {/* Main Section */}
       <Container maxWidth="xl" className="py-8 lg:py-12">
         <Grid gap={8} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
@@ -41,7 +41,11 @@ export default function Footer() {
               <Typography variant="h5" as="h3" className="font-syne">
                 {footerInfo.title}
               </Typography>
-              <Typography variant="paragraphSmall" as="p" className="text-foreground-muted">
+              <Typography
+                variant="paragraphSmall"
+                as="p"
+                className="text-foreground-muted"
+              >
                 {footerInfo.content}
               </Typography>
               <SocialIcons />
@@ -50,7 +54,11 @@ export default function Footer() {
 
           {/* Navigation */}
           <GridItem>
-            <Typography variant="caption" as="h4" className="font-semibold text-foreground tracking-widest uppercase">
+            <Typography
+              variant="caption"
+              as="h4"
+              className="text-foreground font-semibold tracking-widest uppercase"
+            >
               {footerInfo.navigationTitle}
             </Typography>
             <NavLinks />
@@ -58,7 +66,11 @@ export default function Footer() {
 
           {/* Contact */}
           <GridItem>
-            <Typography variant="caption" as="h4" className="font-semibold text-foreground tracking-widest uppercase">
+            <Typography
+              variant="caption"
+              as="h4"
+              className="text-foreground font-semibold tracking-widest uppercase"
+            >
               {footerInfo.contactTitle}
             </Typography>
             <Stack
@@ -68,33 +80,46 @@ export default function Footer() {
             >
               <Link
                 href={`mailto:${footerInfo.contactEmail}`}
-                className="inline-flex items-center gap-2 text-foreground-muted hover:text-accent-gold transition-colors duration-300"
+                className="text-foreground-muted hover:text-accent-gold inline-flex items-center gap-2 transition-colors duration-300"
                 aria-label={`Email ${footerInfo.contactName}`}
               >
-                <Mail className="w-4 h-4" aria-hidden="true" />
+                <Mail className="h-4 w-4" aria-hidden="true" />
                 <Typography variant="caption" as="span">
                   {footerInfo.contactName}
                 </Typography>
               </Link>
-              <Typography variant="caption" as="p" className="text-foreground-subtle">
+              <Typography
+                variant="caption"
+                as="p"
+                className="text-foreground-subtle"
+              >
                 {footerInfo.contactMessage}
               </Typography>
             </Stack>
           </GridItem>
-
         </Grid>
       </Container>
 
       {/* Bottom Bar */}
-      <div className="border-t border-foreground/10">
+      <div className="border-foreground/10 border-t">
         <Container maxWidth="xl" className="py-6">
           <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <Typography variant="caption" as="p" className="text-foreground-subtle">
+            <Typography
+              variant="caption"
+              as="p"
+              className="text-foreground-subtle"
+            >
               {footerInfo.copyright}
             </Typography>
-            <Typography variant="caption" as="p" className="text-foreground-subtle">
+            <Typography
+              variant="caption"
+              as="p"
+              className="text-foreground-subtle"
+            >
               {footerInfo.craftedWith}
-              <span className="text-accent-gold ml-1">{footerInfo.location}</span>
+              <span className="text-accent-gold ml-1">
+                {footerInfo.location}
+              </span>
             </Typography>
           </div>
         </Container>

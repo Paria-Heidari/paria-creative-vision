@@ -1,5 +1,4 @@
-const presets = [0, 1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 32] as const;
-export type GapPreset = (typeof presets)[number];
+export type GapPreset = 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12 | 16 | 20 | 24 | 32;
 export type GapBreakpoints = 'base' | 'sm' | 'md' | 'lg' | 'xl';
 export type ResponsiveGap = Partial<Record<GapBreakpoints, GapPreset>>;
 export type StackGap = GapPreset | ResponsiveGap;

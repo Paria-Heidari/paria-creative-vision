@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
-import { cn } from '@/lib/utils/utils'
+import type { ReactNode } from 'react';
+import { cn } from '@/lib/utils/utils';
 
 const maxWidthMap = {
   sm: 'max-w-screen-sm',
@@ -8,21 +8,23 @@ const maxWidthMap = {
   xl: 'max-w-screen-xl',
   '2xl': 'max-w-screen-2xl',
   full: 'max-w-none',
-} as const
+} as const;
 
-type MaxWidthPreset = keyof typeof maxWidthMap
+type MaxWidthPreset = keyof typeof maxWidthMap;
 
 interface ContainerProps {
-  children: ReactNode
-  maxWidth?: MaxWidthPreset | (string & {})
-  noPadding?: boolean
-  paddingMdOnly?: boolean
-  className?: string
+  children: ReactNode;
+  maxWidth?: MaxWidthPreset | (string & {});
+  noPadding?: boolean;
+  paddingMdOnly?: boolean;
+  className?: string;
 }
 
-function resolveMaxWidthClass(maxWidth: MaxWidthPreset | (string & {})): string {
-  if (maxWidth in maxWidthMap) return maxWidthMap[maxWidth as MaxWidthPreset]
-  return maxWidth
+function resolveMaxWidthClass(
+  maxWidth: MaxWidthPreset | (string & {}),
+): string {
+  if (maxWidth in maxWidthMap) return maxWidthMap[maxWidth as MaxWidthPreset];
+  return maxWidth;
 }
 
 export default function Container({
@@ -36,7 +38,7 @@ export default function Container({
     ? 'px-4 sm:px-6 lg:px-8'
     : paddingMdOnly
       ? 'px-4 md:px-0'
-      : undefined
+      : undefined;
 
   return (
     <div
@@ -49,5 +51,5 @@ export default function Container({
     >
       {children}
     </div>
-  )
+  );
 }

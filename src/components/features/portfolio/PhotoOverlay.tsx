@@ -14,11 +14,7 @@ const PhotoOverlay = ({ photo }: PhotoOverlayProps) => {
       gap={2}
       className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t to-transparent p-5"
     >
-      <Typography
-        variant="h6"
-        as="h3"
-        className="tracking-wider text-white/90"
-      >
+      <Typography variant="h6" as="h3" className="tracking-wider text-white/90">
         {photo.title}
       </Typography>
       {photo.location_city && (

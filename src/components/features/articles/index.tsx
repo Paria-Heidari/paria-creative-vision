@@ -4,4 +4,11 @@ import { default as ArticleCard } from './ArticleCard';
 import { default as ArticlePageHero } from './ArticlePageHero';
 import { default as CtaMedium } from './CtaMedium';
 import { default as ArticleList } from './ArticleList';
-export { ArticleFilter, ArticleGrid, ArticleCard, ArticlePageHero, CtaMedium, ArticleList };
+export {
+  ArticleFilter,
+  ArticleGrid,
+  ArticleCard,
+  ArticlePageHero,
+  CtaMedium,
+  ArticleList,
+};

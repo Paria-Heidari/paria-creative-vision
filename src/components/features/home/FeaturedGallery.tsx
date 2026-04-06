@@ -5,7 +5,7 @@ import { Photo } from '@/types/photo.types';
 import { Stack } from '@/components/layout/Stack';
 import { Grid, GridItem } from '@/components/layout/Grid';
 import { CtaLink } from '@/components/ui/CtaLink';
-import { DecorativeLine } from "@/components/ui/DecorativeLine";
+import { DecorativeLine } from '@/components/ui/DecorativeLine';
 import { Typography } from '@/components/ui/Typography';
 import GalleryItem from '@/components/features/portfolio/GalleryItem';
 import Lightbox from '@/components/features/portfolio/Lightbox';

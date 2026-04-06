@@ -4,7 +4,7 @@ import { portfolioHeroInfo } from '@/data/staticData';
 
 export default function PortfolioPageHero() {
   return (
-    <section className="pt-28 mb-16 md:mb-24 lg:mb-32">
+    <section className="mb-16 pt-28 md:mb-24 lg:mb-32">
       <Stack
         direction="vertical"
         gap={{ base: 4, md: 6 }}

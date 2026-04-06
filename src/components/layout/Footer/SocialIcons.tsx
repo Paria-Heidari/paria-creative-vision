@@ -1,9 +1,5 @@
 import Link from 'next/link';
-import {
-  GitHubIcon,
-  InstagramIcon,
-  LinkedInIcon,
-} from '@/components/ui/icons';
+import { GitHubIcon, InstagramIcon, LinkedInIcon } from '@/components/ui/icons';
 
 const linkClassName =
   'bg-foreground/5 text-foreground-muted hover:bg-accent-gold flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 hover:text-white';

@@ -93,7 +93,7 @@ const GalleryFilters = ({
               aria-pressed={selectedCategory === 'all'}
               className={cn(
                 filterBtnBase,
-                'px-6 py-2.5 text-sm overflow-hidden',
+                'overflow-hidden px-6 py-2.5 text-sm',
                 selectedCategory === 'all'
                   ? filterBtnActive
                   : filterBtnInactive,
