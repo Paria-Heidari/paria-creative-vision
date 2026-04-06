@@ -6,7 +6,12 @@ import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils/utils';
-import { CtaAction } from '@/components/ui/CtaSection';
+
+export interface CtaAction {
+  href: string;
+  label: string;
+  external?: boolean;
+}
 
 export interface CtaSectionProps {
   title: string;
