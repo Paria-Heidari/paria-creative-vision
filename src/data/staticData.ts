@@ -51,7 +51,7 @@ export const latestArticlesInfo = {
   title: 'Latest Insights',
   content:
     'Exploring the intersection of code and creativity. From web development techniques to AI innovations, I share practical insights and reflections on building digital experiences.',
-  ctaLinkData: {
+  ctaLink: {
     href: ROUTES.articles,
     label: 'View all articles',
   },

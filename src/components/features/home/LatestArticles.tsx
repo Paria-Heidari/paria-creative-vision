@@ -42,11 +42,7 @@ const LatestArticles = ({ articles }: LatestArticlesProps) => {
         transition={{ duration: 0.6, delay: 0.5 }}
         className="mt-14 text-center md:mt-20"
       >
-        <CtaLink
-          link={latestArticlesInfo.ctaLinkData}
-          label={latestArticlesInfo.ctaLinkData.label}
-          variant="underline"
-        />
+        <CtaLink {...latestArticlesInfo.ctaLink} variant="underline" />
       </motion.div>
     </section>
   );

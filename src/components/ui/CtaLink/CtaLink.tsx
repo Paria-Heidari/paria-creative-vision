@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils/utils';
 import { Typography } from '@/components/ui/Typography';
-import { LinkData } from '@/types/ui.types';
-
 export type CtaLinkVariant = 'trailing' | 'centered' | 'underline';
 
 const labelTypography: Record<CtaLinkVariant, 'paragraphSmall' | 'navLink'> = {
@@ -15,11 +13,10 @@ const labelTypography: Record<CtaLinkVariant, 'paragraphSmall' | 'navLink'> = {
 };
 
 export interface CtaLinkProps {
-  link: LinkData;
+  href: string;
   label: string;
   variant?: CtaLinkVariant;
   className?: string;
-  children?: React.ReactNode;
 }
 
 const arrowBaseClasses =
@@ -47,29 +44,27 @@ const variantStyles: Record<
 };
 
 export default function CtaLink({
-  link,
+  href,
   label,
-  variant,
+  variant = 'centered',
   className,
-  ...linkProps
 }: CtaLinkProps) {
-  const styles = variant && variantStyles[variant];
+  const styles = variantStyles[variant];
 
   return (
     <Link
-      href={link.href}
+      href={href}
       aria-label={label}
-      className={cn('group', styles?.link, className)}
-      {...linkProps}
+      className={cn('group', styles.link, className)}
     >
       <Typography
-        variant={labelTypography[variant as CtaLinkVariant]}
+        variant={labelTypography[variant]}
         as="span"
-        className={styles?.label}
+        className={styles.label}
       >
-        {link.label}
+        {label}
       </Typography>
-      <ArrowRight className={styles?.arrow} aria-hidden />
+      <ArrowRight className={styles.arrow} aria-hidden />
     </Link>
   );
 }

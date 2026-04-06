@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { Photo } from '@/types/photo.types';
 import { Stack } from '@/components/layout/Stack';
 import { Grid, GridItem } from '@/components/layout/Grid';
-import { CtaLink, CtaLinkProps } from '@/components/ui/CtaLink';
+import { CtaLink } from '@/components/ui/CtaLink';
 import { Typography } from '@/components/ui/Typography';
 import GalleryItem from '@/components/features/portfolio/GalleryItem';
 import Lightbox from '@/components/features/portfolio/Lightbox';
@@ -13,7 +13,7 @@ interface GalleryInfoProps {
   title: string;
   subTitle: string;
   featuredBadgeLabel: string;
-  ctaLink: CtaLinkProps['link'];
+  ctaLink: { href: string; label: string };
 }
 
 interface FeaturedGalleryProps {
@@ -57,7 +57,7 @@ const FeaturedGallery = ({
                 {featuredGalleryInfo.subTitle}
               </Typography>
             </Stack>
-            <CtaLink link={featuredGalleryInfo.ctaLink} variant="trailing" />
+            <CtaLink {...featuredGalleryInfo.ctaLink} variant="trailing" />
           </Stack>
           <Grid gap={6} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {featuredPhotos.map((photo, index) => (
@@ -89,7 +89,7 @@ const FeaturedGallery = ({
         transition={{ duration: 0.6, delay: 0.6 }}
         className="mt-8 text-center md:hidden"
       >
-        <CtaLink link={featuredGalleryInfo.ctaLink} variant="centered" />
+        <CtaLink {...featuredGalleryInfo.ctaLink} variant="centered" />
       </motion.div>
 
       {/* Lightbox */}
