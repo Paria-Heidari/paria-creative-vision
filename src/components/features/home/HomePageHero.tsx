@@ -6,7 +6,7 @@ import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
 import { homePageHeroInfo } from '@/data/staticData';
 
-const Hero = () => {
+const HomePageHero = () => {
   const scrollToContent = useCallback(() => {
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -75,4 +75,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HomePageHero;
