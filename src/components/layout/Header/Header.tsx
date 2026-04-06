@@ -36,7 +36,7 @@ export default function Header() {
       <header
         className={cn(
           'bg-surface-alt fixed top-0 left-0 z-50 w-full transition-all duration-300 ease-out',
-          isScrolled ? 'h-14 shadow-md' : 'h-16 shadow-sm',
+          isScrolled ? 'h-16 shadow-md' : 'h-16 shadow-sm',
           !isVisible
             ? '-translate-y-3 opacity-0'
             : isHidden

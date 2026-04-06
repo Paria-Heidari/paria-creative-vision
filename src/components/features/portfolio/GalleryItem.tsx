@@ -4,12 +4,13 @@ import Image from "next/image";
 import { Photo } from "@/types/photo.types";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, MapPin } from "lucide-react";
-import { Typography } from "@/components/ui/Typography";
+
+import PhotoOverlay from "./PhotoOverlay";
+import FeaturedBadge from "./FeaturedBadge";
 
 interface GalleryItemProps {
   photo: Photo;
-  showFeaturedBadge: boolean;
+  featuredBadgeLabel: string;
   onClick: () => void;
   variant?: "masonry" | "grid";
   index?: number;
@@ -17,7 +18,7 @@ interface GalleryItemProps {
 
 const GalleryItem = ({
   photo,
-  showFeaturedBadge,
+  featuredBadgeLabel,
   onClick,
   variant = "masonry",
   index = 0,
@@ -82,44 +83,10 @@ const GalleryItem = ({
             />
           )}
         </div>
-
-        {/* Hover Overlay */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t to-transparent flex flex-col justify-end p-5"
-        >
-          <div
-          >
-            <Typography variant="h5" as="h3" className="text-white mb-2 tracking-wide">
-              {photo.title}
-            </Typography>
-            {photo.location_city && (
-              <Typography variant="caption" as="p" className="text-white/80 flex items-center gap-2 mb-2">
-                <MapPin className="w-4 h-4 text-accent-gold" />
-                {photo.location_city}, {photo.location_country}
-              </Typography>
-            )}
-            {photo.description && (
-              <Typography variant="caption" as="p" className="text-white/70 line-clamp-2">
-                {photo.description}
-              </Typography>
-            )}
-          </div>
-        </div>
-
-        {/* Featured Badge - Elegant Gold Pill */}
-        {photo.featured && showFeaturedBadge && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-            className="absolute top-3 right-3 bg-accent-gold/95 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg"
-          >
-            <Star className="w-3 h-3 text-white fill-white" />
-            <span className="text-xs font-inter text-white font-semibold tracking-wider uppercase">
-              Featured
-            </span>
-          </motion.div>
-        )}
+        {/* Photo Overlay */}
+        <PhotoOverlay photo={photo} />
+        {/* Featured Badge */}
+        <FeaturedBadge photo={photo} featuredBadgeLabel={featuredBadgeLabel} />
       </motion.div>
     </motion.div>
   );

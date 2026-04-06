@@ -1,14 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Container } from '@/components/layout/Container';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
+import { articlesPageHeroInfo } from '@/data/staticData';
 
 const ArticlePageHero = () => {
     return (
-        <section className="pt-24 pb-12">
-          <Container maxWidth="xl">
+        <section className="pt-28 b-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -20,16 +19,26 @@ const ArticlePageHero = () => {
                 align="center"
                 className="mb-12 text-center"
               >
-                <div className="w-12 h-1 bg-accent-gold rounded-full" />
-                <Typography variant="h1" as="h1" className="font-syne">
-                  Articles
+                <div className="bg-accent-gold h-1 w-12 rounded-full" />
+                <Typography
+                  variant="leadSmall"
+                  as="p"
+                  className="text-foreground-subtle tracking-widest uppercase"
+                >
+                  {articlesPageHeroInfo.title}
                 </Typography>
-                <Typography variant="paragraph" as="p" className="text-foreground-muted max-w-2xl">
-                  Thoughts on code, web development, and the creative journey
+                <Typography variant="h2" as="h1" className="font-syne">
+                  {articlesPageHeroInfo.heading}
+                </Typography>
+                <Typography
+                  variant="lead"
+                  as="p"
+                  className="text-foreground-muted max-w-2xl"
+                >
+                  {articlesPageHeroInfo.content}
                 </Typography>
               </Stack>
             </motion.div>
-          </Container>
         </section>
     );
 };

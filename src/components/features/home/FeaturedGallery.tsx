@@ -1,22 +1,31 @@
 'use client';
-import Link from 'next/link';
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import GalleryItem from '@/components/features/portfolio/GalleryItem';
-import Lightbox from '@/components/features/portfolio/Lightbox';
-import { ArrowRight } from 'lucide-react';
-import { Typography } from '@/components/ui/Typography';
 import { Photo } from '@/types/photo.types';
-import { ROUTES } from '@/data/routes';
 import { Stack } from '@/components/layout/Stack';
 import { Grid, GridItem } from '@/components/layout/Grid';
-import { featuredGalleryInfo } from '@/data/staticData';
+import { CtaLink, CtaLinkProps } from '@/components/ui/CtaLink';
+import { Typography } from '@/components/ui/Typography';
+import GalleryItem from '@/components/features/portfolio/GalleryItem';
+import Lightbox from '@/components/features/portfolio/Lightbox';
 
-interface FeaturedGalleryProps {
-  featuredPhotos: Photo[];
+interface GalleryInfoProps {
+  title: string;
+  subTitle: string;
+  featuredBadgeLabel: string;
+  ctaLink: CtaLinkProps['link'];
 }
 
-const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
+interface FeaturedGalleryProps {
+  featuredGalleryInfo: GalleryInfoProps;
+  featuredPhotos: Photo[];
+  className?: string;
+}
+
+const FeaturedGallery = ({
+  featuredPhotos,
+  featuredGalleryInfo,
+}: FeaturedGalleryProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
@@ -48,19 +57,7 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
                 {featuredGalleryInfo.subTitle}
               </Typography>
             </Stack>
-            <Link
-              href={ROUTES.portfolio}
-              className="hover:text-accent-gold group hidden items-end gap-2 text-lg font-medium transition-colors md:flex"
-            >
-              <Typography
-                variant="paragraphSmall"
-                as="span"
-                className="text-foreground-muted"
-              >
-                {featuredGalleryInfo.viewAllLink}
-              </Typography>
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <CtaLink link={featuredGalleryInfo.ctaLink} variant="trailing" />
           </Stack>
           <Grid gap={6} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {featuredPhotos.map((photo, index) => (
@@ -75,7 +72,7 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
                   <GalleryItem
                     photo={photo}
                     onClick={() => setSelectedPhoto(photo)}
-                    showFeaturedBadge={false}
+                    featuredBadgeLabel={featuredGalleryInfo.featuredBadgeLabel}
                     variant="grid"
                     index={index}
                   />
@@ -92,15 +89,7 @@ const FeaturedGallery = ({ featuredPhotos }: FeaturedGalleryProps) => {
         transition={{ duration: 0.6, delay: 0.6 }}
         className="mt-8 text-center md:hidden"
       >
-        <Link
-          href={ROUTES.portfolio}
-          className="text-foreground hover:text-accent-gold group inline-flex items-center gap-2 text-lg font-medium transition-colors"
-        >
-          <Typography variant="paragraphSmall">
-            {featuredGalleryInfo.viewAllLink}
-          </Typography>
-          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-        </Link>
+        <CtaLink link={featuredGalleryInfo.ctaLink} variant="centered" />
       </motion.div>
 
       {/* Lightbox */}

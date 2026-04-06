@@ -9,9 +9,10 @@ import { Typography } from '@/components/ui/Typography';
 
 interface GalleryGridProps {
   photos: Photo[];
+  featuredBadgeLabel: string;
 }
 
-const GalleryGrid = ({ photos }: GalleryGridProps) => {
+const GalleryGrid = ({ photos, featuredBadgeLabel }: GalleryGridProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -73,7 +74,7 @@ const GalleryGrid = ({ photos }: GalleryGridProps) => {
           <GalleryItem
             key={photo.id}
             photo={photo}
-            showFeaturedBadge={true}
+            featuredBadgeLabel={featuredBadgeLabel}
             onClick={() => handlePhotoClick(photo)}
             index={index}
           />

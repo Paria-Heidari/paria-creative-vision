@@ -1,15 +1,20 @@
-import { ROUTES } from '@/data/routes';
+export const ROUTES = {
+  home: '/',
+  portfolio: '/pages/portfolio',
+  articles: '/pages/articles',
+  about: '/pages/about',
+} as const;
 
 // Navigation data
-export const navigation = [
+export const navigation: { name: string; href: string; current: boolean }[] = [
   {
     name: 'HOME',
     href: ROUTES.home,
     current: true,
   },
-  { name: 'PORTFOLIO', href: ROUTES.portfolio },
-  { name: 'ARTICLES', href: ROUTES.articles },
-  { name: 'ABOUT', href: ROUTES.about },
+  { name: 'PORTFOLIO', href: ROUTES.portfolio, current: false },
+  { name: 'ARTICLES', href: ROUTES.articles, current: false },
+  { name: 'ABOUT', href: ROUTES.about, current: false },
 ];
 
 // Metadata data
@@ -35,13 +40,42 @@ export const homePageHeroInfo = {
 export const featuredGalleryInfo = {
   title: 'Featured Collection',
   subTitle: 'Curated photography highlights',
-  viewAllLink: 'View Full Portfolio',
+  featuredBadgeLabel: 'Featured',
+  ctaLink: {
+    href: navigation.find((item) => item.name === 'PORTFOLIO')?.href as string,
+    label: 'View Full Portfolio',
+  },
 };
 
 export const latestArticlesInfo = {
   title: 'Latest Insights',
   content:
     'Exploring the intersection of code and creativity. From web development techniques to AI innovations, I share practical insights and reflections on building digital experiences.',
+  ctaLinkData: {
+    href: ROUTES.articles,
+    label: 'View all articles',
+  },
+};
+
+export const articlesPageHeroInfo = {
+  title: 'Articles',
+  heading: 'Insights on code & creativity',
+  content:
+    'Exploring the intersection of code and creativity. From web development techniques to AI innovations, I share practical insights and reflections on building digital experiences.',
+};
+
+/** Button ids must stay in sync with `MEDIUM_ARTICLE_FILTERS` in mediumArticleFilterConfig */
+export const articleFilterCategories = [
+  { id: 'all', label: 'All Articles', icon: 'newspaper' },
+  { id: 'web', label: 'Web Dev', icon: 'code' },
+  { id: 'ai', label: 'AI', icon: 'brain' },
+] as const;
+
+export const portfolioHeroInfo = {
+  title: 'Visual Stories by Paria',
+  heading: 'Photography Portfolio',
+  content:
+    'A curated collection of moments captured across landscapes, cities, and fleeting light.',
 };
 
 // Footer data

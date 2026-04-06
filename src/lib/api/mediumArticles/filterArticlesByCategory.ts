@@ -10,7 +10,7 @@ import { getFilterRule } from './mediumArticleFilterConfig';
  */
 export function filterArticlesByCategory(
   articles: MediumArticle[],
-  categorySlug: string
+  categorySlug: string,
 ): MediumArticle[] {
   if (!categorySlug || categorySlug === 'all') {
     return articles;
@@ -25,18 +25,20 @@ export function filterArticlesByCategory(
       const keywordLower = keyword.toLowerCase();
 
       const matchesCategory = article.categories.some((cat) =>
-        cat.toLowerCase().includes(keywordLower)
+        cat.toLowerCase().includes(keywordLower),
       );
 
       if (matchesCategory) return true;
 
       if (matchInText) {
         const matchesTitle = article.title.toLowerCase().includes(keywordLower);
-        const matchesDescription = article.description.toLowerCase().includes(keywordLower);
+        const matchesDescription = article.description
+          .toLowerCase()
+          .includes(keywordLower);
         return matchesTitle || matchesDescription;
       }
 
       return false;
-    })
+    }),
   );
 }

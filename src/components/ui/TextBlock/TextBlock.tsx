@@ -2,10 +2,19 @@ import { Stack } from '@/components/layout/Stack';
 import { Typography } from '../Typography';
 import { cn } from '@/lib/utils/utils';
 
+const textCenterMap = {
+  center: 'text-center',
+  left: 'text-left',
+  right: 'text-right',
+} as const;
+
+type TextCenterPreset = keyof typeof textCenterMap;
+
 interface TextBlockProps {
   title?: string;
   content: string;
   description?: string;
+  textCenter?: TextCenterPreset;
   className?: string;
 }
 
@@ -13,13 +22,14 @@ const TextBlock = ({
   title,
   content,
   description,
+  textCenter = 'center',
   className,
 }: TextBlockProps) => {
   return (
     <Stack
       direction="vertical"
       gap={{ base: 4, md: 6 }}
-      textCenter="center" 
+      textCenter={textCenter} 
       className={cn('mx-auto max-w-4xl', className)}
     >
       <Typography
