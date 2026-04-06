@@ -2,9 +2,9 @@ import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
 import { portfolioHeroInfo } from '@/data/staticData';
 
-export default function PortfolioHero() {
+export default function PortfolioPageHero() {
   return (
-    <section className="pt-28 pb-12">
+    <section className="pt-28 mb-16 md:mb-24 lg:mb-32">
       <Stack
         direction="vertical"
         gap={{ base: 4, md: 6 }}

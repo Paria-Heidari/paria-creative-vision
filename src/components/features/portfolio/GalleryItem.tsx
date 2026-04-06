@@ -14,14 +14,16 @@ interface GalleryItemProps {
   onClick: () => void;
   variant?: "masonry" | "grid";
   index?: number;
+  priority?: boolean;
 }
 
 const GalleryItem = ({
   photo,
   featuredBadgeLabel,
-  onClick,
   variant = "masonry",
   index = 0,
+  priority = false,
+  onClick,
 }: GalleryItemProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -67,10 +69,10 @@ const GalleryItem = ({
               alt={photo.title}
               width={photo.width}
               height={photo.height}
+              priority={priority}
               className={`w-full transition-opacity duration-500 ${
                 isGrid ? "h-full w-full object-cover" : "h-auto"
               } ${isLoaded ? "opacity-100" : "opacity-0"}`}
-              loading="lazy"
               onLoad={() => setIsLoaded(true)}
             />
           </motion.div>

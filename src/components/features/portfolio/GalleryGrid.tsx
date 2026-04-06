@@ -4,8 +4,8 @@ import { Photo } from '@/types/photo.types';
 import { motion } from 'framer-motion';
 import GalleryItem from './GalleryItem';
 import Lightbox from './Lightbox';
-import { ImageOff } from 'lucide-react';
 import { Typography } from '@/components/ui/Typography';
+import GalleryEmptyState from './GalleryEmptyState';
 
 interface GalleryGridProps {
   photos: Photo[];
@@ -33,51 +33,44 @@ const GalleryGrid = ({ photos, featuredBadgeLabel }: GalleryGridProps) => {
   };
 
   if (photos.length === 0) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex flex-col items-center justify-center py-24 px-6"
-      >
-        <div className="w-24 h-24 bg-accent-gold/10 rounded-full flex items-center justify-center mb-6">
-          <ImageOff className="w-12 h-12 text-accent-gold/60" />
-        </div>
-        <Typography variant="h4" as="h2" className="text-foreground mb-3 tracking-wide">
-          No Photos Found
-        </Typography>
-        <Typography variant="paragraph" as="p" className="text-foreground-muted text-center max-w-md">
-          Try selecting a different category or browse all photos to see the collection.
-        </Typography>
-      </motion.div>
-    );
+    return <GalleryEmptyState />;
   }
 
   return (
-    <>
-      {/* Photo count with subtle animation */}
+    <section>
+      {/* Photo count with animation */}
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="px-6 sm:px-8 mb-8"
+        className="mb-6"
       >
-        <Typography variant="caption" as="p" className="tracking-wider uppercase">
-          <span className="text-accent-gold font-semibold">{photos.length}</span>{' '}
+        <Typography
+          variant="caption"
+          as="p"
+          className="tracking-wider uppercase"
+        >
+          <span className="text-accent-gold font-semibold">
+            {photos.length}
+          </span>{' '}
           {photos.length === 1 ? 'Photo' : 'Photos'}
         </Typography>
       </motion.div>
 
       {/* Masonry Grid - Improved spacing */}
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 px-6 sm:px-8 pb-16">
+      <div className="columns-1 space-y-6 sm:columns-2 sm:space-y-6 md:columns-3 lg:columns-4 xl:columns-5">
         {photos.map((photo, index) => (
-          <GalleryItem
-            key={photo.id}
-            photo={photo}
-            featuredBadgeLabel={featuredBadgeLabel}
-            onClick={() => handlePhotoClick(photo)}
-            index={index}
-          />
+         
+            <GalleryItem
+              key={photo.id}
+              photo={photo}
+              featuredBadgeLabel={featuredBadgeLabel}
+              onClick={() => handlePhotoClick(photo)}
+              index={index}
+              priority={index < 5}
+            />
+
         ))}
       </div>
 
@@ -85,8 +78,8 @@ const GalleryGrid = ({ photos, featuredBadgeLabel }: GalleryGridProps) => {
       {selectedPhoto && !isAnimating && (
         <Lightbox photo={selectedPhoto} photos={photos} onClose={handleClose} />
       )}
-    </>
+    </section>
   );
-}
+};
 
 export default GalleryGrid;
