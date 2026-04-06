@@ -5,6 +5,7 @@ import { Photo } from '@/types/photo.types';
 import { Stack } from '@/components/layout/Stack';
 import { Grid, GridItem } from '@/components/layout/Grid';
 import { CtaLink } from '@/components/ui/CtaLink';
+import { DecorativeLine } from "@/components/ui/DecorativeLine";
 import { Typography } from '@/components/ui/Typography';
 import GalleryItem from '@/components/features/portfolio/GalleryItem';
 import Lightbox from '@/components/features/portfolio/Lightbox';
@@ -38,7 +39,7 @@ const FeaturedGallery = ({
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <Stack direction="vertical" gap={{ base: 8, md: 12 }}>
-          <div className="bg-accent-gold h-[2px] w-12" />
+          <DecorativeLine className="h-[2px] rounded-none" />
           <Stack
             direction="horizontal"
             gap={{ base: 3, md: 4 }}

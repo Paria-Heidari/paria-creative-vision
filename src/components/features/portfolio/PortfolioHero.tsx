@@ -9,7 +9,7 @@ export default function PortfolioHero() {
         direction="vertical"
         gap={{ base: 4, md: 6 }}
         align="center"
-        textCenter="center"
+        textAlign="center"
       >
         <Typography
           variant="caption"

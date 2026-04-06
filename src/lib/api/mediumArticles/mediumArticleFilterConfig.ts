@@ -11,11 +11,11 @@ export const MEDIUM_ARTICLE_FILTERS: Record<string, MediumArticleFilterRule> = {
   web: {
     keywords: [
       'programming',
-      'software architecture',
+      'software-architecture',
       'frontend',
       'micro frontends',
       'backend',
-      'fullstack',
+      'full-stack',
       'tech',
       'typescript',
       'javascript',
@@ -31,13 +31,15 @@ export const MEDIUM_ARTICLE_FILTERS: Record<string, MediumArticleFilterRule> = {
       'tailwindcss',
       'google cloud',
       'cloud',
-      'web development',
+      'cloud-computing',
+      'web-development',
     ],
     matchInText: true,
   },
   ai: {
     keywords: [
       'ai',
+      'ai-integration',
       'gemini',
       'claude',
       'llm',
@@ -54,6 +56,8 @@ export const MEDIUM_ARTICLE_FILTERS: Record<string, MediumArticleFilterRule> = {
   },
 };
 
-export function getFilterRule(slug: string): MediumArticleFilterRule | undefined {
+export function getFilterRule(
+  slug: string,
+): MediumArticleFilterRule | undefined {
   return MEDIUM_ARTICLE_FILTERS[slug.toLowerCase()];
 }

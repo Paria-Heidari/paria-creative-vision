@@ -12,11 +12,10 @@ interface ArticleListProps {
 
 export default function ArticleList({ articles }: ArticleListProps) {
   return (
-    <Stack direction="vertical" gap={0} className="mt-10 md:mt-20">
-      {articles.map((article, index) => {
-        return (
+    <ul className="mt-10 md:mt-20">
+      {articles.map((article, index) => (
+        <li key={article.guid}>
           <motion.article
-            key={article.guid}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -110,8 +109,8 @@ export default function ArticleList({ articles }: ArticleListProps) {
               </Stack>
             </Link>
           </motion.article>
-        );
-      })}
-    </Stack>
+        </li>
+      ))}
+    </ul>
   );
 }

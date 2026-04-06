@@ -3,28 +3,58 @@ import { MediumArticle } from '@/lib/api/mediumArticles';
 import ArticleCard from './ArticleCard';
 import { Newspaper } from 'lucide-react';
 import { Typography } from '@/components/ui/Typography';
+import { Grid, GridItem } from '@/components/layout/Grid';
+import { cn } from '@/lib/utils/utils';
 
 interface ArticleGridProps {
   articles: MediumArticle[];
 }
 
-const ArticleGrid = ({ articles }: ArticleGridProps) => {
+export default function ArticleGrid({ articles }: ArticleGridProps) {
+  const lastIndex = articles.length - 1;
+  const lastIn2Col = articles.length % 2 === 1;
+  const lastIn3Col = articles.length % 3 === 1;
+
   return (
     <AnimatePresence mode="wait">
-      {articles.length > 0 ? (
+      {articles.length > 0 && (
         <motion.div
           key="articles-grid"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+          className="flex justify-center"
+         
         >
-          {articles.map((article, index) => (
-            <ArticleCard key={article.guid} article={article} index={index} />
-          ))}
+          <Grid
+            gap={8}
+            className="w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {articles.map((article, index) => {
+              const isLast = index === lastIndex;
+              return (
+                <GridItem
+                  key={article.guid}
+                  rowSpan={1}
+                  colSpan={1}
+                  className={cn(
+                    isLast &&
+                      lastIn2Col &&
+                      'sm:col-span-2 sm:flex sm:w-full sm:justify-center',
+                    isLast &&
+                      lastIn3Col &&
+                      'lg:col-span-1 lg:col-start-2',
+                  )}
+                >
+                  <ArticleCard article={article} index={index} />
+                </GridItem>
+              );
+            })}
+          </Grid>
         </motion.div>
-      ) : (
+      )}
+      {articles.length === 0 && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -53,5 +83,3 @@ const ArticleGrid = ({ articles }: ArticleGridProps) => {
     </AnimatePresence>
   );
 };
-
-export default ArticleGrid;

@@ -4,10 +4,11 @@ import { motion } from 'framer-motion';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
 import { articlesPageHeroInfo } from '@/data/staticData';
+import { DecorativeLine } from "@/components/ui/DecorativeLine";
 
 const ArticlePageHero = () => {
     return (
-        <section className="pt-28 b-12">
+        <section className="pt-28 mb-16 md:mb-24 lg:mb-32">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -19,7 +20,7 @@ const ArticlePageHero = () => {
                 align="center"
                 className="mb-12 text-center"
               >
-                <div className="bg-accent-gold h-1 w-12 rounded-full" />
+                <DecorativeLine />
                 <Typography
                   variant="leadSmall"
                   as="p"

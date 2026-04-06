@@ -34,8 +34,8 @@ type ButtonSize = keyof typeof buttonSizeClassMap
 type ButtonRounded = keyof typeof roundedClassMap
 
 type BaseProps = {
-  children?: ReactNode
   btnText?: string
+  btnTextVariant?: 'paragraph' | 'paragraphSmall' | 'navLink'
   variant?: ButtonVariant
   size?: ButtonSize
   startIcon?: ReactNode
@@ -64,8 +64,8 @@ const baseButtonClasses =
   'inline-flex items-center justify-center gap-2 font-medium tracking-wide transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold/40 focus-visible:ring-offset-2'
 
 export default function Button({
-  children,
   btnText,
+  btnTextVariant,
   variant = 'primary',
   size = 'md',
   startIcon,
@@ -91,12 +91,10 @@ export default function Button({
   const content = (
     <>
       {startIcon ? <span className="shrink-0" aria-hidden="true">{startIcon}</span> : null}
-      {btnText ? (
-        <Typography variant="paragraph" as="span" className={cn(loading && 'opacity-0')}>
+      {btnText && (
+        <Typography variant={btnTextVariant ?? 'paragraph'} as="span" className={cn(loading && 'opacity-0')}>
           {btnText}
         </Typography>
-      ) : (
-        children
       )}
       {loading && (
         <span className="absolute">

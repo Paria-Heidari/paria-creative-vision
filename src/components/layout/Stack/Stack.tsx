@@ -31,7 +31,7 @@ const itemsMap = {
   stretch: 'items-stretch',
 } as const
 
-const textCenterMap = {
+const textAlignMap = {
   center: 'text-center',
   left: 'text-left',
   right: 'text-right',
@@ -40,7 +40,7 @@ const textCenterMap = {
 type AlignPreset = keyof typeof alignMap
 type JustifyPreset = keyof typeof justifyMap
 type ItemsPreset = keyof typeof itemsMap
-type TextCenterPreset = keyof typeof textCenterMap
+type TextAlignPreset = keyof typeof textAlignMap
 
 export type { GapPreset, GapBreakpoints, ResponsiveGap, StackGap } from './stackGap'
 
@@ -52,7 +52,7 @@ interface StackProps {
   align?: AlignPreset
   items?: ItemsPreset
   justify?: JustifyPreset
-  textCenter?: TextCenterPreset
+  textAlign?: TextAlignPreset
   className?: string
 }
 
@@ -63,7 +63,7 @@ export default function Stack({
   align,
   items,
   justify,
-  textCenter,
+  textAlign,
   className,
 }: StackProps) {
   return (
@@ -75,7 +75,7 @@ export default function Stack({
         align && alignMap[align],
         items && itemsMap[items],
         justify && justifyMap[justify],
-        textCenter && textCenterMap[textCenter],
+        textAlign && textAlignMap[textAlign],
         className,
       )}
     >
