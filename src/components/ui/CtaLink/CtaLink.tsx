@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils/utils';
 import { Typography } from '@/components/ui/Typography';
+
 export type CtaLinkVariant = 'trailing' | 'centered' | 'underline';
+
 
 const labelTypography: Record<CtaLinkVariant, 'paragraphSmall' | 'navLink'> = {
   trailing: 'paragraphSmall',
@@ -16,6 +18,7 @@ export interface CtaLinkProps {
   href: string;
   label: string;
   variant?: CtaLinkVariant;
+  asSpan?: boolean;
   className?: string;
 }
 
@@ -47,16 +50,13 @@ export default function CtaLink({
   href,
   label,
   variant = 'centered',
+  asSpan = false,
   className,
 }: CtaLinkProps) {
   const styles = variantStyles[variant];
-
-  return (
-    <Link
-      href={href}
-      aria-label={label}
-      className={cn('group', styles.link, className)}
-    >
+  const sharedClassName = cn('group', styles.link, className);
+  const content = (
+    <>
       <Typography
         variant={labelTypography[variant]}
         as="span"
@@ -65,6 +65,16 @@ export default function CtaLink({
         {label}
       </Typography>
       <ArrowRight className={styles.arrow} aria-hidden />
+    </>
+  );
+
+  if (asSpan) {
+    return <span className={sharedClassName}>{content}</span>;
+  }
+
+  return (
+    <Link href={href} aria-label={label} className={sharedClassName}>
+      {content}
     </Link>
   );
 }

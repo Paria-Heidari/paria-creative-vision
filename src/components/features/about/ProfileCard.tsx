@@ -42,6 +42,7 @@ export default function ProfileCard({ info, className }: ProfileCardInfo) {
                 src={info.imageLink}
                 alt={info.imageAlt}
                 fill
+                sizes="(max-width: 768px) 100vw, 30vw"
                 priority
                 className="object-cover"
               />
