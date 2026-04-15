@@ -96,15 +96,18 @@ export const workProjects = [
       decisions: [
         {
           title: 'Workflow modeled as a state machine',
-          body: 'Invalid status transitions are impossible at the code level, not just the UI. This mirrors how real compliance systems work and eliminates an entire class of data integrity bugs.',
+          description:
+            'Invalid status transitions are impossible at the code level, not just the UI. This mirrors how real compliance systems work and eliminates an entire class of data integrity bugs.',
         },
         {
           title: 'Rejection requires a reason — enforced at API level',
-          body: 'A rejected decision without explanation is useless to the requester. Enforcing this server-side (not just form validation) means it cannot be bypassed by any client.',
+          description:
+            'A rejected decision without explanation is useless to the requester. Enforcing this server-side (not just form validation) means it cannot be bypassed by any client.',
         },
         {
           title: 'decided_at separated from updated_at',
-          body: 'Time-to-decision is a business metric. Mixing it with updated_at would pollute the signal every time a comment is added or a field is edited. Separate fields, separate concerns.',
+          description:
+            'Time-to-decision is a business metric. Mixing it with updated_at would pollute the signal every time a comment is added or a field is edited. Separate fields, separate concerns.',
         },
       ],
       outcome:

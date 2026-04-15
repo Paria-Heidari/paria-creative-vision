@@ -85,8 +85,13 @@ export default async function WorkItemPage({ params }: PageProps) {
               <Stack direction="vertical" gap={{ base: 8, md: 12 }}>
                 <SectionLabel>Key Decisions</SectionLabel>
                 {workDeepDive.decisions.map((decision, index) => (
-                  <KeyDecisionsSection key={index} title={decision.title} description={decision.description} index={index} />
-                ))} 
+                  <KeyDecisionsSection
+                    key={index}
+                    title={decision.title}
+                    description={decision.description}
+                    index={index}
+                  />
+                ))}
               </Stack>
 
               {/* Outcome */}
