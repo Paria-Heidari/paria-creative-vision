@@ -148,6 +148,7 @@ const GalleryFilters = ({
                     gap={{ base: 2, md: 4 }}
                     align="center"
                     justify="center"
+                    className="flex-wrap"
                   >
                     {selectedCategoryData.subcategories.map((subcategory) => {
                       const isSelected =
