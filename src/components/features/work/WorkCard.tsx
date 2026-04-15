@@ -147,7 +147,7 @@ export default function WorkCard({
 
         {/* Tags */}
         {visibleTags.length > 0 && (
-          <Stack direction="horizontal" gap={2}>
+          <Stack direction="horizontal" gap={2} className="flex-wrap">
             {visibleTags.map((tag) => (
               <span
                 key={tag}

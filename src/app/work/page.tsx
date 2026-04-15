@@ -10,7 +10,7 @@ export default function WorkPage() {
     <>
       <WorkPageHero {...workPageHeroData} />
       <Container maxWidth="xl" className="pb-24 md:pb-32">
-        <Grid gap={8} cols="2">
+        <Grid gap={8} className="grid-cols-1 md:grid-cols-2">
           {workProjects.map((project, index) => (
             <GridItem key={project.slug} colSpan={1}>
             <WorkCard
