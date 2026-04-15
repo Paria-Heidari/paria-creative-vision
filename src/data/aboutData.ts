@@ -1,4 +1,4 @@
-import { ROUTES } from './staticData';
+import { routes as ROUTES } from '@/lib/routes/routes';
 
 // Skills data
 export const techSkills = [
