@@ -6,7 +6,7 @@ import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
 import { workProjects } from '@/data/workData';
 import { routes as ROUTES } from '@/lib/routes/routes';
-import { SitePreviewSection, WorkDeepDiveSection, WorkItemPageHero, WorkItemSidebar } from '@/components/features/work/workItemPage';
+import { KeyDecisionsSection, SitePreviewSection, WorkDeepDiveSection, WorkItemPageHero, WorkItemSidebar } from '@/components/features/work/workItemPage';
 import BackNavigationLink from '@/components/ui/BackNavigationLink/BackNavigationLink';
 import { DecorativeLine } from '@/components/ui/DecorativeLine';
 
@@ -65,10 +65,10 @@ export default async function WorkItemPage({ params }: PageProps) {
       <Container maxWidth="xl" className="py-16 md:py-20">
         <div className="grid gap-16 lg:grid-cols-3 lg:gap-24">
           {/* Main content */}
-          <div className="lg:col-span-2" >
+          <div className="lg:col-span-2">
             <Stack direction="vertical" gap={{ base: 12, md: 12 }}>
               {/* Problem */}
-              <Stack direction="vertical" gap={{ base: 6, md: 12 }}>
+              <Stack direction="vertical" gap={{ base: 6, md: 12 }} >
                 <SectionLabel>The Problem</SectionLabel>
                 <blockquote className="border-l-accent-gold bg-surface-muted rounded-r-lg border-l-2 py-4 pr-4 pl-6">
                   <Typography
@@ -79,6 +79,14 @@ export default async function WorkItemPage({ params }: PageProps) {
                     {workDeepDive.problem}
                   </Typography>
                 </blockquote>
+              </Stack>
+
+              {/* Key decisions */}
+              <Stack direction="vertical" gap={{ base: 8, md: 12 }}>
+                <SectionLabel>Key Decisions</SectionLabel>
+                {workDeepDive.decisions.map((decision, index) => (
+                  <KeyDecisionsSection key={index} title={decision.title} description={decision.description} index={index} />
+                ))} 
               </Stack>
 
               {/* Outcome */}
