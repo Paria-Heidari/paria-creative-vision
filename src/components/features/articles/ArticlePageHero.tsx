@@ -3,12 +3,19 @@
 import { motion } from 'framer-motion';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
-import { articlesPageHeroInfo } from '@/data/staticData';
 import { DecorativeLine } from '@/components/ui/DecorativeLine';
+import { cn } from '@/lib/utils/utils';
 
-const ArticlePageHero = () => {
+export interface ArticlePageHeroProps {
+  title: string;
+  heading: string;
+  content: string;
+  className?: string;
+}
+
+const ArticlePageHero = ({title, heading, content, className}: ArticlePageHeroProps) => {
   return (
-    <section className="mb-16 pt-28 md:mb-24 lg:mb-32">
+    <section className={cn(className, 'mb-16 pt-28 md:mb-24 lg:mb-32')}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -26,17 +33,17 @@ const ArticlePageHero = () => {
             as="p"
             className="text-foreground-subtle tracking-widest uppercase"
           >
-            {articlesPageHeroInfo.title}
+            {title}
           </Typography>
           <Typography variant="h2" as="h1" className="font-syne">
-            {articlesPageHeroInfo.heading}
+            {heading}
           </Typography>
           <Typography
             variant="lead"
             as="p"
             className="text-foreground-muted max-w-2xl"
           >
-            {articlesPageHeroInfo.content}
+            {content}
           </Typography>
         </Stack>
       </motion.div>

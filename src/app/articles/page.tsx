@@ -5,6 +5,7 @@ import {
   CtaMedium,
 } from '@/components/features/articles';
 import { Container } from '@/components/layout/Container';
+import { articlesPageHeroData } from '@/data/staticData';
 
 const mediumUsername = process.env.MEDIUM_USERNAME as string;
 
@@ -14,7 +15,7 @@ export default async function Articles() {
 
   return (
     <>
-      <ArticlePageHero />
+      <ArticlePageHero {...articlesPageHeroData} />
       <Container maxWidth="xl">
         <ArticleFilter initialArticles={articles} />
         {articles.length > 0 && (

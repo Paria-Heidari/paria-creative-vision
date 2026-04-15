@@ -47,7 +47,7 @@ const GalleryFilters = ({
       params.delete('subcategory');
     }
     const queryString = params.toString();
-    router.push(`/pages/portfolio${queryString ? `?${queryString}` : ''}`);
+    router.push(`/portfolio${queryString ? `?${queryString}` : ''}`);
   };
 
   const handleSubcategoryClick = (
@@ -58,7 +58,7 @@ const GalleryFilters = ({
     params.set('category', categorySlug);
     params.set('subcategory', subcategorySlug);
     const queryString = params.toString();
-    router.push(`/pages/portfolio${queryString ? `?${queryString}` : ''}`);
+    router.push(`/portfolio${queryString ? `?${queryString}` : ''}`);
   };
 
   const selectedCategoryData = categories?.find(

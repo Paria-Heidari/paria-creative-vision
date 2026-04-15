@@ -43,6 +43,8 @@ function SkillCard({
         <Typography variant="paragraph" as="p">
           {description}
         </Typography>
+        {skills && (
+          <>
         <Typography
           variant="caption"
           as="h4"
@@ -62,6 +64,8 @@ function SkillCard({
             </Typography>
           ))}
         </Stack>
+        </>
+        )}
       </Stack>
     </motion.div>
   );
@@ -70,16 +74,16 @@ function SkillCard({
 interface DualCardSectionProps {
   title: string;
   subTitle: string;
-  developerCard: Omit<SkillCardProps, 'icon' | 'animateFrom'>;
-  photographerCard: Omit<SkillCardProps, 'icon' | 'animateFrom'>;
+  leftCard: Omit<SkillCardProps, 'icon' | 'animateFrom'>;
+  rightCard: Omit<SkillCardProps, 'icon' | 'animateFrom'>;
   className?: string;
 }
 
 export default function DualCardSection({
   title,
   subTitle,
-  developerCard,
-  photographerCard,
+  leftCard,
+  rightCard,
   className,
 }: DualCardSectionProps) {
   return (
@@ -112,12 +116,12 @@ export default function DualCardSection({
 
         <div className="grid gap-8 md:grid-cols-2 lg:gap-12">
           <SkillCard
-            {...developerCard}
+            {...leftCard}
             icon={<Code2 className="text-accent-gold h-7 w-7" />}
             animateFrom="left"
           />
           <SkillCard
-            {...photographerCard}
+            {...rightCard}
             icon={<Camera className="text-accent-gold h-7 w-7" />}
             animateFrom="right"
           />

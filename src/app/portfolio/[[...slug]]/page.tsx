@@ -9,6 +9,7 @@ import {
 import { Container } from '@/components/layout/Container';
 import { PortfolioPageHero } from '@/components/features/portfolio';
 import { featuredGalleryInfo } from '@/data/staticData';
+import { portfolioPageHeroData } from '@/data/staticData';
 
 interface PortfolioPageProps {
   searchParams: Promise<{
@@ -38,7 +39,7 @@ export default async function PortfolioPage({
 
   return (
     <>
-      <PortfolioPageHero />
+      <PortfolioPageHero {...portfolioPageHeroData} />
       <Container maxWidth="2xl">
         <GalleryFilters
           currentCategory={categorySlug}

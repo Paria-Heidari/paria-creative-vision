@@ -2,19 +2,19 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Photo } from '@/types/photo.types';
+import { LinkData } from '@/types/ui.types';
 import { Stack } from '@/components/layout/Stack';
 import { Grid, GridItem } from '@/components/layout/Grid';
 import { CtaLink } from '@/components/ui/CtaLink';
-import { DecorativeLine } from '@/components/ui/DecorativeLine';
-import { Typography } from '@/components/ui/Typography';
 import GalleryItem from '@/components/features/portfolio/GalleryItem';
 import Lightbox from '@/components/features/portfolio/Lightbox';
+import { SectionHeader } from '@/components/ui/SectionHeader';
 
 interface GalleryInfoProps {
   title: string;
   subTitle: string;
   featuredBadgeLabel: string;
-  ctaLink: { href: string; label: string };
+  ctaLink: LinkData;
 }
 
 interface FeaturedGalleryProps {
@@ -39,27 +39,11 @@ const FeaturedGallery = ({
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <Stack direction="vertical" gap={{ base: 8, md: 12 }}>
-          <DecorativeLine className="h-[2px] rounded-none" />
-          <Stack
-            direction="horizontal"
-            gap={{ base: 3, md: 4 }}
-            justify="between"
-            items="end"
-          >
-            <Stack direction="vertical" gap={{ base: 4, md: 6 }}>
-              <Typography variant="h2" as="h2">
-                {featuredGalleryInfo.title}
-              </Typography>
-              <Typography
-                variant="lead"
-                as="p"
-                className="text-foreground-muted"
-              >
-                {featuredGalleryInfo.subTitle}
-              </Typography>
-            </Stack>
-            <CtaLink {...featuredGalleryInfo.ctaLink} variant="trailing" />
-          </Stack>
+          <SectionHeader
+            title={featuredGalleryInfo.title}
+            subTitle={featuredGalleryInfo.subTitle}
+            ctaLink={featuredGalleryInfo.ctaLink}
+          />
           <Grid gap={6} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {featuredPhotos.map((photo, index) => (
               <GridItem key={photo.id}>

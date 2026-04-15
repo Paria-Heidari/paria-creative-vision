@@ -4,9 +4,16 @@ import { useCallback } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
-import { homePageHeroInfo } from '@/data/staticData';
 
-const HomePageHero = () => {
+export interface HomePageHeroProps {
+  subTitle: string;
+  heading: string;
+  heading2: string;
+  subHeading: string;
+  scrollLabel: string;
+}
+
+const HomePageHero = ({ subTitle, heading, heading2, subHeading, scrollLabel }: HomePageHeroProps) => {
   const scrollToContent = useCallback(() => {
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -46,13 +53,13 @@ const HomePageHero = () => {
             as="span"
             className="text-accent-gold font-semibold tracking-[0.3em] uppercase"
           >
-            {homePageHeroInfo.subTitle}
+            {subTitle}
           </Typography>
           <Typography variant="h2" as="h1" className="tracking-wide text-white">
-            {homePageHeroInfo.heading}
+            {heading}
             <br />
             <span className="text-accent-gold-light">
-              {homePageHeroInfo.heading2}
+              {heading2}
             </span>
           </Typography>
           <Typography
@@ -60,7 +67,7 @@ const HomePageHero = () => {
             as="p"
             className="tracking-[0.1em] text-white/90"
           >
-            {homePageHeroInfo.subHeading}
+            {subHeading}
           </Typography>
         </Stack>
       </div>
@@ -77,7 +84,7 @@ const HomePageHero = () => {
           as="span"
           className="tracking-[0.3em] text-inherit uppercase"
         >
-          {homePageHeroInfo.scrollLabel}
+          {scrollLabel}
         </Typography>
         <ChevronDown
           className="animate-bounce-subtle h-5 w-5 motion-reduce:animate-none"

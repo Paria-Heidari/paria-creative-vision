@@ -9,9 +9,9 @@ import { CtaSection } from '@/components/ui/CtaSection';
 import {
   aboutPageHeroInfo,
   profileCardInfo,
-  twoWorldsSectionInfo,
   aboutCtaSectionInfo,
-} from '@/data/staticData';
+  twoWorldsSectionInfo,
+} from '@/data/aboutData';
 
 export default function About() {
   return (
