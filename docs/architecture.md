@@ -63,45 +63,50 @@ public/                        # Static assets served directly
 docs/                          # Project documentation
 src/
 ├── app/                          # Next.js App Router pages & layouts
-│   ├── layout.tsx                # Root layout for the app
-│   ├── globals.css               # Global styles
-│   ├── page.tsx                  # Home page (Hero + Featured Gallery)
+│   ├── layout.tsx                # Root layout
+│   ├── globals.css               # Global styles entry point
+│   ├── page.tsx                  # Home page (hero + featured gallery)
 │   ├── about/page.tsx            # About page
-│   ├── articles/page.tsx         # Articles listing page
-│   └── portfolio/[[...slug]]/page.tsx  # Portfolio gallery with filters
+│   ├── articles/page.tsx         # Articles listing
+│   ├── portfolio/[[...slug]]/page.tsx  # Photography gallery with filters
+│   └── work/
+│       ├── page.tsx              # Work / case studies listing
+│       └── [slug]/page.tsx       # Individual case study
 │
-├── components/                   # Reusable UI components (feature-based + shared)
-│   ├── Hero/                     # Hero section component
-│   ├── Body/                     # Layout for body/content sections
-│   ├── Header/                   # Site header
-│   ├── Footer/                   # Footer component
-│   ├── Gallery/                  # Gallery grid, items, filters, Lightbox
-│   ├── FeaturedGallery/          # Featured project/photo carousel
-│   ├── Article/                  # Article cards, page hero, grid, Medium CTA
-│   ├── LatestArticles/           # Latest articles listing
-│   └── shared/                   # Shared primitives used across features
-│       ├── Button/               # Shared buttons
-│       ├── TextBlock/            # Shared paragraph/text blocks
-│       └── icons/                # Shared SVG/icon components
+├── components/
+│   ├── features/                 # Page-specific feature components
+│   │   ├── home/                 # Hero, featured gallery
+│   │   ├── portfolio/            # GalleryGrid, GalleryItem, GalleryFilters, Lightbox
+│   │   ├── articles/             # ArticleCard, ArticleGrid, ArticleFilter
+│   │   ├── work/                 # WorkCard, WorkItemPage sections
+│   │   └── about/                # ProfileCard, DualCardSection
+│   ├── layout/                   # Structural layout components
+│   │   ├── Header/               # Site header with mobile menu
+│   │   ├── Footer/               # Site footer
+│   │   ├── Container/            # Max-width wrapper
+│   │   ├── Grid/ & Stack/        # Layout primitives
+│   │   └── Body/                 # Page body wrapper
+│   └── ui/                       # Shared design-system components
+│       ├── Button/               # Button with variants (gold, ghost, primary…)
+│       ├── Typography/           # Type scale component
+│       ├── CtaLink/              # CTA link component
+│       ├── SectionHeader/        # Section heading
+│       └── icons/                # SVG / icon components
 │
 ├── lib/                          # API & utilities
 │   ├── api/
 │   │   ├── photos.ts             # Supabase queries for photos/categories
-│   │   └── mediumArticles/       # Medium articles integration
-│   ├── supabase/
-│   │   ├── client.ts             # Client-side Supabase queries
-│   │   └── server.ts             # Server-side Supabase queries
+│   │   └── mediumArticles/       # Medium RSS integration
+│   └── supabase/
+│       ├── client.ts             # Browser Supabase client
+│       └── server.ts             # Server-component Supabase client
 │
+├── styles/                       # Global CSS (tokens, base, animations)
 ├── types/                        # TypeScript types
-│   ├── database.types.ts         # Generated Supabase types
-│   └── photo.types.ts            # Domain-specific types for photos/categories
-│
-├── data/                         # Static data
-│   └── data.ts                   # hero content or placeholders
-│
-├── hooks/                        # (Planned) shared React hooks
-├── contexts/                     # (Planned) React context providers
-└── tests                         # (Planned) unit/integration tests
+│   ├── database.types.ts         # Auto-generated Supabase types
+│   └── photo.types.ts            # Domain types (Photo, Category, Subcategory)
+├── data/                         # Static content and project data
+└── context/                      # React context providers
 ```
 
 ---

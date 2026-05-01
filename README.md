@@ -6,7 +6,7 @@ Live site: [paria.eu](https://paria.eu)
 
 ## Tech Stack
 
-- **Next.js 15** — App Router, Server Components, static generation
+- **Next.js 16** — App Router, Server Components, static generation
 - **TypeScript** — Strict mode, types generated from Supabase schema
 - **Tailwind CSS v4** — Custom design system with design tokens
 - **Supabase** — PostgreSQL database, storage, and row-level security
@@ -26,7 +26,7 @@ Live site: [paria.eu](https://paria.eu)
 
 ### Prerequisites
 
-- Node.js 20+
+- Node.js 22+
 - Supabase account
 
 ### Installation

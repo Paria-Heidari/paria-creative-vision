@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Brain, Code, Newspaper } from 'lucide-react';
 import Button from '@/components/ui/Button/Button';
 import { motion } from 'framer-motion';
@@ -30,15 +31,40 @@ const categories = [
 
 interface ArticleFilterProps {
   initialArticles: MediumArticle[];
+  initialCategory?: string;
 }
 
-const ArticleFilter = ({ initialArticles }: ArticleFilterProps) => {
-  const [activeCategory, setActiveCategory] = useState('all');
+const ArticleFilter = ({
+  initialArticles,
+  initialCategory,
+}: ArticleFilterProps) => {
+  const [activeCategory, setActiveCategory] = useState(
+    initialCategory || 'all',
+  );
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const filteredArticles = filterArticlesByCategory(
     initialArticles,
     activeCategory,
   );
+
+  const handleCategoryChange = (categoryId: string) => {
+    setActiveCategory(categoryId);
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (categoryId === 'all') {
+      params.delete('category');
+    } else {
+      params.set('category', categoryId);
+    }
+    const queryString = params.toString();
+    router.replace(queryString ? `${pathname}?${queryString}` : pathname, {
+      scroll: false,
+    });
+  };
 
   return (
     <section className="px-6 pb-20 sm:px-8">
@@ -61,15 +87,13 @@ const ArticleFilter = ({ initialArticles }: ArticleFilterProps) => {
                 btnText={category.label}
                 btnTextVariant="paragraphSmall"
                 startIcon={<Icon className="h-4 w-4 shrink-0" />}
-                onClick={() => setActiveCategory(category.id)}
+                onClick={() => handleCategoryChange(category.id)}
                 className={
                   !isActive
                     ? 'border-foreground/10 hover:border-accent-gold hover:text-accent-gold w-full bg-white/80 hover:bg-white/90'
                     : 'w-full'
                 }
-              >
-                {category.label}
-              </Button>
+              />
             );
           })}
         </motion.div>
