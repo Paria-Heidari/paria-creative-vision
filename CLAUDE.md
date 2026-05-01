@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Paria Creative Vision is a modern photography portfolio built with Next.js 15, TypeScript, Tailwind CSS, and Supabase. The application showcases photography work through a responsive gallery with category/subcategory filtering and a lightbox viewer.
+Paria Creative Vision is a modern photography portfolio built with Next.js 16, TypeScript, Tailwind CSS, and Supabase. The application showcases photography work through a responsive gallery with category/subcategory filtering and a lightbox viewer.
 
 ## Development Commands
 
@@ -52,11 +52,13 @@ Photos are stored in Supabase Storage, referenced via `storage_path` field.
 Uses Next.js App Router with Server Components:
 
 - `/` - Home page with hero and featured photos
-- `/pages/portfolio/[[...slug]]` - Main gallery with optional category/subcategory filters
+- `/portfolio/[[...slug]]` - Main gallery with optional category/subcategory filters
   - Query params: `?category=slug` or `?subcategory=slug`
   - Server-side filtering via Supabase queries
-- `/pages/about` - About page
-- `/pages/articles` - Articles page
+- `/about` - About page
+- `/articles` - Articles page
+- `/work` - Work / case studies listing
+- `/work/[slug]` - Individual case study
 
 **Important**: Portfolio uses catch-all route `[[...slug]]` but currently filters via query params, not slug params.
 

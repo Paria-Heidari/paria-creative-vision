@@ -39,6 +39,7 @@ type ButtonSize = keyof typeof buttonSizeClassMap;
 type ButtonRounded = keyof typeof roundedClassMap;
 
 type BaseProps = {
+  children?: ReactNode;
   btnText?: string;
   btnTextVariant?: 'paragraph' | 'paragraphSmall' | 'navLink';
   variant?: ButtonVariant;
@@ -49,12 +50,14 @@ type BaseProps = {
   loading?: boolean;
   disabled?: boolean;
   className?: string;
+  onClick?: () => void;
 };
 
 type ButtonAsButton = BaseProps &
   Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseProps> & {
     href?: never;
     external?: never;
+    ref?: React.RefObject<HTMLButtonElement>;
   };
 
 type ButtonAsLink = BaseProps &
@@ -69,6 +72,7 @@ const baseButtonClasses =
   'inline-flex items-center justify-center gap-2 font-medium tracking-wide transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold/40 focus-visible:ring-offset-2';
 
 export default function Button({
+  children,
   btnText,
   btnTextVariant,
   variant = 'primary',
@@ -79,6 +83,7 @@ export default function Button({
   loading = false,
   disabled = false,
   className,
+  onClick,
   href,
   ...props
 }: ButtonProps) {
@@ -100,6 +105,7 @@ export default function Button({
           {startIcon}
         </span>
       ) : null}
+      {children}
       {btnText && (
         <Typography
           variant={btnTextVariant ?? 'paragraph'}
@@ -150,6 +156,7 @@ export default function Button({
       disabled={isDisabled}
       aria-busy={loading || undefined}
       className={classes}
+      onClick={onClick}
       {...buttonProps}
     >
       {content}

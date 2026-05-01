@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Photo } from '@/types/photo.types';
 import { X, ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
@@ -19,6 +19,7 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [direction, setDirection] = useState<'left' | 'right' | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const currentPhoto = photos[currentIndex];
   const hasPrevious = currentIndex > 0;
@@ -29,22 +30,34 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
     : '/images/placeholder.jpg';
 
   const handlePrevious = useCallback(() => {
-    if (hasPrevious) {
-      setDirection('right');
-      setIsLoading(true);
-      setCurrentIndex((prev) => prev - 1);
-    }
+    if (!hasPrevious) return;
+    setIsLoading(true);
+    setDirection('right');
+    setCurrentIndex((prev) => prev - 1);
   }, [hasPrevious]);
 
   const handleNext = useCallback(() => {
-    if (hasNext) {
-      setDirection('left');
-      setIsLoading(true);
-      setCurrentIndex((prev) => prev + 1);
-    }
+    if (!hasNext) return;
+    setIsLoading(true);
+    setDirection('left');
+    setCurrentIndex((prev) => prev + 1);
   }, [hasNext]);
 
-  // Keyboard navigation
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (touchStartX.current === null) return;
+      const delta = e.changedTouches[0].clientX - touchStartX.current;
+      touchStartX.current = null;
+      if (delta > 50) handlePrevious();
+      else if (delta < -50) handleNext();
+    },
+    [handleNext, handlePrevious],
+  );
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -53,7 +66,6 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    // Prevent body scroll when lightbox is open
     document.body.style.overflow = 'hidden';
 
     return () => {
@@ -67,95 +79,132 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
       role="dialog"
       aria-modal="true"
       aria-label={currentPhoto.title}
-      className="bg-surface-strong/70 animate-fadeIn fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+      className="animate-fadeIn bg-surface-strong/70 fixed inset-0 z-50 flex flex-col backdrop-blur-sm sm:items-center sm:justify-center"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
-      {/* Close button */}
+      {/* Top bar */}
+      <div className="flex items-center justify-between px-4 py-3 sm:absolute sm:inset-x-0 sm:top-0 sm:z-50 sm:px-6 sm:py-5">
+        <div className="bg-accent-gold rounded-full px-4 py-2">
+          <Typography variant="caption" as="span" className="tracking-wider text-white">
+            {currentIndex + 1} / {photos.length}
+          </Typography>
+        </div>
 
-      <Button
-        variant="gold"
-        onClick={onClose}
-        aria-label="Close lightbox"
-        className="bg-accent-gold hover:bg-accent-gold-hover group absolute top-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300"
-      >
-        <X className="h-6 w-6 text-white transition-transform duration-300 group-hover:rotate-90" />
-      </Button>
-
-      {/* Navigation buttons */}
-      {hasPrevious && (
         <Button
           variant="gold"
-          onClick={handlePrevious}
-          aria-label="Previous photo"
-          className="bg-accent-gold hover:bg-accent-gold-hover group absolute left-6 z-50 flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300"
+          onClick={onClose}
+          aria-label="Close lightbox"
+          className="h-9 w-9 rounded-full p-0 sm:h-12 sm:w-12"
         >
-          <ChevronLeft className="h-6 w-6 text-white transition-transform duration-300 group-hover:-translate-x-1" />
+          <X className="h-5 w-5 sm:h-6 sm:w-6" />
         </Button>
-      )}
-
-      {hasNext && (
-        <Button
-          variant="gold"
-          onClick={handleNext}
-          aria-label="Next photo"
-          className="bg-accent-gold hover:bg-accent-gold-hover group absolute right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300"
-        >
-          <ChevronRight className="h-6 w-6 text-white transition-transform duration-300 group-hover:translate-x-1" />
-        </Button>
-      )}
-
-      {/* Image counter */}
-      <div className="bg-accent-gold absolute top-6 left-6 z-50 rounded-full px-4 py-2 backdrop-blur-sm">
-        <Typography
-          variant="caption"
-          as="span"
-          className="tracking-wider text-white"
-        >
-          {currentIndex + 1} / {photos.length}
-        </Typography>
       </div>
 
-      {/* Main content container */}
+      {/* Image area */}
       <div
-        className="mx-6 flex max-h-[90vh] max-w-7xl flex-col"
+        className="relative flex flex-1 items-center justify-center sm:w-full sm:max-w-6xl sm:flex-none sm:px-20"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Image container */}
-        <div className="relative mb-6 flex flex-1 items-center justify-center">
-          {/* Loading spinner */}
-          {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="border-accent-gold border-t-accent-gold h-12 w-12 animate-spin rounded-full border-4" />
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="border-accent-gold h-10 w-10 animate-spin rounded-full border-2 border-t-transparent" />
+          </div>
+        )}
+
+        <Image
+          src={imageUrl}
+          alt={currentPhoto.title}
+          width={currentPhoto.width}
+          height={currentPhoto.height}
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1200px"
+          className={`h-auto max-h-[58vh] w-full object-contain transition-all duration-500 sm:max-h-[70vh] sm:w-auto sm:rounded-lg sm:shadow-2xl ${
+            isLoading ? 'scale-95 opacity-0' : 'scale-100 opacity-100'
+          } ${direction === 'left' ? 'animate-slideInLeft' : direction === 'right' ? 'animate-slideInRight' : ''}`}
+          onLoad={() => setIsLoading(false)}
+        />
+
+        {/* Desktop-only side arrows */}
+        {hasPrevious && (
+          <Button
+            variant="gold"
+            onClick={handlePrevious}
+            aria-label="Previous photo"
+            className="group absolute left-0 hidden h-12 w-12 items-center justify-center rounded-full transition-all duration-300 sm:flex"
+          >
+            <ChevronLeft className="h-6 w-6 text-white transition-transform duration-300 group-hover:-translate-x-1" />
+          </Button>
+        )}
+
+        {hasNext && (
+          <Button
+            variant="gold"
+            onClick={handleNext}
+            aria-label="Next photo"
+            className="group absolute right-0 hidden h-12 w-12 items-center justify-center rounded-full transition-all duration-300 sm:flex"
+          >
+            <ChevronRight className="h-6 w-6 text-white transition-transform duration-300 group-hover:translate-x-1" />
+          </Button>
+        )}
+      </div>
+
+      {/* Bottom section */}
+      <div
+        className="px-4 pt-4 pb-8 sm:pt-5 sm:pb-0"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Mobile nav: prev | dot indicators | next */}
+        <div className="mb-4 flex items-center justify-between sm:hidden">
+          <button
+            onClick={handlePrevious}
+            aria-label="Previous photo"
+            disabled={!hasPrevious}
+            className="flex h-10 w-10 items-center justify-center rounded-full text-foreground-muted transition-all disabled:opacity-20 active:bg-foreground/5"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          {photos.length <= 12 ? (
+            <div className="flex items-center gap-1.5">
+              {photos.map((_, i) => (
+                <div
+                  key={i}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === currentIndex ? 'w-5 bg-accent-gold' : 'w-1.5 bg-foreground/20'
+                  }`}
+                />
+              ))}
             </div>
+          ) : (
+            <Typography variant="caption" as="span" className="text-foreground-muted">
+              {currentIndex + 1} / {photos.length}
+            </Typography>
           )}
 
-          {/* Image */}
-          <Image
-            src={imageUrl}
-            alt={currentPhoto.title}
-            width={currentPhoto.width}
-            height={currentPhoto.height}
-            className={`h-auto max-h-[70vh] w-auto max-w-full rounded-lg object-contain shadow-2xl transition-all duration-500 ${
-              isLoading ? 'scale-95 opacity-0' : 'scale-100 opacity-100'
-            } ${direction === 'left' ? 'animate-slideInLeft' : direction === 'right' ? 'animate-slideInRight' : ''}`}
-            priority
-            onLoad={() => setIsLoading(false)}
-          />
+          <button
+            onClick={handleNext}
+            aria-label="Next photo"
+            disabled={!hasNext}
+            className="flex h-10 w-10 items-center justify-center rounded-full text-foreground-muted transition-all disabled:opacity-20 active:bg-foreground/5"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
         </div>
 
         {/* Photo info */}
-        <div className="bg-surface-raised/90 mx-auto max-w-2xl rounded-lg p-6 text-center backdrop-blur-sm">
+        <div className="mx-auto max-w-2xl rounded-lg bg-surface-raised/90 p-4 text-center backdrop-blur-sm sm:p-6">
           <Typography
             variant="h4"
             as="h2"
-            className="text-foreground mb-3 tracking-wide"
+            className="mb-1 tracking-wide text-foreground sm:mb-3"
           >
             {currentPhoto.title}
           </Typography>
 
           {currentPhoto.location_city && currentPhoto.location_country && (
-            <div className="mb-3 flex items-center justify-center gap-2">
+            <div className="mb-1 flex items-center justify-center gap-1.5 sm:mb-3 sm:gap-2">
               <MapPin
-                className="text-foreground-muted h-5 w-5"
+                className="h-4 w-4 text-foreground-muted sm:h-5 sm:w-5"
                 aria-hidden="true"
               />
               <Typography
@@ -178,13 +227,12 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
             </Typography>
           )}
 
-          {/* Tags */}
           {currentPhoto.tags && currentPhoto.tags.length > 0 && (
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               {currentPhoto.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="bg-accent-gold/10 text-accent-gold font-inter rounded-full px-3 py-1 text-xs tracking-wider uppercase"
+                  className="font-inter bg-accent-gold/10 text-accent-gold rounded-full px-3 py-1 text-xs tracking-wider uppercase"
                 >
                   {tag}
                 </span>

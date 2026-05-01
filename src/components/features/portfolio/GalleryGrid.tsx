@@ -67,7 +67,7 @@ const GalleryGrid = ({ photos, featuredBadgeLabel }: GalleryGridProps) => {
             featuredBadgeLabel={featuredBadgeLabel}
             onClick={() => handlePhotoClick(photo)}
             index={index}
-            priority={index < 5}
+            priority={index === 0}
           />
         ))}
       </div>
