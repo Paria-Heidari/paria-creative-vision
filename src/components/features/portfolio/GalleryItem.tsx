@@ -28,6 +28,9 @@ const GalleryItem = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const isGrid = variant === 'grid';
+  const imageSizes = isGrid
+    ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+    : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw';
   const imageUrl = photo.storage_path
     ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${photo.storage_path}`
     : '/images/placeholder.jpg';
@@ -71,6 +74,8 @@ const GalleryItem = ({
               alt={photo.title}
               width={photo.width}
               height={photo.height}
+              sizes={imageSizes}
+              loading={priority ? 'eager' : 'lazy'}
               priority={priority}
               className={`w-full transition-opacity duration-500 ${
                 isGrid ? 'h-full w-full object-cover' : 'h-auto'

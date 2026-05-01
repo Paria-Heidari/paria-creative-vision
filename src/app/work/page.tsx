@@ -9,7 +9,7 @@ export default function WorkPage() {
   return (
     <>
       <WorkPageHero {...workPageHeroData} />
-      <Container maxWidth="xl" className="pb-24 md:pb-32">
+      <Container maxWidth="xl">
         <Grid gap={8} className="grid-cols-1 md:grid-cols-2">
           {workProjects.map((project, index) => (
             <GridItem key={project.slug} colSpan={1}>
