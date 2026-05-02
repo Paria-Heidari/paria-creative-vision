@@ -3,7 +3,7 @@ import { routes as ROUTES } from '@/lib/routes/routes';
 
 export const workProjects = [
   {
-    slug: 'portfolio-website',
+    slug: 'paria-creative-vision',
     title: 'Paria Creative Vision',
     subtitle: 'Full-stack portfolio · React · TypeScript · Next.js · Supabase',
     year: '2025–2026',
