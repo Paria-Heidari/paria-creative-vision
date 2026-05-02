@@ -119,10 +119,12 @@ export const workProjects = [
 
 type WorkProject = (typeof workProjects)[number];
 
-const SelectedWorkSlugs = ['portfolio-website', 'dashboard'] as const;
+const SelectedWorkSlugs = workProjects.map((project) => project.slug);
 
 const selectedWorkProjects = SelectedWorkSlugs.map((slug) =>
-  workProjects.find((project) => project.slug === slug),
+  workProjects.find(
+    (project) => project.slug === slug && project.status === 'live',
+  ),
 ).filter(Boolean) as WorkProject[];
 
 const selectedWorkCards: WorkCardProps[] = selectedWorkProjects.map(
