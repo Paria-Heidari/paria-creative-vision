@@ -10,6 +10,8 @@ import { Container } from '@/components/layout/Container';
 import { PortfolioPageHero } from '@/components/features/portfolio';
 import { featuredGalleryInfo } from '@/data/staticData';
 import { portfolioPageHeroData } from '@/data/staticData';
+import { Suspense } from 'react';
+import { Loading } from '@/components/ui/Loading';
 
 interface PortfolioPageProps {
   searchParams: Promise<{
@@ -18,16 +20,18 @@ interface PortfolioPageProps {
   }>;
 }
 
-export default async function PortfolioPage({
+const GalleryGridSection = async ({
   searchParams,
-}: PortfolioPageProps) {
+}: {
+  searchParams: Promise<{
+    category?: string;
+    subcategory?: string;
+  }>;
+}) => {
   const { category: categorySlug, subcategory: subcategorySlug } =
     await searchParams;
 
-  // Fetch all categories with nested subcategories (for filter buttons)
   const categories = await getAllCategories();
-
-  // Fetch photos based on filters
   let photos;
   if (subcategorySlug) {
     photos = await getPhotosBySubcategory(subcategorySlug);
@@ -39,17 +43,29 @@ export default async function PortfolioPage({
 
   return (
     <>
+      <GalleryFilters
+        currentCategory={categorySlug}
+        currentSubcategory={subcategorySlug}
+        categories={categories}
+      />
+      <GalleryGrid
+        photos={photos}
+        featuredBadgeLabel={featuredGalleryInfo.featuredBadgeLabel}
+      />
+    </>
+  );
+};
+
+export default function PortfolioPage({
+  searchParams,
+}: PortfolioPageProps) {
+  return (
+    <>
       <PortfolioPageHero {...portfolioPageHeroData} />
       <Container maxWidth="2xl">
-        <GalleryFilters
-          currentCategory={categorySlug}
-          currentSubcategory={subcategorySlug}
-          categories={categories}
-        />
-        <GalleryGrid
-          photos={photos}
-          featuredBadgeLabel={featuredGalleryInfo.featuredBadgeLabel}
-        />
+        <Suspense fallback={<Loading />}>
+          <GalleryGridSection searchParams={searchParams} />
+        </Suspense>
       </Container>
     </>
   );

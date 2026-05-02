@@ -11,11 +11,12 @@ import { cn } from '@/lib/utils/utils';
 import { Typography } from '@/components/ui/Typography';
 import { useHeaderScroll } from '@/hooks/useHeaderScroll';
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function Header() {
   const { isVisible, isHidden, isScrolled } = useHeaderScroll();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const currentYear = new Date().getFullYear();
 
   const isActive = (href: string) =>
     pathname === href || (href !== '/' && pathname.startsWith(href));
@@ -174,7 +175,7 @@ export default function Header() {
               as="p"
               className="text-center tracking-wide"
             >
-              © {currentYear} Paria Creative Vision
+              © {CURRENT_YEAR} Paria Creative Vision
             </Typography>
           </div>
         </div>
