@@ -101,7 +101,7 @@ Build a portfolio website that allows users to explore Pariaâ€™s creative work â
 
 > **Early design:** The diagram below was created at the start of the project as an initial user flow sketch. The Mermaid chart below reflects the current implemented state.
 
-![User flow](./diagrams/user_flow_start.png)
+![User flow](./diagrams/user_flow_Start.png)
 
 ```mermaid
 flowchart LR
