@@ -3,7 +3,7 @@ import { routes as ROUTES } from '@/lib/routes/routes';
 
 export const workProjects = [
   {
-    slug: 'portfolio-website',
+    slug: 'paria-creative-vision',
     title: 'Paria Creative Vision',
     subtitle: 'Full-stack portfolio · React · TypeScript · Next.js · Supabase',
     year: '2025–2026',
@@ -119,10 +119,12 @@ export const workProjects = [
 
 type WorkProject = (typeof workProjects)[number];
 
-const SelectedWorkSlugs = ['portfolio-website', 'dashboard'] as const;
+const SelectedWorkSlugs = workProjects.map((project) => project.slug);
 
 const selectedWorkProjects = SelectedWorkSlugs.map((slug) =>
-  workProjects.find((project) => project.slug === slug),
+  workProjects.find(
+    (project) => project.slug === slug && project.status === 'live',
+  ),
 ).filter(Boolean) as WorkProject[];
 
 const selectedWorkCards: WorkCardProps[] = selectedWorkProjects.map(

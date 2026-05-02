@@ -1,155 +1,112 @@
-## Styling
+## Frontend Styling Guide
 
-This project uses **Tailwind CSS v4** with **PostCSS** inside the Next.js build pipeline.
+In this project, I use **Tailwind CSS v4** + **PostCSS** with Next.js (Turbopack).
 
-### Styling pipeline
-
-1. Global styles start in `src/app/globals.css`.
+The goal is simple:
+- keep styles scalable
+- keep naming clean
+- avoid random one-off values in components
+The goal is simple:
+- keep styles scalable
+- keep naming clean
+- avoid random one-off values in components
+1. Styles are written in `src/app/globals.css`.
 2. Tailwind is loaded with `@import "tailwindcss";`.
-3. `npm run dev` or `npm run build` triggers the Next.js pipeline.
+3. Running `npm run dev` or `npm run build` starts the Next.js pipeline.
 4. Next.js reads `postcss.config.mjs` and runs PostCSS plugins.
-5. Tailwind and custom CSS are compiled into final CSS output.
-6. The browser receives optimized CSS.
+5. Tailwind directives are compiled into final CSS.
+6. The browser receives compiled CSS.
 
-#### Dependencies for this setup
+#### What to install for this setup
 
-```bash
-npm install tailwindcss @tailwindcss/postcss postcss
-```
+`npm install tailwindcss @tailwindcss/postcss postcss`
 
-For this Next.js + Turbopack setup, you usually **do not need** `@tailwindcss/cli` or a separate Tailwind watch command.
+For this Next.js + Turbopack project, you usually **do not need** `@tailwindcss/cli` or a separate Tailwind watch command.
 
-#### Why PostCSS is required
+#### Why PostCSS is needed here
 
-PostCSS is the transformation layer for CSS. Next.js uses it to run the Tailwind PostCSS plugin (and any future CSS transforms) automatically during development and production builds.
+PostCSS is the CSS processing step. Next.js uses it to run Tailwind's PostCSS plugin and any additional CSS transforms automatically during dev/build.
 
 ---
+### Style architecture
 
-## Style architecture
+In this project, I decided to split styles into multiple files and import them in index.css and import index.css in single global entry/place src/app/globals.css.
 
-I intentionally split global styling into focused files, then import them through one global entry point. This keeps the system maintainable while still giving me one place to control load order.
+- src/app/globals.css
+@import "tailwindcss";
+imports of split global files (index.css)
 
-### File structure and responsibilities
+src/styles/tokens.css
+:root variables + @theme mappings and use Tailwind classes
 
-- `src/app/globals.css`
-  - Loads Tailwind (`@import "tailwindcss";`)
-  - Imports `src/styles/index.css`
-- `src/styles/index.css`
-  - Central style aggregator for shared global style files
-- `src/styles/tokens.css`
-  - Design tokens (CSS variables)
-  - Theme values and Tailwind token mapping
-- `src/styles/base.css`
-  - Minimal global defaults and reset-style rules
-- `src/styles/animations.css`
-  - Reusable animation variables and keyframes
+src/styles/base.css
+minimal global defaults only
 
-### Token structure
+src/styles/tokens/index.css (imports all)
 
-I use semantic token naming so styles stay readable and easy to evolve.
+#### Token Structure
+1- Keep tokens semantic - use name by role.
+3 layers mentally
+- Primitive / global: raw palette values ( --gold-500, etc.)
+- Semantic: Ui meaning (--color-bg, --color-text, etc.)
+- Component (optional): when needed (--button-primary-bg)
 
-#### 1) Primitive (raw values)
+2- Split tokens by domain in src/styles/*,  them in globals.css.
 
-Raw palette or scale values, for example:
-- `--gold-500`
-- `--gray-900`
+3- Theme strategy (light/dark/brand)
+Inside tokens:
+:root { ...light defaults... }
+@media (prefers-color-scheme: dark) {...OS preference automatically...} Or
+.dark { ...overrides... }
+optional [data-theme="brandB"] { ... }
 
-#### 2) Semantic (meaning-based)
+4- Tailwind mapping layer
+Keep a single @theme inline block that maps the css variables to Tailwind tokens.
+--color-background: var(--color-bg);
+--color-foreground: var(--color-text);
+etc.
+Then component use Tailwind classes like bg-background text-foreground
 
-Tokens by UI role, for example:
-- `--color-bg`
-- `--color-text`
-- `--color-border`
 
-#### 3) Component tokens (optional)
+#### practical Rule
+- If style is app-wide -> put in src/styles/*
+- If style is feature/component-specific ->prefer Tailwind classes first
+- If Tailwind becomes unreadable -> 
+    use *.module.css near that component Or
+    A small helper function (cn) 
 
-Used only when a shared component needs dedicated variables, for example:
-- `--button-primary-bg`
-- `--button-primary-text`
+#### Dark mode 
+System mode strategy- Use OS preference automatically via @media (prefers-color-scheme: dark).
+- User sets dark mode in OS
+- Site follows automatically
+- No button needed
 
-### Theme strategy (light / dark / brand)
+### Custom Font
+Upload .woff2 file in public/fonts/...
+Use next/font/local (for the .woff2) in src/app/layout.tsx then map it to tokens.
 
-Base values live in `:root`, and then layers override as needed:
-
-- `:root { ... }` for default light theme
-- `@media (prefers-color-scheme: dark) { ... }` for automatic OS dark mode
-- Optional `.dark { ... }` if manual dark toggle is added later
-- Optional `[data-theme="brandB"] { ... }` for brand-specific theme variants
-
-### Tailwind mapping layer
-
-Keep one mapping layer that links CSS variables to Tailwind tokens:
-
-- `--color-background: var(--color-bg);`
-- `--color-foreground: var(--color-text);`
-
-Then components can use utility classes like `bg-background` and `text-foreground`.
-
-### Practical rules I follow
-
-- If a style is app-wide, put it in `src/styles/*`.
-- If a style is feature/component-specific, prefer Tailwind classes first.
-- If Tailwind classes become noisy or hard to scan:
-  - use a nearby `*.module.css`, or
-  - use a small utility helper like `cn()` to keep class composition clean.
-
-### Dark mode decision
-
-Current strategy is **system mode only**:
-- user changes OS theme,
-- site follows automatically via `prefers-color-scheme`,
-- no theme toggle button needed right now.
-
-This keeps the first version simple while leaving room to add manual theme switching later.
-
----
-
-## Custom font setup
-
-My approach is to store font files in `public/fonts`, load them with `next/font/local`, then map them into tokens so usage stays consistent everywhere.
-
-### 1) Add font files
-
-Place `.woff2` files in `public/fonts/...`.
-
-### 2) Load font in `src/app/layout.tsx`
-
-```ts
+1- Load font in layout.tsx
+- import local font from public/fonts/...
+- assign CSS variable (e.g. "--font-grotesk")
 const Grotesk = localFont({
   src: "../../public/fonts/founders-grotesk-regular.woff2",
   variable: "--font-grotesk",
   display: "swap",
 });
-```
 
-### 3) Apply font class on root element
+2- Add variable class to <body>
+<html
+      lang="en"
+      className={`${Grotesk.className} font-grotesk`}
+    >
+3- In tokens.css, map token to that variable
+--pri-font-grotesk: var(--font-grotesk);
+then semantic
+--sem-font-family-grotesk: var(--pri-font-grotesk);
 
-Use the generated class/variable on `html` or `body` (depending on your layout convention), for example:
-
-```tsx
-<html lang="en" className={`${Grotesk.className} font-grotesk`}>
-```
-
-### 4) Map font into tokens
-
-In `tokens.css`:
-- `--pri-font-grotesk: var(--font-grotesk);`
-- `--semi-font-family-grotesk: var(--pri-font-grotesk);`
-
-### 5) Expose to Tailwind when needed
-
-Inside your Tailwind token mapping layer:
-- `--font-family-grotesk: var(--semi-font-family-grotesk);`
-
-Then use either:
-- Tailwind utility class like `font-grotesk`, or
-- direct CSS variable usage for specific cases.
-
----
-
-## Notes for future me
-
-- Keep adding tokens by **role**, not by color name, unless it is a primitive token.
-- Prefer extending semantic tokens before creating component-specific tokens.
-- Keep global CSS minimal; push most UI styling into component-level Tailwind utilities.
-- If the design system grows, split `tokens.css` by domain (`color`, `typography`, `spacing`, `motion`) and re-export through `src/styles/index.css`.
+4- Expose to Tailwind if needed
+in @theme inline:
+    --font-family-grotesk: var(--sem-font-family-grotesk);
+then use 
+font-grotesk in classes, Or 
+font-family: var(--sem-font-family-brand) in CSS
