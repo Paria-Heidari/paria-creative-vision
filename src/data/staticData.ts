@@ -16,11 +16,26 @@ export const navigation: { name: string; href: string; current: boolean }[] = [
 // Metadata data
 export const metadataInfo = {
   title: 'Paria Creative Vision',
-  description: 'Personal portfolio of Paria',
+  description:
+    "Paria's portfolio at the intersection of code and lens — photography collections, engineering case studies, and articles on web dev and AI.",
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
     apple: '/favicon.svg',
+  },
+  openGraph: {
+    title: 'Paria Creative Vision',
+    description:
+      "Paria's portfolio at the intersection of code and lens — photography collections, engineering case studies, and articles on web dev and AI.",
+    images: [{ url: '/images/work/cover.jpg', width: 1728, height: 944 }],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Paria Creative Vision',
+    description:
+      "Paria's portfolio at the intersection of code and lens — photography collections, engineering case studies, and articles on web dev and AI.",
+    images: ['/images/work/cover.jpg'],
   },
 };
 

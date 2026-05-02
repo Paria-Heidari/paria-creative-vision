@@ -19,7 +19,7 @@ interface PortfolioPageProps {
     subcategory?: string;
   }>;
 }
-
+// Make Server Component Partial Pre-Rendered by using cacheComponents in next.config.ts
 const GalleryGridSection = async ({
   searchParams,
 }: {

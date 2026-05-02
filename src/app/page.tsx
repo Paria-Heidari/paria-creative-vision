@@ -13,8 +13,8 @@ import { homePageHeroData } from '@/data/staticData';
 import { Suspense } from 'react';
 import { Loading } from '@/components/ui/Loading';
 
+// Make Server Component Partial Pre-Rendered by using cacheComponents in next.config.ts
 const mediumUsername = process.env.MEDIUM_USERNAME as string;
-
 const FeaturedGallerySection = async () => {
   const featuredPhotos = await getFeaturedPhotos();
   return (

@@ -22,12 +22,8 @@ Build a portfolio website that allows users to explore Paria’s creative work �
 - Filter photos by category / subcategory
 - Filter articles by technology category (Web Dev, AI)
 - Work / case studies section to provide context through storytelling
-
-**In progress:**
 - Contact form with validation
-
-**Brainstorming:**
-- Richer project storytelling — optional interactive elements such as maps for travel/location-based work
+- Project storytelling — optional interactive elements such as maps for travel/location-based work
 
 ---
 ## Requirements
@@ -36,20 +32,22 @@ Build a portfolio website that allows users to explore Paria’s creative work �
 - Display photos in the portfolio
 - Filter photos by category / subCategory.
 - Access and read articles / insights
-- Filter articles by category / subCategory.
-- Contact form with input validation
+- Filter articles by category.
+- Display work cases 
 - Responsive layout - all devices
 - Smooth animations and interactive elements
 - Error handling (example, broken images or failed form submissions)
-**... in progress ....**
+- Contact form with input validation
 - Storytelling via Projects
     Include description, optional link, and interactive elements like maps ? (brainstorming)
 
 ### Non-Functional Requirements
 **Performance**
-- Fast loading times - Pages should load in under 2 seconds globally
-- Images should be optimized and lazily loaded
-- Partial Pre-Rendering (PPR) — static page shells are prerendered at build time; dynamic content (data fetches) streams in at request time via Suspense boundaries
+- Fast loading times — pages should load in under 2 seconds globally
+- Images optimized and lazily loaded (Next.js Image + Supabase Storage CDN)
+- Partial Pre-Rendering (PPR) — static page shells prerendered at build time; dynamic content streams at request time via Suspense boundaries
+- ISR for third-party content — articles revalidate every hour without a full rebuild (`revalidate: 3600`)
+- Font optimization via `next/font` — fonts are downloaded at build time and served from the same origin (no Google Fonts round-trip at runtime); size-adjusted fallbacks are generated automatically to eliminate layout shift (CLS)
 
 **Accessibility**
 - Semantic HTML structure
@@ -75,7 +73,7 @@ Build a portfolio website that allows users to explore Paria’s creative work �
 
 ### Minimum Viable Product (MVP)
 
-**MVP Features (shipped):**
+**MVP Features:**
 - Home page with featured projects (Supabase)
 - Portfolio page with category / subcategory filtering — **PPR**: hero prerendered, gallery streams via Suspense (Supabase + SSR)
 - Articles page with category filtering — **PPR**: hero prerendered, articles stream via Suspense (Medium RSS)
@@ -87,10 +85,10 @@ Build a portfolio website that allows users to explore Paria’s creative work �
 
 **In progress / brainstorming:**
 - **Paria Creative Vision** (this website) — the portfolio itself is also a case study featured under `/work`; documents the design decisions, PPR architecture, and tech stack choices made during its own build
-- Verdikt case study — B2B SaaS decision-approval workflow; portfolio write-up at `/work/verdikt` (see `docs/verdikt-prd.md`)
-- Contact form
+- **Verdikt** case study — B2B SaaS decision-approval workflow; portfolio write-up at `/work/verdikt`.
 
 **Excluded from MVP:**
+- Contact form
 - Analytics
 - Maps / interactive storytelling elements
 ---
@@ -113,7 +111,8 @@ flowchart LR
     Portfolio --> Filter[Filter by category / subcategory]
     Filter --> Lightbox[Lightbox viewer]
     Portfolio --> Lightbox
-    Work --> Verdikt[Verdikt case study\n in progress]
+    Work --> PariaCreativeVision[PariaCreativeVision\n -Live]
+    Work --> Verdikt[Verdikt\n -in progress]
     Work --> MoreCaseStudies[... more case studies\n brainstorming]
 ```
 
@@ -126,8 +125,9 @@ flowchart LR
 | 3 | **Lightbox** | Views image full-screen; navigates prev/next or closes. |
 | 4 | **Articles** | Reads insights filtered by category; opens full article on Medium. |
 | 5 | **Work** | Browses case studies listing. |
-| 6 | **Work / Verdikt** | Reads Verdikt case study (in progress). |
-| 7 | **About** | Reads bio and context. |
+| 6 | **Work / Paria Creative Vision** | Reads case study (Live). |
+| 7 | **Work / Verdikt** | Reads Verdikt case study (in progress). |
+| 8 | **About** | Reads bio and context. |
 
 **Key paths:**
 - Home → Portfolio (filter) → Lightbox
