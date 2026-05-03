@@ -34,8 +34,8 @@ Most companies handle these processes through email threads and spreadsheets. Ve
 
 **Tagline:** *"Decisions, tracked. Outcomes, owned."*
 
-**Live demo:** `paria.dev/verdikt/dashboard`  
-**Portfolio case study:** `paria.dev/work/verdikt`
+**Live demo:** `paria.eu/verdikt/dashboard`  
+**Portfolio case study:** `paria.eu/work/verdikt`
 
 ---
 
@@ -539,32 +539,3 @@ src/
 
 7. LIVE DEMO
 ```
-
-### The Story in Interviews
-
-> "I built Verdikt to show I can model business logic — not just UI. The interesting part wasn't the form or the list view. It was the workflow engine: a state machine that enforces valid transitions per role, writes an immutable audit log on every change, and requires documented reasoning for rejections. The analytics dashboard turns that data into 6 metrics a CFO would actually care about."
-
-### Key Phrases for LinkedIn / CV
-
-- *Multi-tenant B2B SaaS*
-- *Role-based workflow engine with enforced state transitions*
-- *Immutable audit log*
-- *KPI dashboard: approval rate, time-to-decision, overdue tracking*
-
----
-
-## 14. Open Questions
-
-| Question | Status | Decision |
-|---|---|---|
-| Project name: Verdikt vs alternatives? | ✅ Decided | Verdikt |
-| Call it SaaS in portfolio? | ✅ Decided | Yes — multi-tenant org table confirms it |
-| Magic link only, or add password auth? | ✅ Decided | Magic link for MVP simplicity |
-| Separate repo or inside portfolio? | ✅ Decided | Inside portfolio — one domain, one deployment |
-| Use existing portfolio's Supabase project or new one? | ✅ Decided | Same project — separate tables prefixed `verdikt_` |
-| Recharts or Chart.js for analytics? | ✅ Decided | Recharts (better React integration) |
-| Publish Medium article before or after shipping? | Open | Article 1 during schema design |
-
----
-
-
