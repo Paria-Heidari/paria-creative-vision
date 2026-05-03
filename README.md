@@ -68,8 +68,8 @@ MEDIUM_USERNAME=your_medium_username
 
 This repo hosts two apps under one domain using Next.js route groups:
 
-- **Portfolio** (`paria.dev/*`) — public photography & case studies site
-- **Verdikt** (`paria.dev/verdikt/*`) — B2B decision-tracking SaaS demo
+- **Portfolio** (`paria.eu/*`)
+- **Verdikt** — B2B decision-tracking SaaS demo
 
 ```
 src/
