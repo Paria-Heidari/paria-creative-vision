@@ -66,22 +66,40 @@ MEDIUM_USERNAME=your_medium_username
 
 ## Project Structure
 
+This repo hosts two apps under one domain using Next.js route groups:
+
+- **Portfolio** (`paria.eu/*`)
+- **Verdikt** — B2B decision-tracking SaaS demo
+
 ```
 src/
-├── app/                  # Next.js App Router pages
-│   ├── page.tsx          # Home
-│   ├── portfolio/        # Photography gallery
-│   ├── work/             # Engineering work & case studies
-│   ├── articles/         # Medium articles
-│   └── about/            # About page
+├── app/
+│   ├── layout.tsx                    # Bare HTML shell (fonts only)
+│   ├── (portfolio)/                  # Public portfolio — Header + Footer layout
+│   │   ├── layout.tsx
+│   │   ├── page.tsx                  # /
+│   │   ├── portfolio/                # /portfolio — photography gallery
+│   │   ├── work/                     # /work — case studies
+│   │   ├── articles/                 # /articles
+│   │   └── about/                    # /about
+│   └── (verdikt)/                    # Verdikt SaaS — Sidebar layout
+│       └── verdikt/
+│           ├── layout.tsx
+│           ├── login/                # /verdikt/login
+│           ├── auth/callback/        # /verdikt/auth/callback (magic link handler)
+│           ├── dashboard/            # /verdikt/dashboard
+│           └── departments/          # /verdikt/departments
 ├── components/
-│   ├── features/         # Page-specific components
+│   ├── features/         # Page-specific components (portfolio, verdikt, home…)
 │   ├── layout/           # Container, Grid, Stack, Header, Footer
-│   └── ui/               # Shared UI components and design system
-├── data/                 # Static content and project data
-├── lib/                  # Supabase clients, API layer, utilities
-├── styles/               # Design tokens and global CSS
-└── types/                # TypeScript definitions
+│   └── ui/               # Shared design system components
+├── data/                 # Static content and navigation data
+├── lib/
+│   ├── api/              # Supabase query functions (portfolio)
+│   ├── verdikt/          # Verdikt query functions, workflow engine, auth helpers
+│   └── supabase/         # Supabase clients (server, client, server-admin)
+├── migrations/           # SQL migrations (run in Supabase dashboard)
+└── types/                # TypeScript definitions (portfolio + verdikt)
 ```
 
 ## TypeScript Type Generation

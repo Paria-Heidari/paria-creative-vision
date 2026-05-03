@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Syne, Inter } from 'next/font/google';
 import localFont from 'next/font/local';
-import { BodyLayout } from '@/components/layout/Body';
 import { metadataInfo } from '@/data/staticData';
 import './globals.css';
 
@@ -33,9 +32,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       {/* suppressHydrationWarning: extensions (e.g. Grammarly) inject attributes on <body> */}
-      <body suppressHydrationWarning>
-        <BodyLayout>{children}</BodyLayout>
-      </body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
