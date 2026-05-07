@@ -13,8 +13,7 @@ export default function BodyLayout({
 }) {
   return (
     <Stack direction="vertical" gap={0} className={cn("min-h-screen", className)}>
-      {/* Header uses usePathname() — dynamic API, must be inside Suspense with cacheComponents */}
-      <Suspense fallback={<div className="h-16 w-full" />}>
+      <Suspense fallback={<div className="bg-surface-alt fixed top-0 left-0 z-50 h-16 w-full" />}>
         <Header />
       </Suspense>
       <main className="flex-grow">{children}</main>
