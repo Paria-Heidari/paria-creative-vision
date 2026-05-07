@@ -35,7 +35,7 @@ const FeaturedGallery = ({
     <section ref={sectionRef}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        animate={isInView ? { opacity: 1, y: 0 } : {opacity: 0, y: 30}}
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <Stack direction="vertical" gap={{ base: 8, md: 12 }}>
@@ -48,7 +48,6 @@ const FeaturedGallery = ({
             {featuredPhotos.map((photo, index) => (
               <GridItem key={photo.id}>
                 <motion.div
-                  key={photo.id}
                   initial={{ opacity: 0, y: 40 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}

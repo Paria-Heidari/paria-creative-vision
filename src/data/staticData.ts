@@ -30,13 +30,6 @@ export const metadataInfo = {
     images: [{ url: '/images/work/cover.jpg', width: 1728, height: 944 }],
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Paria Creative Vision',
-    description:
-      "Paria's portfolio at the intersection of code and lens — photography collections, engineering case studies, and articles on web dev and AI.",
-    images: ['/images/work/cover.jpg'],
-  },
 };
 
 // HomePage data

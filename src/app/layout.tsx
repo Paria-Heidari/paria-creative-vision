@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: metadataInfo.description,
   icons: metadataInfo.icons,
   openGraph: metadataInfo.openGraph,
-  twitter: metadataInfo.twitter,
+  twitter: metadataInfo.openGraph,
 };
 
 export default function RootLayout({

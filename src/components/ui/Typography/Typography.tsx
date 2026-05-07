@@ -3,9 +3,9 @@ import { cn } from '@/lib/utils/utils';
 
 const typographyVariants = {
   // Display headings — Syne for editorial impact
-  h1: 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-syne leading-[1.05] tracking-tight',
-  h2: 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold font-syne leading-[1.1] tracking-tight',
-  h3: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold font-syne leading-snug tracking-tight',
+  h1: 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-grotesk leading-[1.05] tracking-tight',
+  h2: 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold font-grotesk leading-[1.1] tracking-tight',
+  h3: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold font-grotesk leading-snug tracking-tight',
 
   // Functional headings — Grotesk for clean hierarchy
   h4: 'text-xl sm:text-2xl md:text-3xl font-semibold font-grotesk leading-snug',
