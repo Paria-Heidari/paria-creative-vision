@@ -1,36 +1,32 @@
-import FeaturedGallery from '@/components/features/home/FeaturedGallery';
-import LatestArticles from '@/components/features/home/LatestArticles';
+import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import HomePageHero from '@/components/features/home/HomePageHero';
 import { TextBlock } from '@/components/ui/TextBlock';
 import { Container } from '@/components/layout/Container';
 import { Stack } from '@/components/layout/Stack';
-import { getFeaturedPhotos } from '@/lib/api/photos';
-import { getMediumArticles } from '@/lib/api/mediumArticles';
 import { SelectedWorkSection } from '@/components/features/work';
 import { selectedWorkSectionData } from '@/data/workData';
-import { featuredGalleryInfo, textBlockData } from '@/data/staticData';
-import { homePageHeroData } from '@/data/staticData';
-import { Suspense } from 'react';
-import { Loading } from '@/components/ui/Loading';
+import {
+  textBlockData,
+  homePageHeroData,
+  metadataInfo,
+} from '@/data/staticData';
+import {
+  FeaturedGallerySection,
+  FeaturedGallerySkeleton,
+} from '@/components/features/home/FeaturedGallerySection';
+import {
+  LatestArticlesSection,
+  LatestArticlesSkeleton,
+} from '@/components/features/home/LatestArticlesSection';
 
-// Make Server Component Partial Pre-Rendered by using cacheComponents in next.config.ts
-const mediumUsername = process.env.MEDIUM_USERNAME as string;
-const FeaturedGallerySection = async () => {
-  const featuredPhotos = await getFeaturedPhotos();
-  return (
-    <FeaturedGallery
-      featuredPhotos={featuredPhotos}
-      featuredGalleryInfo={featuredGalleryInfo}
-    />
-  );
+export const metadata: Metadata = {
+  title: metadataInfo.title,
+  description: metadataInfo.description,
+  openGraph: metadataInfo.openGraph,
 };
 
-const LatestArticlesSection = async () => {
-  const articles = await getMediumArticles(mediumUsername);
-  return <LatestArticles articles={articles} />;
-};
-
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <HomePageHero {...homePageHeroData} />
@@ -41,12 +37,16 @@ export default async function Home() {
             info={selectedWorkSectionData.info}
             cards={selectedWorkSectionData.cards}
           />
-          <Suspense fallback={<Loading />}>
-            <FeaturedGallerySection />
-          </Suspense>
-          <Suspense fallback={<Loading />}>
-            <LatestArticlesSection />
-          </Suspense>
+          <div className="min-h-[640px]">
+            <Suspense fallback={<FeaturedGallerySkeleton />}>
+              <FeaturedGallerySection />
+            </Suspense>
+          </div>
+          <div className="min-h-[640px]">
+            <Suspense fallback={<LatestArticlesSkeleton />}>
+              <LatestArticlesSection />
+            </Suspense>
+          </div>
         </Stack>
       </Container>
     </>

@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import {Circle, Clock, Loader } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
 import { cn } from '@/lib/utils/utils';
 import { CtaLink } from '@/components/ui/CtaLink';
+import { WORK_STATUS } from './workCard.status';
 
 export interface WorkCardProps {
   title: string;
@@ -20,27 +20,6 @@ export interface WorkCardProps {
   animateFrom?: 'left' | 'right';
   className?: string;
 }
-
-const statusConfig = {
-  live: {
-    label: 'Live',
-    icon: Circle,
-    className: 'bg-success/10 text-success border border-success/20',
-    iconClassName: 'fill-success text-success',
-  },
-  'coming-soon': {
-    label: 'Coming Soon',
-    icon: Clock,
-    className: 'bg-accent text-foreground-muted border border-border',
-    iconClassName: 'text-foreground-muted',
-  },
-  'in-progress': {
-    label: 'In Progress',
-    icon: Loader,
-    className: 'bg-warning/10 text-warning border border-warning/20',
-    iconClassName: 'animate-spin text-warning',
-  },
-};
 
 const MAX_TAGS = 5;
 
@@ -57,8 +36,8 @@ export default function WorkCard({
 }: WorkCardProps) {
   const visibleTags = tags?.slice(0, MAX_TAGS) ?? [];
   const isComingSoon = status === 'coming-soon';
-  const Icon = statusConfig[status].icon;
-  const IconClassName = statusConfig[status].iconClassName;
+  const Icon = WORK_STATUS[status].icon;
+  const IconClassName = WORK_STATUS[status].iconClassName;
   const baseClass =
     'group flex h-full flex-col gap-6 rounded-lg border border-border bg-surface p-8 border-l-4 border-l-accent-gold transition-all duration-300';
   const comingSoonClass = 'pointer-events-none cursor-default opacity-60';
@@ -103,13 +82,13 @@ export default function WorkCard({
             as="span"
             className={cn(
               'ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-medium',
-              statusConfig[status].className,
+              WORK_STATUS[status].className,
             )}
           >
             {Icon && (
               <Icon className={cn('h-3 w-3', IconClassName)} aria-hidden />
             )}
-            {statusConfig[status].label}
+            {WORK_STATUS[status].label}
           </Typography>
         </Stack>
 
@@ -156,11 +135,11 @@ export default function WorkCard({
                 {tag}
               </span>
             ))}
-            {(tags?.length ?? 0) > MAX_TAGS && (
+            {/* {(tags?.length ?? 0) > MAX_TAGS && (
               <span className="border-border bg-background text-foreground-subtle rounded-full border px-2 py-1 text-xs">
                 +{(tags?.length ?? 0) - MAX_TAGS} more
               </span>
-            )}
+            )} */}
           </Stack>
         )}
 
