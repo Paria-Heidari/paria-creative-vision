@@ -10,26 +10,27 @@ import { Container } from '@/components/layout/Container';
 import { PortfolioPageHero } from '@/components/features/portfolio';
 import { featuredGalleryInfo } from '@/data/staticData';
 import { portfolioPageHeroData } from '@/data/staticData';
+import { routes as ROUTES } from '@/lib/routes/routes';
 import { Suspense } from 'react';
 import { Loading } from '@/components/ui/Loading';
 
 interface PortfolioPageProps {
-  searchParams: Promise<{
-    category?: string;
-    subcategory?: string;
+  // searchParams: Promise<{
+  //   category?: string;
+  //   subcategory?: string;
+  // }>;
+  params:Promise<{
+    slug: string[];
   }>;
 }
 // Make Server Component Partial Pre-Rendered by using cacheComponents in next.config.ts
 const GalleryGridSection = async ({
-  searchParams,
-}: {
-  searchParams: Promise<{
-    category?: string;
-    subcategory?: string;
-  }>;
-}) => {
-  const { category: categorySlug, subcategory: subcategorySlug } =
-    await searchParams;
+  params,
+}: PortfolioPageProps) => {
+  const slugArray = (await params)?.slug ?? [];
+  const categorySlug = slugArray[0];
+  const subcategorySlug = slugArray[1];
+  const basePath = ROUTES.portfolio;
 
   const categories = await getAllCategories();
   let photos;
@@ -44,6 +45,7 @@ const GalleryGridSection = async ({
   return (
     <>
       <GalleryFilters
+        basePath={basePath}
         currentCategory={categorySlug}
         currentSubcategory={subcategorySlug}
         categories={categories}
@@ -57,14 +59,14 @@ const GalleryGridSection = async ({
 };
 
 export default function PortfolioPage({
-  searchParams,
+  params,
 }: PortfolioPageProps) {
   return (
     <>
       <PortfolioPageHero {...portfolioPageHeroData} />
       <Container maxWidth="2xl">
         <Suspense fallback={<Loading />}>
-          <GalleryGridSection searchParams={searchParams} />
+          <GalleryGridSection params={params} />
         </Suspense>
       </Container>
     </>
