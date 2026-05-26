@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { getSupabaseStatic } from '@/lib/supabase/static';
 import type { QueryData } from '@supabase/supabase-js';
 
 const logPostgrestError = (
@@ -190,4 +191,13 @@ export async function getAllCategories() {
   }));
 
   return categoriesWithSortedSubcategories;
+}
+
+export async function getAllCategoriesStatic() {
+  const { data: categories } = await getSupabaseStatic()
+    .from('categories')
+    .select('slug, subcategories(slug)')
+    .order('display_order', { ascending: true });
+
+  return categories ?? [];
 }

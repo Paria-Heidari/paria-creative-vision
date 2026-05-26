@@ -5,6 +5,7 @@ import {
   getPhotosByCategory,
   getPhotosBySubcategory,
   getAllCategories,
+  getAllCategoriesStatic,
 } from '@/lib/api/photos';
 import { Container } from '@/components/layout/Container';
 import { PortfolioPageHero } from '@/components/features/portfolio';
@@ -15,14 +16,26 @@ import { Suspense } from 'react';
 import { Loading } from '@/components/ui/Loading';
 
 interface PortfolioPageProps {
-  // searchParams: Promise<{
-  //   category?: string;
-  //   subcategory?: string;
-  // }>;
   params:Promise<{
     slug: string[];
   }>;
 }
+
+export async function generateStaticParams() {
+  const categories = await getAllCategoriesStatic();
+
+  const paths: { slug: string[] }[] = [{ slug: [] }];
+
+  for (const category of categories ?? []) {
+    paths.push({ slug: [category.slug] });
+    for (const sub of category.subcategories ?? []) {
+      paths.push({ slug: [category.slug, sub.slug] });
+    }
+  }
+
+  return paths;
+}
+
 // Make Server Component Partial Pre-Rendered by using cacheComponents in next.config.ts
 const GalleryGridSection = async ({
   params,
