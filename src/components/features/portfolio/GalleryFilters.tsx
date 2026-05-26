@@ -1,5 +1,5 @@
 'use client';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Typography } from '@/components/ui/Typography';
 import { Category } from '@/types/photo.types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,6 +8,7 @@ import { Stack } from '@/components/layout/Stack';
 import { cn } from '@/lib/utils/utils';
 
 interface GalleryFiltersProps {
+  basePath: string;
   currentCategory?: string;
   currentSubcategory?: string;
   categories?: Category[];
@@ -27,39 +28,13 @@ const subBtnInactive =
   'bg-surface-raised text-foreground-muted hover:bg-accent-gold/10 hover:text-accent-gold';
 
 const GalleryFilters = ({
+  basePath,
   currentCategory,
   currentSubcategory,
   categories,
 }: GalleryFiltersProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-
   const selectedCategory = currentCategory || 'all';
-  const selectedSubcategory = currentSubcategory;
-
-  const handleCategoryClick = (categorySlug: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (categorySlug === 'all') {
-      params.delete('category');
-      params.delete('subcategory');
-    } else {
-      params.set('category', categorySlug);
-      params.delete('subcategory');
-    }
-    const queryString = params.toString();
-    router.push(`/portfolio${queryString ? `?${queryString}` : ''}`);
-  };
-
-  const handleSubcategoryClick = (
-    categorySlug: string,
-    subcategorySlug: string,
-  ) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('category', categorySlug);
-    params.set('subcategory', subcategorySlug);
-    const queryString = params.toString();
-    router.push(`/portfolio${queryString ? `?${queryString}` : ''}`);
-  };
 
   const selectedCategoryData = categories?.find(
     (c) => c.slug === selectedCategory,
@@ -89,14 +64,12 @@ const GalleryFilters = ({
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => handleCategoryClick('all')}
+              onClick={() => router.push(basePath)}
               aria-pressed={selectedCategory === 'all'}
               className={cn(
                 filterBtnBase,
                 'overflow-hidden px-6 py-2.5 text-sm',
-                selectedCategory === 'all'
-                  ? filterBtnActive
-                  : filterBtnInactive,
+                selectedCategory === 'all' ? filterBtnActive : filterBtnInactive,
               )}
             >
               All Photos
@@ -109,7 +82,7 @@ const GalleryFilters = ({
                   key={category.id}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => handleCategoryClick(category.slug)}
+                  onClick={() => router.push(`${basePath}/${category.slug}`)}
                   aria-pressed={isSelected}
                   className={cn(
                     filterBtnBase,
@@ -120,9 +93,7 @@ const GalleryFilters = ({
                   <span>{category.name}</span>
                   <span
                     className={
-                      isSelected
-                        ? 'text-xs text-white/70'
-                        : 'text-foreground-muted text-xs'
+                      isSelected ? 'text-xs text-white/70' : 'text-foreground-muted text-xs'
                     }
                   >
                     ({category.photo_count})
@@ -151,18 +122,14 @@ const GalleryFilters = ({
                     className="flex-wrap"
                   >
                     {selectedCategoryData.subcategories.map((subcategory) => {
-                      const isSelected =
-                        selectedSubcategory === subcategory.slug;
+                      const isSelected = currentSubcategory === subcategory.slug;
                       return (
                         <motion.button
                           key={subcategory.id}
                           whileHover={{ scale: 1.03 }}
                           whileTap={{ scale: 0.97 }}
                           onClick={() =>
-                            handleSubcategoryClick(
-                              selectedCategory,
-                              subcategory.slug,
-                            )
+                            router.push(`${basePath}/${selectedCategory}/${subcategory.slug}`)
                           }
                           aria-pressed={isSelected}
                           className={cn(
@@ -171,21 +138,19 @@ const GalleryFilters = ({
                           )}
                         >
                           <span>{subcategory.name}</span>
-                          <span className="opacity-60">
-                            ({subcategory.photo_count})
-                          </span>
+                          <span className="opacity-60">({subcategory.photo_count})</span>
                         </motion.button>
                       );
                     })}
 
-                    {selectedSubcategory && (
+                    {currentSubcategory && (
                       <motion.button
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => handleCategoryClick(selectedCategory)}
+                        onClick={() => router.push(`${basePath}/${selectedCategory}`)}
                         className="bg-foreground/10 text-foreground-muted hover:bg-foreground/20 flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-300"
                       >
                         <X className="h-3 w-3" aria-hidden="true" />
@@ -213,13 +178,12 @@ const GalleryFilters = ({
                 >
                   {selectedCategoryData.description ||
                     `Exploring the ${selectedCategoryData.name} collection`}
-                  {selectedSubcategory && (
+                  {currentSubcategory && (
                     <span className="text-accent-gold">
-                      {' '}
-                      —{' '}
+                      {' '}—{' '}
                       {
                         selectedCategoryData.subcategories?.find(
-                          (s) => s.slug === selectedSubcategory,
+                          (s) => s.slug === currentSubcategory,
                         )?.name
                       }
                     </span>
