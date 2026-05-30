@@ -20,7 +20,7 @@ interface PortfolioPageProps {
     slug: string[];
   }>;
 }
-
+// Generate static paths for all categories and subcategories at build time
 export async function generateStaticParams() {
   const categories = await getAllCategoriesStatic();
 

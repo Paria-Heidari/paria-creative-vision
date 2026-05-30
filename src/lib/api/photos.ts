@@ -67,14 +67,11 @@ export async function getFeaturedPhotos(limit = 3) {
 export async function getPhotosByCategory(categorySlug: string) {
   const supabase = await createClient();
 
-  const categoryQuery = supabase
+  const { data: category, error: categoryError } = await supabase
     .from('categories')
     .select('id')
     .eq('slug', categorySlug)
     .maybeSingle();
-
-  type CategoryType = QueryData<typeof categoryQuery>;
-  const { data: category, error: categoryError } = await categoryQuery;
 
   if (categoryError) {
     logPostgrestError('Error resolving category by slug:', categoryError);
@@ -82,33 +79,11 @@ export async function getPhotosByCategory(categorySlug: string) {
   }
   if (!category) return [];
 
-  const subcategoriesQuery = supabase
-    .from('subcategories')
-    .select('id')
-    .eq('category_id', (category as CategoryType).id);
-
-  type SubcategoriesType = QueryData<typeof subcategoriesQuery>;
-  const { data: subcategories, error: subcategoriesError } =
-    await subcategoriesQuery;
-
-  if (subcategoriesError) {
-    logPostgrestError(
-      'Error fetching subcategories for category:',
-      subcategoriesError,
-    );
-    return [];
-  }
-
-  const subcategoryIds = ((subcategories ?? []) as SubcategoriesType).map(
-    (row) => row.id,
-  );
-  if (subcategoryIds.length === 0) return [];
-
   const photosQuery = supabase
     .from('photos')
-    .select('*, subcategory:subcategories(*)')
+    .select('*, subcategory:subcategories!inner(*)')
+    .eq('subcategories.category_id', category.id)
     .eq('published', true)
-    .in('subcategory_id', subcategoryIds)
     .order('display_order', { ascending: true });
 
   type PhotosByCategoryType = QueryData<typeof photosQuery>;
@@ -129,24 +104,10 @@ export async function getPhotosByCategory(categorySlug: string) {
 export async function getPhotosBySubcategory(subcategorySlug: string) {
   const supabase = await createClient();
 
-  const subcategoryQuery = supabase
-    .from('subcategories')
-    .select('id')
-    .eq('slug', subcategorySlug)
-    .maybeSingle();
-
-  const { data: subcategory, error: subcategoryError } = await subcategoryQuery;
-  if (subcategoryError) {
-    logPostgrestError('Error resolving subcategory by slug:', subcategoryError);
-    return [];
-  }
-
-  if (!subcategory) return [];
-
   const query = supabase
     .from('photos')
-    .select('*, subcategory:subcategories(*)')
-    .eq('subcategory_id', subcategory.id)
+    .select('*, subcategory:subcategories!inner(*)')
+    .eq('subcategories.slug', subcategorySlug)
     .eq('published', true)
     .order('display_order', { ascending: true });
 
@@ -170,7 +131,11 @@ export async function getAllCategories() {
   const query = supabase
     .from('categories')
     .select('*, subcategories(*)')
-    .order('display_order', { ascending: true });
+    .order('display_order', { ascending: true })
+    .order('display_order', {
+      referencedTable: 'subcategories',
+      ascending: true,
+    });
 
   type CategoriesType = QueryData<typeof query>;
 
@@ -180,24 +145,19 @@ export async function getAllCategories() {
     return [] as CategoriesType;
   }
 
-  const categoriesWithSortedSubcategories = (
-    (data ?? []) as CategoriesType
-  ).map((category) => ({
-    ...category,
-    subcategories:
-      category.subcategories?.sort(
-        (a, b) => a.display_order - b.display_order,
-      ) || [],
-  }));
-
-  return categoriesWithSortedSubcategories;
+  return data;
 }
 
 export async function getAllCategoriesStatic() {
-  const { data: categories } = await getSupabaseStatic()
+  const { data: categories, error } = await getSupabaseStatic()
     .from('categories')
     .select('slug, subcategories(slug)')
     .order('display_order', { ascending: true });
+
+  if (error) {
+    logPostgrestError('Error fetching categories for static params:', error);
+    return [];
+  }
 
   return categories ?? [];
 }
