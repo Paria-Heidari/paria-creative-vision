@@ -7,7 +7,6 @@ import { Typography } from '@/components/ui/Typography';
 
 export type CtaLinkVariant = 'trailing' | 'centered' | 'underline';
 
-
 const labelTypography: Record<CtaLinkVariant, 'paragraphSmall' | 'navLink'> = {
   trailing: 'paragraphSmall',
   centered: 'paragraphSmall',

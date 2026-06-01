@@ -12,9 +12,7 @@ interface ArticlesPageProps {
     category?: string;
   }>;
 }
-export default function ArticlesPage({
-  searchParams,
-}: ArticlesPageProps) {
+export default function ArticlesPage({ searchParams }: ArticlesPageProps) {
   return (
     <>
       <ArticlePageHero {...articlesPageHeroData} />

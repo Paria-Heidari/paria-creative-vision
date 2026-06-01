@@ -86,7 +86,11 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
       {/* Top bar */}
       <div className="flex items-center justify-between px-4 py-3 sm:absolute sm:inset-x-0 sm:top-0 sm:z-50 sm:px-6 sm:py-5">
         <div className="bg-accent-gold rounded-full px-4 py-2">
-          <Typography variant="caption" as="span" className="tracking-wider text-white">
+          <Typography
+            variant="caption"
+            as="span"
+            className="tracking-wider text-white"
+          >
             {currentIndex + 1} / {photos.length}
           </Typography>
         </div>
@@ -159,7 +163,7 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
             onClick={handlePrevious}
             aria-label="Previous photo"
             disabled={!hasPrevious}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-foreground-muted transition-all disabled:opacity-20 active:bg-foreground/5"
+            className="text-foreground-muted active:bg-foreground/5 flex h-10 w-10 items-center justify-center rounded-full transition-all disabled:opacity-20"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -170,13 +174,19 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
                 <div
                   key={i}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === currentIndex ? 'w-5 bg-accent-gold' : 'w-1.5 bg-foreground/20'
+                    i === currentIndex
+                      ? 'bg-accent-gold w-5'
+                      : 'bg-foreground/20 w-1.5'
                   }`}
                 />
               ))}
             </div>
           ) : (
-            <Typography variant="caption" as="span" className="text-foreground-muted">
+            <Typography
+              variant="caption"
+              as="span"
+              className="text-foreground-muted"
+            >
               {currentIndex + 1} / {photos.length}
             </Typography>
           )}
@@ -185,18 +195,18 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
             onClick={handleNext}
             aria-label="Next photo"
             disabled={!hasNext}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-foreground-muted transition-all disabled:opacity-20 active:bg-foreground/5"
+            className="text-foreground-muted active:bg-foreground/5 flex h-10 w-10 items-center justify-center rounded-full transition-all disabled:opacity-20"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
 
         {/* Photo info */}
-        <div className="mx-auto max-w-2xl rounded-lg bg-surface-raised/90 p-4 text-center backdrop-blur-sm sm:p-6">
+        <div className="bg-surface-raised/90 mx-auto max-w-2xl rounded-lg p-4 text-center backdrop-blur-sm sm:p-6">
           <Typography
             variant="h4"
             as="h2"
-            className="mb-1 tracking-wide text-foreground sm:mb-3"
+            className="text-foreground mb-1 tracking-wide sm:mb-3"
           >
             {currentPhoto.title}
           </Typography>
@@ -204,7 +214,7 @@ const Lightbox = ({ photo, photos, onClose }: LightboxProps) => {
           {currentPhoto.location_city && currentPhoto.location_country && (
             <div className="mb-1 flex items-center justify-center gap-1.5 sm:mb-3 sm:gap-2">
               <MapPin
-                className="h-4 w-4 text-foreground-muted sm:h-5 sm:w-5"
+                className="text-foreground-muted h-4 w-4 sm:h-5 sm:w-5"
                 aria-hidden="true"
               />
               <Typography

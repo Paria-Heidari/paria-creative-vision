@@ -4,8 +4,10 @@ import HomePageHero from '@/components/features/home/HomePageHero';
 import { TextBlock } from '@/components/ui/TextBlock';
 import { Container } from '@/components/layout/Container';
 import { Stack } from '@/components/layout/Stack';
-import { SelectedWorkSection } from '@/components/features/work';
-import { selectedWorkSectionData } from '@/data/workData';
+import {
+  SelectedWorkSection,
+  SelectedWorkSkeleton,
+} from '@/components/features/home/SelectedWorkSection';
 import {
   textBlockData,
   homePageHeroData,
@@ -33,10 +35,10 @@ export default function Home() {
       <Container maxWidth="xl">
         <Stack direction="vertical" gap={{ base: 12, md: 24 }}>
           <TextBlock content={textBlockData.content} />
-          <SelectedWorkSection
-            info={selectedWorkSectionData.info}
-            cards={selectedWorkSectionData.cards}
-          />
+          <Suspense fallback={<SelectedWorkSkeleton />}>
+            <SelectedWorkSection />
+          </Suspense>
+
           <div className="min-h-[640px]">
             <Suspense fallback={<FeaturedGallerySkeleton />}>
               <FeaturedGallerySection />

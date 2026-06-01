@@ -10,7 +10,9 @@ interface WorkDeepDiveSectionProps {
   }[];
 }
 
-export default function WorkDeepDiveSection({ articles }: WorkDeepDiveSectionProps) {
+export default function WorkDeepDiveSection({
+  articles,
+}: WorkDeepDiveSectionProps) {
   return (
     <>
       {articles.map((article) => (

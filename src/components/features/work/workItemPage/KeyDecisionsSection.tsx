@@ -3,7 +3,7 @@ import { Typography } from '@/components/ui/Typography';
 
 interface KeyDecisionsSectionProps {
   title: string;
-  description: string;
+  description: string | null;
   index: number;
 }
 

@@ -1,24 +1,22 @@
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { LinkData } from '@/types/ui.types';
-import WorkCard, { WorkCardProps } from './WorkCard';
+import WorkCard, { WorkCardProps } from '../work/WorkCard';
 import { Stack } from '@/components/layout/Stack';
 import { Grid, GridItem } from '@/components/layout/Grid';
+import { selectedWorkSectionInfo } from '@/data/staticData';
 
-interface SelectedWorkSectionProps {
-  info: {
-    title: string;
-    subTitle: string;
-    ctaLink: LinkData;
-  };
+interface SelectedWorkProps {
   cards: Omit<WorkCardProps, 'animateFrom'>[];
-  className?: string;
 }
 
-export default function SelectedWorkSection({ info, cards }: SelectedWorkSectionProps) {
+export default function SelectedWork({ cards }: SelectedWorkProps) {
   return (
     <Stack direction="vertical" gap={{ base: 8, md: 12 }}>
-      <SectionHeader title={info.title} subTitle={info.subTitle} ctaLink={info.ctaLink} />
-      <Grid gap={8} className="grid-cols-1 md:grid-cols-2">  
+      <SectionHeader
+        title={selectedWorkSectionInfo.title}
+        subTitle={selectedWorkSectionInfo.subTitle}
+        ctaLink={selectedWorkSectionInfo.ctaLink}
+      />
+      <Grid gap={8} className="grid-cols-1 md:grid-cols-2">
         {cards.map((card, index) => (
           <GridItem key={card.title} colSpan={1}>
             <WorkCard

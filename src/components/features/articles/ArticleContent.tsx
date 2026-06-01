@@ -7,7 +7,9 @@ interface ArticleContentProps {
   searchParams: Promise<{ category?: string }>;
 }
 
-export default async function ArticleContent({ searchParams }: ArticleContentProps) {
+export default async function ArticleContent({
+  searchParams,
+}: ArticleContentProps) {
   const { category = 'all' } = await searchParams;
   const articles = await getMediumArticles(mediumUsername);
   return (
