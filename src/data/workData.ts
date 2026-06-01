@@ -116,39 +116,6 @@ export const workProjects = [
   },
 ] as const;
 
-type WorkProject = (typeof workProjects)[number];
-
-const SelectedWorkSlugs = workProjects.map((project) => project.slug);
-
-// const selectedWorkProjects = SelectedWorkSlugs.map((slug) =>
-//   workProjects.find(
-//     (project) => project.slug === slug && project.status === 'live',
-//   ),
-// ).filter(Boolean) as WorkProject[];
-
-// const selectedWorkCards: WorkCardProps[] = selectedWorkProjects.map(
-//   (project, index) => ({
-//     number: `0${index + 1}`,
-//     title: project.title,
-//     subtitle: project.subtitle,
-//     description: project.description,
-//     tags: project.tags,
-//     status: project.status,
-//     href: `${ROUTES.work}/${project.slug}`,
-//   }),
-// );
-
-// export const selectedWorkSectionData = {
-//   info: {
-//     title: 'Selected Work',
-//     subTitle: 'A selection of my work',
-//     ctaLink: {
-//       href: ROUTES.work,
-//       label: 'View All Work',
-//     },
-//   },
-//   cards: selectedWorkCards,
-// };
 export const selectedWorkSectionInfo = {
   title: 'Selected Work',
   subTitle: 'A selection of my work',
