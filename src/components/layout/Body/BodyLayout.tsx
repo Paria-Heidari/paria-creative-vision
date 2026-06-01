@@ -12,8 +12,16 @@ export default function BodyLayout({
   className?: string;
 }) {
   return (
-    <Stack direction="vertical" gap={0} className={cn("min-h-screen", className)}>
-      <Suspense fallback={<div className="bg-surface-alt fixed top-0 left-0 z-50 h-16 w-full" />}>
+    <Stack
+      direction="vertical"
+      gap={0}
+      className={cn('min-h-screen', className)}
+    >
+      <Suspense
+        fallback={
+          <div className="bg-surface-alt fixed top-0 left-0 z-50 h-16 w-full" />
+        }
+      >
         <Header />
       </Suspense>
       <main className="flex-grow">{children}</main>

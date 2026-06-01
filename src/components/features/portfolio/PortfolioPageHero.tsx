@@ -9,7 +9,12 @@ interface PortfolioPageHeroProps {
   className?: string;
 }
 
-export default function PortfolioPageHero({ title, heading, content, className }: PortfolioPageHeroProps) {
+export default function PortfolioPageHero({
+  title,
+  heading,
+  content,
+  className,
+}: PortfolioPageHeroProps) {
   return (
     <section className={cn(className, 'mb-16 pt-28 md:mb-24 lg:mb-32')}>
       <Stack

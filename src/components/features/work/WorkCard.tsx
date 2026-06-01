@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { WorkProjectRow } from '@/types/work.types';
 import { motion } from 'framer-motion';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
@@ -9,19 +10,17 @@ import { cn } from '@/lib/utils/utils';
 import { CtaLink } from '@/components/ui/CtaLink';
 import { WORK_STATUS } from './workCard.status';
 
-export interface WorkCardProps {
-  title: string;
-  subtitle?: string;
-  description: string;
-  tags?: readonly string[];
+const MAX_TAGS = 5;
+
+export type WorkCardProps = Pick<
+  WorkProjectRow,
+  'title' | 'subtitle' | 'description' | 'tags' | 'status'
+> & {
   href: string;
-  status?: 'live' | 'coming-soon' | 'in-progress';
   external?: boolean;
   animateFrom?: 'left' | 'right';
   className?: string;
-}
-
-const MAX_TAGS = 5;
+};
 
 export default function WorkCard({
   title,

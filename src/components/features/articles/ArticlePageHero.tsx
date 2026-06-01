@@ -13,7 +13,12 @@ export interface ArticlePageHeroProps {
   className?: string;
 }
 
-const ArticlePageHero = ({title, heading, content, className}: ArticlePageHeroProps) => {
+const ArticlePageHero = ({
+  title,
+  heading,
+  content,
+  className,
+}: ArticlePageHeroProps) => {
   return (
     <section className={cn(className, 'mb-16 pt-28 md:mb-24 lg:mb-32')}>
       <motion.div

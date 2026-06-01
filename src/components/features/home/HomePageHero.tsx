@@ -13,7 +13,13 @@ export interface HomePageHeroProps {
   scrollLabel: string;
 }
 
-const HomePageHero = ({ subTitle, heading, heading2, subHeading, scrollLabel }: HomePageHeroProps) => {
+const HomePageHero = ({
+  subTitle,
+  heading,
+  heading2,
+  subHeading,
+  scrollLabel,
+}: HomePageHeroProps) => {
   const scrollToContent = useCallback(() => {
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -58,9 +64,7 @@ const HomePageHero = ({ subTitle, heading, heading2, subHeading, scrollLabel }: 
           <Typography variant="h2" as="h1" className="tracking-wide text-white">
             {heading}
             <br />
-            <span className="text-accent-gold-light">
-              {heading2}
-            </span>
+            <span className="text-accent-gold-light">{heading2}</span>
           </Typography>
           <Typography
             variant="paragraph"

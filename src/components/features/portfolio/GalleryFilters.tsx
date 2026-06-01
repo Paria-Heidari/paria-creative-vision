@@ -69,7 +69,9 @@ const GalleryFilters = ({
               className={cn(
                 filterBtnBase,
                 'overflow-hidden px-6 py-2.5 text-sm',
-                selectedCategory === 'all' ? filterBtnActive : filterBtnInactive,
+                selectedCategory === 'all'
+                  ? filterBtnActive
+                  : filterBtnInactive,
               )}
             >
               All Photos
@@ -93,7 +95,9 @@ const GalleryFilters = ({
                   <span>{category.name}</span>
                   <span
                     className={
-                      isSelected ? 'text-xs text-white/70' : 'text-foreground-muted text-xs'
+                      isSelected
+                        ? 'text-xs text-white/70'
+                        : 'text-foreground-muted text-xs'
                     }
                   >
                     ({category.photo_count})
@@ -122,14 +126,17 @@ const GalleryFilters = ({
                     className="flex-wrap"
                   >
                     {selectedCategoryData.subcategories.map((subcategory) => {
-                      const isSelected = currentSubcategory === subcategory.slug;
+                      const isSelected =
+                        currentSubcategory === subcategory.slug;
                       return (
                         <motion.button
                           key={subcategory.id}
                           whileHover={{ scale: 1.03 }}
                           whileTap={{ scale: 0.97 }}
                           onClick={() =>
-                            router.push(`${basePath}/${selectedCategory}/${subcategory.slug}`)
+                            router.push(
+                              `${basePath}/${selectedCategory}/${subcategory.slug}`,
+                            )
                           }
                           aria-pressed={isSelected}
                           className={cn(
@@ -138,7 +145,9 @@ const GalleryFilters = ({
                           )}
                         >
                           <span>{subcategory.name}</span>
-                          <span className="opacity-60">({subcategory.photo_count})</span>
+                          <span className="opacity-60">
+                            ({subcategory.photo_count})
+                          </span>
                         </motion.button>
                       );
                     })}
@@ -150,7 +159,9 @@ const GalleryFilters = ({
                         exit={{ opacity: 0, scale: 0.8 }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => router.push(`${basePath}/${selectedCategory}`)}
+                        onClick={() =>
+                          router.push(`${basePath}/${selectedCategory}`)
+                        }
                         className="bg-foreground/10 text-foreground-muted hover:bg-foreground/20 flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-300"
                       >
                         <X className="h-3 w-3" aria-hidden="true" />
@@ -180,7 +191,8 @@ const GalleryFilters = ({
                     `Exploring the ${selectedCategoryData.name} collection`}
                   {currentSubcategory && (
                     <span className="text-accent-gold">
-                      {' '}—{' '}
+                      {' '}
+                      —{' '}
                       {
                         selectedCategoryData.subcategories?.find(
                           (s) => s.slug === currentSubcategory,

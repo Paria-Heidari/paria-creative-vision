@@ -82,6 +82,15 @@ export const portfolioPageHeroData = {
     'A curated collection of moments captured across landscapes, cities, and fleeting light.',
 };
 
+export const selectedWorkSectionInfo = {
+  title: 'Selected Work',
+  subTitle: 'A selection of my work',
+  ctaLink: {
+    href: ROUTES.work,
+    label: 'View All Work',
+  },
+};
+
 // Footer data
 const currentYear = new Date().getFullYear();
 const location = 'Europe';

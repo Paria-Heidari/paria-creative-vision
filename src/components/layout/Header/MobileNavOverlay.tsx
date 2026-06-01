@@ -13,7 +13,11 @@ interface MobileNavDrawerProps {
   onClose: () => void;
 }
 
-export default function MobileNavDrawer({ isOpen, isActive, onClose }: MobileNavDrawerProps) {
+export default function MobileNavDrawer({
+  isOpen,
+  isActive,
+  onClose,
+}: MobileNavDrawerProps) {
   return (
     <>
       <div
@@ -21,7 +25,9 @@ export default function MobileNavDrawer({ isOpen, isActive, onClose }: MobileNav
         tabIndex={0}
         className={cn(
           'fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden',
-          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
+          isOpen
+            ? 'pointer-events-auto opacity-100'
+            : 'pointer-events-none opacity-0',
         )}
         onClick={onClose}
         aria-hidden="true"
@@ -64,7 +70,11 @@ export default function MobileNavDrawer({ isOpen, isActive, onClose }: MobileNav
         </ul>
         <div className="absolute right-0 bottom-8 left-0 px-6">
           <div className="border-foreground/10 border-t pt-6">
-            <Typography variant="caption" as="p" className="text-center tracking-wide">
+            <Typography
+              variant="caption"
+              as="p"
+              className="text-center tracking-wide"
+            >
               © {CURRENT_YEAR} Paria Creative Vision
             </Typography>
           </div>

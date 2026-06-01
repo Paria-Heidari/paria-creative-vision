@@ -45,26 +45,26 @@ function SkillCard({
         </Typography>
         {skills && (
           <>
-        <Typography
-          variant="caption"
-          as="h4"
-          className="font-semibold tracking-wider uppercase"
-        >
-          {skillsLabel}
-        </Typography>
-        <Stack direction="horizontal" gap={2} className="flex-wrap">
-          {skills.map((skill) => (
             <Typography
               variant="caption"
-              as="span"
-              key={skill}
-              className="bg-accent-gold/10 text-accent-gold rounded-full px-3 py-1.5"
+              as="h4"
+              className="font-semibold tracking-wider uppercase"
             >
-              {skill}
+              {skillsLabel}
             </Typography>
-          ))}
-        </Stack>
-        </>
+            <Stack direction="horizontal" gap={2} className="flex-wrap">
+              {skills.map((skill) => (
+                <Typography
+                  variant="caption"
+                  as="span"
+                  key={skill}
+                  className="bg-accent-gold/10 text-accent-gold rounded-full px-3 py-1.5"
+                >
+                  {skill}
+                </Typography>
+              ))}
+            </Stack>
+          </>
         )}
       </Stack>
     </motion.div>
