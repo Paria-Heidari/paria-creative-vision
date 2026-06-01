@@ -25,6 +25,7 @@ interface WorkPageProps {
 
 export async function generateStaticParams() {
   const projects = await getAllWorkProjectSlugs();
+  if (projects.length === 0) return [{ slug: 'paria-creative-vision' }];
   return projects.map(({ slug }) => ({ slug }));
 }
 
