@@ -14,7 +14,7 @@ interface WorkItemSidebarProps {
 export default function WorkItemSidebar({ project }: WorkItemSidebarProps) {
   return (
     <aside>
-      <div className="divide-border/50 sticky top-28 divide-y">
+      <div className="divide-border sticky top-28 divide-y">
         {/* Metadata */}
         <div className="pb-6">
           <Stack direction="vertical" gap={6}>

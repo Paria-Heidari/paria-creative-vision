@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import {} from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Stack } from '@/components/layout/Stack';
 import { Typography } from '@/components/ui/Typography';
@@ -26,7 +25,9 @@ interface WorkPageProps {
 export async function generateStaticParams() {
   const projects = await getAllWorkProjectSlugs();
   if (projects.length === 0) return [{ slug: 'paria-creative-vision' }];
-  return projects.map(({ slug }) => ({ slug }));
+  //Take the slug from each project and return it as an object in an array
+  const path = projects.map(({ slug }) => ({ slug }));
+  return path;
 }
 
 const SectionLabel = ({ children }: { children: string }) => (
