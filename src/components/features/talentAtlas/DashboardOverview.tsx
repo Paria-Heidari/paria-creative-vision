@@ -1,4 +1,7 @@
+'use client';
+
 import { Users, Megaphone, TrendingUp, Clock } from 'lucide-react';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 const stats = [
   { label: 'Total Hired', value: '47', icon: Users },
@@ -27,10 +30,16 @@ const activity = [
 ];
 
 export function DashboardOverview() {
+  const { user, isLoading } = useUser();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold text-slate-900">Dashboard</h1>
+        {user && (<h2 className="text-slate-500">Welcome back, {user.given_name}!</h2>)}  
         <p className="mt-1 text-sm text-slate-500">
           Overview of your hiring activity
         </p>
