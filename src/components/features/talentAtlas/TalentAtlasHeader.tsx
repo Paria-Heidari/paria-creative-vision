@@ -6,7 +6,10 @@ import { routes as ROUTE } from '@/lib/routes/routes';
 
 const navItems = [
   { label: 'Dashboard', href: ROUTE.talentAtlasDashboard },
-  { label: 'Members', href: ROUTE.talentAtlasMembers },
+  { label: 'Candidates', href: ROUTE.talentAtlasCandidates },
+  { label: 'Campaigns', href: ROUTE.talentAtlasCampaigns },
+  { label: 'Companies', href: ROUTE.talentAtlasCompanies },
+  { label: 'Settings', href: ROUTE.talentAtlasSettings },
 ];
 
 export function TalentAtlasHeader() {

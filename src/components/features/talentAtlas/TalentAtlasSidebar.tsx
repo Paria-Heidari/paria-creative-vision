@@ -20,7 +20,19 @@ const sections = [
   {
     label: 'Hiring',
     items: [
-      { label: 'Members', href: ROUTE.talentAtlasMembers, icon: Users, badge: 1 },
+      { label: 'Candidates', href: ROUTE.talentAtlasCandidates, icon: Users, badge: 1 },
+    ],
+  },
+  {
+    label: 'Campaigns',
+    items: [
+      { label: 'Overview', href: ROUTE.talentAtlasCampaigns, icon: LayoutDashboard, badge: null },
+    ],
+  },
+  {
+    label: 'Companies',
+    items: [
+      { label: 'Overview', href: ROUTE.talentAtlasCompanies, icon: LayoutDashboard, badge: null },
     ],
   },
   {
