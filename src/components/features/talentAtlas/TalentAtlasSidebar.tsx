@@ -20,7 +20,7 @@ const sections = [
   {
     label: 'Hiring',
     items: [
-      { label: 'Candidates', href: ROUTE.talentAtlasCandidates, icon: Users, badge: 1 },
+      { label: 'Candidates', href: ROUTE.talentAtlasCandidates, icon: Users, badge: null },
     ],
   },
   {
