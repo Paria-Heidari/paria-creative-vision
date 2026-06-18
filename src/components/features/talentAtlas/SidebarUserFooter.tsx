@@ -1,16 +1,11 @@
-import { auth0 } from '@/lib/auth0/auth0';
 import { LogOut } from 'lucide-react';
+import { getSessionOrRedirect } from '@/lib/auth0/session';
 import Image from 'next/image';
 import {routes as ROUTE} from '@/lib/routes/routes';
-import { redirect } from 'next/navigation';
 
 export async function SidebarUserFooter() {
-  const session = await auth0.getSession();
-    // user does not have a session — redirect to login
-  if (!session) {
-    redirect(`/auth/login?returnTo=${process.env.APP_BASE_URL}${ROUTE.talentAtlasDashboard}`);
-  }
-  const user = session?.user;
+  const session = await getSessionOrRedirect();
+  const user = session.user;
 
   if (!user) return null;
 

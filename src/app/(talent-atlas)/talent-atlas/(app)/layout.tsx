@@ -19,7 +19,9 @@ export default function TalentAtlasAppLayout({
             </Suspense>
           }
         />
-        <main className="flex-1 overflow-y-auto bg-white p-8">{children}</main>
+          <main className="flex-1 overflow-y-auto bg-white p-8">
+            {children}
+          </main>
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ export const routes = {
   about: '/about',
   talentAtlas: '/talent-atlas',
   talentAtlasDashboard: '/talent-atlas/dashboard',
-  talentAtlasMembers: '/talent-atlas/members',
+  talentAtlasCampaigns: '/talent-atlas/campaigns',
+  talentAtlasCandidates: '/talent-atlas/candidates',
+  talentAtlasCompanies: '/talent-atlas/companies',
   talentAtlasSettings: '/talent-atlas/settings',
 } as const;
