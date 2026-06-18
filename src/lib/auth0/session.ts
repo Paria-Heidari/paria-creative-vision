@@ -7,7 +7,7 @@ export async function getSessionOrRedirect() {
 
   if (!session) {
     redirect(
-      `/auth/login?returnTo=${process.env.APP_BASE_URL}${ROUTE.talentAtlasDashboard}`,
+      `/auth/login?returnTo=${process.env.APP_BASE_URL?.replace(/\/$/, '')}${ROUTE.talentAtlasDashboard}`,
     );
   }
   return session;
