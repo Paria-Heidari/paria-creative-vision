@@ -1,7 +1,9 @@
 import { Suspense } from 'react';
+import { Auth0Provider } from '@auth0/nextjs-auth0';
 import { TalentAtlasHeader } from '@/components/features/talentAtlas/TalentAtlasHeader';
 import { TalentAtlasSidebar } from '@/components/features/talentAtlas/TalentAtlasSidebar';
 import { SidebarUserFooter } from '@/components/features/talentAtlas/SidebarUserFooter';
+import QueryProvider from '@/components/providers/QueryProvider';
 
 export default function TalentAtlasAppLayout({
   children,
@@ -19,9 +21,13 @@ export default function TalentAtlasAppLayout({
             </Suspense>
           }
         />
-          <main className="flex-1 overflow-y-auto bg-white p-8">
-            {children}
-          </main>
+        <Auth0Provider>
+          <QueryProvider>
+            <main className="flex-1 overflow-y-auto bg-white p-8">
+              {children}
+            </main>
+          </QueryProvider>
+        </Auth0Provider>
       </div>
     </div>
   );

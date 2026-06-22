@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { MOCK_CAMPAIGNS } from '@/data/talentAtlasMockData';
 
+// stays automatically in sync if we change the mock data - don´t need to update the type separately.
 type Campaign = (typeof MOCK_CAMPAIGNS)[number];
 
 const statusStyles: Record<string, string> = {
