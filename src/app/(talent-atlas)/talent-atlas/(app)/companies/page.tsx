@@ -1,28 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { MOCK_COMPANIES } from '@/data/talentAtlasMockData';
-
-type Company = (typeof MOCK_COMPANIES)[number];
+import { useCompanies } from '@/hooks/talent-atlas/useCompanies';
 
 const ENDPOINT = '/api/talent-atlas/companies';
 
 export default function CompaniesPage() {
-  const [companies, setCompanies] = useState<Company[]>([]);
-  const [source, setSource] = useState<'api' | 'preview'>('preview');
+  const { data, isLoading, error } = useCompanies();
 
-  useEffect(() => {
-    fetch(ENDPOINT)
-      .then((r) => r.json())
-      .then((data) => {
-        setCompanies(data);
-        setSource('api');
-      })
-      .catch(() => {
-        setCompanies(MOCK_COMPANIES);
-        setSource('preview');
-      });
-  }, []);
+  if (isLoading) return <p className="text-sm text-slate-500">Loading...</p>;
+  if (error) return <p className="text-sm text-red-500">Failed to load companies.</p>;
 
   return (
     <div className="space-y-6">
@@ -44,10 +30,6 @@ export default function CompaniesPage() {
         </a>
       </div>
 
-      {source === 'api' && (
-        <p className="text-xs text-green-600">✓ Live data from REST API</p>
-      )}
-
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
         <table className="min-w-full divide-y divide-slate-200">
           <thead className="bg-slate-50">
@@ -63,7 +45,7 @@ export default function CompaniesPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {companies.map((c) => (
+            {data?.map((c) => (
               <tr key={c.id} className="hover:bg-slate-50">
                 <td className="px-5 py-4 text-sm font-medium text-slate-900">
                   {c.name}

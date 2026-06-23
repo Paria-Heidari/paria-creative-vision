@@ -11,24 +11,24 @@ export default function TalentAtlasAppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
-      <TalentAtlasHeader />
-      <div className="flex flex-1 overflow-hidden">
-        <TalentAtlasSidebar
-          footer={
-            <Suspense fallback={null}>
-              <SidebarUserFooter />
-            </Suspense>
-          }
-        />
-        <Auth0Provider>
-          <QueryProvider>
+    <QueryProvider>
+      <div className="flex h-screen flex-col overflow-hidden">
+        <TalentAtlasHeader />
+        <div className="flex flex-1 overflow-hidden">
+          <TalentAtlasSidebar
+            footer={
+              <Suspense fallback={null}>
+                <SidebarUserFooter />
+              </Suspense>
+            }
+          />
+          <Auth0Provider>
             <main className="flex-1 overflow-y-auto bg-white p-8">
               {children}
             </main>
-          </QueryProvider>
-        </Auth0Provider>
+          </Auth0Provider>
+        </div>
       </div>
-    </div>
+    </QueryProvider>
   );
 }
