@@ -4,6 +4,7 @@ import { TalentAtlasHeader } from '@/components/features/talentAtlas/TalentAtlas
 import { TalentAtlasSidebar } from '@/components/features/talentAtlas/TalentAtlasSidebar';
 import { SidebarUserFooter } from '@/components/features/talentAtlas/SidebarUserFooter';
 import QueryProvider from '@/components/providers/QueryProvider';
+import { RealtimeProvider } from '@/components/providers/talentAtlas/RealtimeProvider';
 
 export default function TalentAtlasAppLayout({
   children,
@@ -13,6 +14,7 @@ export default function TalentAtlasAppLayout({
   return (
     <QueryProvider>
       <div className="flex h-screen flex-col overflow-hidden">
+        <RealtimeProvider />  {/* renders null, opens WS, feeds RxJS → TanStack cache */}
         <TalentAtlasHeader />
         <div className="flex flex-1 overflow-hidden">
           <TalentAtlasSidebar

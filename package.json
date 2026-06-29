@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "ws:server": "tsx src/server/ws-server.ts",
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
