@@ -10,6 +10,11 @@ const stageStyles: Record<string, string> = {
   hired: 'bg-green-50 text-green-700 ring-green-600/20',
 };
 
+const decisionStyles: Record<string, string> = {
+  proceed: 'bg-green-50 text-green-700 ring-green-600/20',
+  hold: 'bg-amber-50 text-amber-700 ring-amber-600/20',
+};
+
 const ENDPOINT = '/api/talent-atlas/candidates';
 
 export default function CandidatesPage() {
@@ -26,14 +31,6 @@ export default function CandidatesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg border border-yellow-200 bg-yellow-50 px-4 py-2.5 text-sm text-yellow-800">
-        <span className="font-semibold">Note:</span> This page is intentionally
-        open for portfolio demo purposes. API-level authorization is in place
-        but page-level auth is not yet enforced — candidate data shown here is
-        mock data only. This will be restricted to authorized users before real
-        data is connected.
-      </div>
-
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">Candidates</h1>
@@ -56,7 +53,7 @@ export default function CandidatesPage() {
         <table className="min-w-full divide-y divide-slate-200">
           <thead className="bg-slate-50">
             <tr>
-              {['Name', 'Email', 'Campaign', 'Stage'].map((col) => (
+              {['Name', 'Email', 'Campaign', 'Stage', 'Latest Feedback'].map((col) => (
                 <th
                   key={col}
                   className="px-5 py-3 text-left text-xs font-medium tracking-wide text-slate-500 uppercase"
@@ -82,6 +79,25 @@ export default function CandidatesPage() {
                   >
                     {c.stage}
                   </span>
+                </td>
+                <td className="px-5 py-4 text-sm text-slate-500">
+                  {c.latestFeedback ? (
+                    <span
+                      className="inline-flex items-center gap-1.5"
+                      title={`${c.latestFeedback.company}: ${c.latestFeedback.feedback}`}
+                    >
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${decisionStyles[c.latestFeedback.decision] ?? ''}`}
+                      >
+                        {c.latestFeedback.decision}
+                      </span>
+                      <span className="max-w-[16rem] truncate">
+                        {c.latestFeedback.feedback}
+                      </span>
+                    </span>
+                  ) : (
+                    '—'
+                  )}
                 </td>
               </tr>
             ))}

@@ -49,6 +49,13 @@ export const MOCK_CANDIDATES = [
     stage: 'applied',
     campaign_id: '2',
   },
+  {
+    id: '4',
+    full_name: 'John',
+    email: 'john@example.com',
+    stage: 'applied',
+    campaign_id: '2',
+  },
 ];
 
 export const MOCK_COMPANIES = [

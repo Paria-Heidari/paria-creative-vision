@@ -16,9 +16,12 @@ type AuthHandler = (
   session: AppSession,
 ) => Promise<Response>;
 
+const bypassAuth =
+  process.env.NODE_ENV === 'development' && process.env.AUTH_BYPASS === 'true';
+
 export function withAuth(allowedRoles: Role[], authHandler: AuthHandler) {
   const handler = async (req: NextRequest, ctx: RouteHandlerContext) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (bypassAuth) {
       return authHandler(req, ctx, {} as AppSession);
     }
     const session = (await auth0.getSession()) as AppSession | null;

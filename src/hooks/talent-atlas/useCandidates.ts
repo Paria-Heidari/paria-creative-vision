@@ -2,7 +2,17 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/queryKeys';
 import { MOCK_CANDIDATES } from '@/data/talentAtlasMockData';
 
-type candidate = (typeof MOCK_CANDIDATES)[number];
+export type CandidateFeedback = {
+  company: string;
+  feedback: string;
+  decision: 'proceed' | 'hold';
+};
+
+type candidate = (typeof MOCK_CANDIDATES)[number] & {
+  // Populated live via the company_feedback WS event — never present on the
+  // initial REST fetch, since it's not persisted anywhere server-side (mock only).
+  latestFeedback?: CandidateFeedback;
+};
 type NewCandidate = Omit<candidate, 'id'>;
 
 export function useCandidates() {
@@ -29,7 +39,7 @@ export function useCreateCandidate() {
       return res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({});
+      queryClient.invalidateQueries({ queryKey: queryKeys.candidates });
     },
   });
 }

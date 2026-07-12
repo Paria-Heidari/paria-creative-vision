@@ -5,6 +5,7 @@
   "scripts": {
     "ws:server": "tsx src/server/ws-server.ts",
     "dev": "next dev --turbopack",
+    "dev:all": "npm run ws:server & npm run dev",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",

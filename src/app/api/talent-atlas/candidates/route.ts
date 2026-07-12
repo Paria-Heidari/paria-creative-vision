@@ -3,11 +3,28 @@ import { WebSocket } from 'ws';
 import { withAuth } from '@/lib/auth0/withAuth';
 import { MOCK_CANDIDATES } from '@/data/talentAtlasMockData';
 import { ROLES } from '@/lib/auth0/roles';
+import type { CandidateCreatedEvent } from '@/types/ws.types';
 
-const notifyWsServer = (candidate: Record<string, unknown>) => {
-  const ws = new WebSocket('ws://localhost:8080');
+type Candidate = (typeof MOCK_CANDIDATES)[number];
+
+const notifyWsServer = (candidate: Candidate) => {
+  const ws = new WebSocket(
+    `ws://localhost:${process.env.NEXT_PUBLIC_WS_PORT ?? 4000}`,
+  );
   ws.on('open', () => {
-    ws.send(JSON.stringify({ type: 'new_candidate', data: candidate }));
+    const event: CandidateCreatedEvent = {
+      type: 'candidate_created',
+      eventId: `candidate-created-${candidate.id}`,
+      payload: {
+        candidateId: candidate.id,
+        fullName: candidate.full_name,
+        email: candidate.email,
+        stage: candidate.stage,
+        campaignId: candidate.campaign_id,
+      },
+      timestamp: Date.now(),
+    };
+    ws.send(JSON.stringify(event));
     ws.close();
   });
 };

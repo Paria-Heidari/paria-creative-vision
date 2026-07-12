@@ -26,6 +26,7 @@ function isDuplicate(event: WsEvent): boolean {
 
 // Extract a stable entity ID for coalescing updates within a buffer window
 function getEntityId(event: WsEvent): string {
+  if (event.type === 'candidate_created') return event.payload.candidateId;
   if (event.type === 'candidate_updated') return event.payload.candidateId;
   if (event.type === 'campaign_updated') return event.payload.campaignId;
   if (event.type === 'company_feedback') return event.payload.candidateId;

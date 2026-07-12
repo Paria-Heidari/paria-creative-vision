@@ -8,7 +8,7 @@ import {
   DECISIONS,
 } from '@/data/talentAtlasMockData';
 
-const PORT = 4000;
+const PORT = Number(process.env.NEXT_PUBLIC_WS_PORT) || 4000;
 const wss = new WebSocketServer({ port: PORT });
 
 console.log(`WebSocket server running on ws://localhost:${PORT}`);
@@ -40,6 +40,16 @@ wss.on('connection', (socket) => {
       timestamp: Date.now(),
     } satisfies WsEvent),
   );
+
+  // Relay real events sent by API routes to all connected clients
+  socket.on('message', (raw) => {
+    try {
+      const event = JSON.parse(raw.toString()) as WsEvent;
+      broadcast(event);
+    } catch {
+      console.warn('[WS] Failed to parse client message:', raw.toString());
+    }
+  });
 
   socket.on('close', () => {
     clients.delete(socket);
@@ -103,7 +113,7 @@ setInterval(() => {
   console.log(
     `Broadcast: ${eventType} [evt-${eventCounter}] to ${clients.size} client(s)`,
   );
-}, 2000);
+}, 10000);
 
 // Clean shutdown on Ctrl+C
 process.on('SIGINT', () => {

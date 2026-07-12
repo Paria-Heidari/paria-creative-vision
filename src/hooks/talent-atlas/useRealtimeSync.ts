@@ -5,6 +5,7 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 import { wsEvents$, cleanEvents$ } from '@/lib/realtime/wsStream';
 import { queryKeys } from '@/lib/query/queryKeys';
 import type { WsEvent } from '@/types/ws.types';
+import type { CandidateFeedback } from '@/hooks/talent-atlas/useCandidates';
 
 // Connects WS server → RxJS pipeline → TanStack cache
 // Drop this hook once in the (app) layout — one connection for the entire app
@@ -23,7 +24,7 @@ export function useRealtimeSync() {
 
   // Feed raw WS events into the RxJS Subject
   useWebSocket({
-    url: 'ws://localhost:4000',
+    url: `ws://localhost:${process.env.NEXT_PUBLIC_WS_PORT ?? 4000}`,
     onEvent: (event) => wsEvents$.next(event),
   });
 }
@@ -61,6 +62,49 @@ function applyEventToCache(
                   ...c,
                   applied_count: event.payload.applied_count,
                   hired_count: event.payload.hired_count,
+                }
+              : c,
+          ),
+      );
+      break;
+    }
+    case 'candidate_created': {
+      queryClient.setQueryData(
+        queryKeys.candidates,
+        (
+          old: {
+            id: string;
+            full_name: string;
+            email: string;
+            stage: string;
+            campaign_id: string;
+          }[] = [],
+        ) => [
+          {
+            id: event.payload.candidateId,
+            full_name: event.payload.fullName,
+            email: event.payload.email,
+            stage: event.payload.stage,
+            campaign_id: event.payload.campaignId,
+          },
+          ...old,
+        ],
+      );
+      break;
+    }
+    case 'company_feedback': {
+      queryClient.setQueryData(
+        queryKeys.candidates,
+        (old: { id: string; latestFeedback?: CandidateFeedback }[] = []) =>
+          old.map((c) =>
+            c.id === event.payload.candidateId
+              ? {
+                  ...c,
+                  latestFeedback: {
+                    company: event.payload.company,
+                    feedback: event.payload.feedback,
+                    decision: event.payload.decision,
+                  },
                 }
               : c,
           ),

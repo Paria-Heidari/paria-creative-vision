@@ -1,8 +1,23 @@
+// Pool for ws-server.ts's random simulator only. candidate_created (real POSTs)
+// and connected (per-socket handshake) are triggered elsewhere and don't belong here.
 export const TYPES = [
   'candidate_updated',
   'campaign_updated',
   'company_feedback',
 ] as const;
+
+export type CandidateCreatedEvent = {
+  type: 'candidate_created';
+  eventId: string;
+  payload: {
+    candidateId: string;
+    fullName: string;
+    email: string;
+    stage: string;
+    campaignId: string;
+  };
+  timestamp: number;
+};
 
 export type CandidateUpdatedEvent = {
   type: 'candidate_updated';
@@ -47,6 +62,7 @@ export type ConnectedEvent = {
 };
 
 export type WsEvent =
+  | CandidateCreatedEvent
   | CandidateUpdatedEvent
   | CampaignUpdatedEvent
   | CompanyFeedbackEvent

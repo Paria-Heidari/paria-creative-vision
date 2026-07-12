@@ -6,6 +6,7 @@ import { createQueryClient } from '@/lib/query/queryClient';
 import { ReactNode, useState } from 'react';
 
 export default function QueryProvider({ children }: { children: ReactNode }) {
+  // Lazy initialization of QueryClient to avoid creating a new instance on every render
   const [queryClient] = useState(() => createQueryClient());
 
   return (
