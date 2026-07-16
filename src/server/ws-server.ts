@@ -16,10 +16,18 @@ console.log(`WebSocket server running on ws://localhost:${PORT}`);
 const clients = new Set<WebSocket>();
 let eventCounter = 0;
 
+// Tracks whether each client responded to the last ping.
+// WeakMap avoids monkey-patching (socket.isAlive = true) the WebSocket object.
+// WeakMap - sticky note we attach beside the object
+const isAlive = new WeakMap<WebSocket, boolean>();
+const HEARTBEAT_INTERVAL = 30_000;
+
+// Randomly pick an item from an array
 function pick<T>(arr: readonly T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+// Broadcast a WS event to all connected clients
 function broadcast(event: WsEvent) {
   const message = JSON.stringify(event);
   clients.forEach((client) => {
@@ -31,6 +39,8 @@ function broadcast(event: WsEvent) {
 
 wss.on('connection', (socket) => {
   clients.add(socket);
+  isAlive.set(socket, true);
+  socket.on('pong', () => isAlive.set(socket, true));
   console.log('Client connected. Total:', clients.size);
 
   socket.send(
@@ -61,6 +71,19 @@ wss.on('connection', (socket) => {
     clients.delete(socket);
   });
 });
+
+// Ping every client on an interval. If a client hasn't responded to the
+// previous ping by the time the next one fires, it is silently dead — terminate it.
+setInterval(() => {
+  wss.clients.forEach((socket) => {
+    if (!isAlive.get(socket)) {
+      socket.terminate();
+      return;
+    }
+    isAlive.set(socket, false);
+    socket.ping();
+  });
+}, HEARTBEAT_INTERVAL);
 
 // Simulate real events every 2 seconds
 setInterval(() => {

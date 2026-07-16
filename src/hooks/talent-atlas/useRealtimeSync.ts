@@ -23,8 +23,12 @@ export function useRealtimeSync() {
   }, [queryClient]);
 
   // Feed raw WS events into the RxJS Subject
+  const wsUrl =
+    process.env.NEXT_PUBLIC_WS_URL ??
+    `ws://localhost:${process.env.NEXT_PUBLIC_WS_PORT ?? 4000}`;
+
   useWebSocket({
-    url: `ws://localhost:${process.env.NEXT_PUBLIC_WS_PORT ?? 4000}`,
+    url: wsUrl,
     onEvent: (event) => wsEvents$.next(event),
   });
 }
