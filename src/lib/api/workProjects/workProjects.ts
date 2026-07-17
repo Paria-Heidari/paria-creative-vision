@@ -9,7 +9,7 @@ export async function getAllWorkProjects() {
   const query = supabase
     .from('work_projects')
     .select('*')
-    .order('display_order', { ascending: true });
+    .order('created_at', { ascending: false });
 
   type WorkProjectsType = QueryData<typeof query>;
   const { data: projects, error } = await query;
