@@ -1,9 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { MOCK_CAMPAIGNS } from '@/data/talentAtlasMockData';
+import { useCampaigns } from '@/hooks/talent-atlas/useCampaigns';
 
-type Campaign = (typeof MOCK_CAMPAIGNS)[number];
 
 const statusStyles: Record<string, string> = {
   active: 'bg-green-50 text-green-700 ring-green-600/20',
@@ -13,21 +11,12 @@ const statusStyles: Record<string, string> = {
 const ENDPOINT = '/api/talent-atlas/campaigns';
 
 export default function CampaignsPage() {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const [source, setSource] = useState<'api' | 'preview'>('preview');
 
-  useEffect(() => {
-    fetch(ENDPOINT)
-      .then((r) => r.json())
-      .then((data) => {
-        setCampaigns(data);
-        setSource('api');
-      })
-      .catch(() => {
-        setCampaigns(MOCK_CAMPAIGNS);
-        setSource('preview');
-      });
-  }, []);
+  const {data, isLoading, error} = useCampaigns();
+  
+  if (isLoading) return <p className="text-sm text-slate-500">Loading...</p>;
+  if (error)
+    return <p className="text-sm text-red-500">Failed to load campaign.</p>;
 
   return (
     <div className="space-y-6">
@@ -49,10 +38,6 @@ export default function CampaignsPage() {
         </a>
       </div>
 
-      {source === 'api' && (
-        <p className="text-xs text-green-600">✓ Live data from REST API</p>
-      )}
-
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
         <table className="min-w-full divide-y divide-slate-200">
           <thead className="bg-slate-50">
@@ -70,7 +55,7 @@ export default function CampaignsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {campaigns.map((c) => (
+            {data?.map((c) => (
               <tr key={c.id} className="hover:bg-slate-50">
                 <td className="px-5 py-4 text-sm font-medium text-slate-900">
                   {c.title}

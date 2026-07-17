@@ -1,3 +1,5 @@
+export const STAGES = ['applied', 'screening', 'interview', 'hired'] as const;
+
 export const MOCK_CAMPAIGNS = [
   {
     id: '1',
@@ -47,9 +49,25 @@ export const MOCK_CANDIDATES = [
     stage: 'applied',
     campaign_id: '2',
   },
+  {
+    id: '4',
+    full_name: 'John',
+    email: 'john@example.com',
+    stage: 'applied',
+    campaign_id: '2',
+  },
 ];
 
 export const MOCK_COMPANIES = [
   { id: '1', name: 'SAP SE', location: 'Berlin', open_campaigns: 1 },
   { id: '2', name: 'BNP Paribas', location: 'Paris', open_campaigns: 1 },
 ];
+
+export const MOCK_FEEDBACKS = [
+  'Strong technical background, good cultural fit.',
+  'Impressive portfolio but lacks relevant experience.',
+  'Excellent communication skills, strong problem-solver.',
+  'Needs more experience in the required tech stack.',
+] as const;
+
+export const DECISIONS = ['proceed', 'hold'] as const;

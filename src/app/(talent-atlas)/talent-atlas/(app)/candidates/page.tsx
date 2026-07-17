@@ -1,9 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { MOCK_CANDIDATES, MOCK_CAMPAIGNS } from '@/data/talentAtlasMockData';
-
-type Candidate = (typeof MOCK_CANDIDATES)[number];
+import { useCandidates } from '@/hooks/talent-atlas/useCandidates';
+import { useCampaigns } from '@/hooks/talent-atlas/useCampaigns';
 
 const stageStyles: Record<string, string> = {
   applied: 'bg-blue-50 text-blue-700 ring-blue-600/20',
@@ -12,42 +10,27 @@ const stageStyles: Record<string, string> = {
   hired: 'bg-green-50 text-green-700 ring-green-600/20',
 };
 
-const campaignMap = Object.fromEntries(
-  MOCK_CAMPAIGNS.map((c) => [c.id, c.title]),
-);
+const decisionStyles: Record<string, string> = {
+  proceed: 'bg-green-50 text-green-700 ring-green-600/20',
+  hold: 'bg-amber-50 text-amber-700 ring-amber-600/20',
+};
 
 const ENDPOINT = '/api/talent-atlas/candidates';
 
 export default function CandidatesPage() {
-  const [candidates, setCandidates] = useState<Candidate[]>([]);
-  const [source, setSource] = useState<'api' | 'preview'>('preview');
+  const { data, isLoading, error } = useCandidates();
+  const { data: campaigns } = useCampaigns();
 
-  useEffect(() => {
-    fetch(ENDPOINT)
-      .then((r) => r.json())
-      .then((data) => {
-        setCandidates(data);
-        setSource('api');
-      })
-      // FIXME: API auth (withAuth) is bypassed here — 403 falls back to mock data,
-      // so unauthenticated users still see candidates in production.
-      // Intentional for portfolio demo. Must enforce page-level auth before real data.
-      .catch(() => {
-        setCandidates(MOCK_CANDIDATES);
-        setSource('preview');
-      });
-  }, []);
+  const campaignMap = Object.fromEntries(
+    (campaigns ?? []).map((c) => [c.id, c.title]),
+  );
+
+  if (isLoading) return <p className="text-sm text-slate-500">Loading...</p>;
+  if (error)
+    return <p className="text-sm text-red-500">Failed to load candidates.</p>;
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg border border-yellow-200 bg-yellow-50 px-4 py-2.5 text-sm text-yellow-800">
-        <span className="font-semibold">Note:</span> This page is intentionally
-        open for portfolio demo purposes. API-level authorization is in place
-        but page-level auth is not yet enforced — candidate data shown here is
-        mock data only. This will be restricted to authorized users before real
-        data is connected.
-      </div>
-
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">Candidates</h1>
@@ -66,15 +49,11 @@ export default function CandidatesPage() {
         </a>
       </div>
 
-      {source === 'api' && (
-        <p className="text-xs text-green-600">✓ Live data from REST API</p>
-      )}
-
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
         <table className="min-w-full divide-y divide-slate-200">
           <thead className="bg-slate-50">
             <tr>
-              {['Name', 'Email', 'Campaign', 'Stage'].map((col) => (
+              {['Name', 'Email', 'Campaign', 'Stage', 'Latest Feedback'].map((col) => (
                 <th
                   key={col}
                   className="px-5 py-3 text-left text-xs font-medium tracking-wide text-slate-500 uppercase"
@@ -85,7 +64,7 @@ export default function CandidatesPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {candidates.map((c) => (
+            {data?.map((c) => (
               <tr key={c.id} className="hover:bg-slate-50">
                 <td className="px-5 py-4 text-sm font-medium text-slate-900">
                   {c.full_name}
@@ -100,6 +79,25 @@ export default function CandidatesPage() {
                   >
                     {c.stage}
                   </span>
+                </td>
+                <td className="px-5 py-4 text-sm text-slate-500">
+                  {c.latestFeedback ? (
+                    <span
+                      className="inline-flex items-center gap-1.5"
+                      title={`${c.latestFeedback.company}: ${c.latestFeedback.feedback}`}
+                    >
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${decisionStyles[c.latestFeedback.decision] ?? ''}`}
+                      >
+                        {c.latestFeedback.decision}
+                      </span>
+                      <span className="max-w-[16rem] truncate">
+                        {c.latestFeedback.feedback}
+                      </span>
+                    </span>
+                  ) : (
+                    '—'
+                  )}
                 </td>
               </tr>
             ))}

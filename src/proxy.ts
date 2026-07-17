@@ -8,6 +8,8 @@ export async function proxy(request: Request) {
 
 export const config = {
   matcher: [
+    '/talent-atlas/(.*)', // talent-atlas app
+    '/auth/(.*)', // auth routes (login, logout, callback)
     /*
      * Match all request paths except for the ones starting with:
      * - _next/static (static files)

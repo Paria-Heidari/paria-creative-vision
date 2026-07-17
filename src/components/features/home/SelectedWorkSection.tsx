@@ -23,7 +23,7 @@ export function SelectedWorkSkeleton() {
 }
 
 export const SelectedWorkSection = async () => {
-  const projects = await getAllWorkProjects();
+  const projects = (await getAllWorkProjects()).slice(0, 2);
   const cards = projects.map((project) => ({
     ...project,
     href: `${ROUTES.work}/${project.slug}`,
