@@ -3,12 +3,14 @@ import { getPhotoByIdAdmin } from '@/lib/api/admin/photos';
 import { getAllCategories } from '@/lib/api/photos/photos';
 import EditPhotoForm from '@/components/features/admin/EditPhotoForm';
 import AdminTopBar from '@/components/features/admin/AdminTopBar';
+import { connection } from 'next/server';
 
 interface EditPhotoPageProps {
   params: Promise<{ id: string }>;
 }
 
 export default async function EditPhotoPage({ params }: EditPhotoPageProps) {
+  await connection();
   const { id } = await params;
 
   const [photo, categories] = await Promise.all([

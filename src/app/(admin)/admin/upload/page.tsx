@@ -1,8 +1,10 @@
 import AdminTopBar from '@/components/features/admin/AdminTopBar';
 import UploadForm from '@/components/features/admin/UploadForm';
 import { getAllCategories } from '@/lib/api/photos/photos';
+import { connection } from 'next/server';
 
 export default async function AdminUploadPage() {
+  await connection();
   const categories = await getAllCategories();
 
 
