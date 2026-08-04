@@ -3,42 +3,64 @@
 import { type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  LayoutDashboard,
-  Users,
-  Settings,
-} from 'lucide-react';
+import { LayoutDashboard, Users, Settings } from 'lucide-react';
 import { routes as ROUTE } from '@/lib/routes/routes';
+import { Typography } from '@/components/ui/Typography';
 
 const sections = [
   {
     label: 'Overview',
     items: [
-      { label: 'Dashboard', href: ROUTE.talentAtlasDashboard, icon: LayoutDashboard, badge: null },
+      {
+        label: 'Dashboard',
+        href: ROUTE.talentAtlasDashboard,
+        icon: LayoutDashboard,
+        badge: null,
+      },
     ],
   },
   {
     label: 'Hiring',
     items: [
-      { label: 'Candidates', href: ROUTE.talentAtlasCandidates, icon: Users, badge: null },
+      {
+        label: 'Candidates',
+        href: ROUTE.talentAtlasCandidates,
+        icon: Users,
+        badge: null,
+      },
     ],
   },
   {
     label: 'Campaigns',
     items: [
-      { label: 'Overview', href: ROUTE.talentAtlasCampaigns, icon: LayoutDashboard, badge: null },
+      {
+        label: 'Overview',
+        href: ROUTE.talentAtlasCampaigns,
+        icon: LayoutDashboard,
+        badge: null,
+      },
     ],
   },
   {
     label: 'Companies',
     items: [
-      { label: 'Overview', href: ROUTE.talentAtlasCompanies, icon: LayoutDashboard, badge: null },
+      {
+        label: 'Overview',
+        href: ROUTE.talentAtlasCompanies,
+        icon: LayoutDashboard,
+        badge: null,
+      },
     ],
   },
   {
     label: 'Admin',
     items: [
-      { label: 'Settings', href: ROUTE.talentAtlasSettings, icon: Settings, badge: null },
+      {
+        label: 'Settings',
+        href: ROUTE.talentAtlasSettings,
+        icon: Settings,
+        badge: null,
+      },
     ],
   },
 ];
@@ -54,7 +76,14 @@ export function TalentAtlasSidebar({ footer }: { footer?: ReactNode }) {
           TA
         </div>
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-white">TalentAtlas</p>
+          <Link href={ROUTE.talentAtlas}>
+            <Typography
+              variant="h6"
+              className="truncate font-semibold text-white"
+            >
+              TalentAtlas
+            </Typography>
+          </Link>
         </div>
       </div>
 
@@ -62,12 +91,14 @@ export function TalentAtlasSidebar({ footer }: { footer?: ReactNode }) {
       <nav className="flex-1 space-y-6 px-3 pb-4">
         {sections.map((section) => (
           <div key={section.label}>
-            <p className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+            <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
               {section.label}
             </p>
             <ul className="space-y-0.5">
               {section.items.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+                const isActive =
+                  pathname === item.href ||
+                  pathname.startsWith(item.href + '/');
                 const Icon = item.icon;
                 return (
                   <li key={item.href}>
@@ -82,7 +113,7 @@ export function TalentAtlasSidebar({ footer }: { footer?: ReactNode }) {
                       <Icon size={16} className="shrink-0" />
                       <span className="flex-1">{item.label}</span>
                       {item.badge !== null && (
-                        <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white">
+                        <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] leading-none font-semibold text-white">
                           {item.badge}
                         </span>
                       )}

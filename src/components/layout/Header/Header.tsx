@@ -39,7 +39,7 @@ export default function Header() {
     <>
       <header
         className={cn(
-          'bg-surface-alt fixed top-0 left-0 z-50 w-full transition-all duration-300 ease-out',
+          'bg-surface-alt fixed top-0 left-0 z-50 w-full transition-all duration-200 ease-out',
           isScrolledClass,
           hasMountedClass,
           isHiddenByScrollClass,

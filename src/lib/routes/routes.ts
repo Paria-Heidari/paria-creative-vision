@@ -10,4 +10,6 @@ export const routes = {
   talentAtlasCandidates: '/talent-atlas/candidates',
   talentAtlasCompanies: '/talent-atlas/companies',
   talentAtlasSettings: '/talent-atlas/settings',
+  admin: '/admin/photos',
+  adminUpload: '/admin/upload',
 } as const;
