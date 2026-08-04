@@ -16,10 +16,12 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen  overflow-hidden bg-slate-50 ">
+    <div className="flex h-screen overflow-hidden bg-slate-50">
+      <Suspense fallback={<div className="w-[220px] shrink-0 bg-[#0F172A]" />}>
         <AdminSidebar />
+      </Suspense>
       <Suspense fallback={<Loading className="mx-auto" />}>
-        <main className="flex-1"> 
+        <main className="flex-1">
           <AdminAuthGate>{children}</AdminAuthGate>
         </main>
       </Suspense>
