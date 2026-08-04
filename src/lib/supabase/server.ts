@@ -5,7 +5,6 @@ import type { Database } from '@/types/database.types';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
-const supabaseRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
   throw new Error(
@@ -14,7 +13,8 @@ if (!supabaseUrl || !supabaseKey) {
 }
 
 export function createAdminClient() {
-  const serviceRoleKey = supabaseRoleKey;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
   if (!serviceRoleKey) throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY');
   return createSupabaseClient<Database>(supabaseUrl!, serviceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },

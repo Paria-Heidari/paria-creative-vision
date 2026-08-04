@@ -3,7 +3,7 @@ import { withAuth } from '@/lib/auth0/withAuth';
 import { createAdminClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
-export const DELETE = withAuth([ROLES.ADMIN], async (_req, ctx, _session) => {
+export const DELETE = withAuth([ROLES.ADMIN], async (_req, ctx) => {
   const { id } = await ctx.params;
   const supabase = createAdminClient();
 
@@ -33,7 +33,7 @@ export const DELETE = withAuth([ROLES.ADMIN], async (_req, ctx, _session) => {
   return new NextResponse(null, { status: 204 });
 });
 
-export const PATCH = withAuth([ROLES.ADMIN], async (req, ctx, _session) => {
+export const PATCH = withAuth([ROLES.ADMIN], async (req, ctx) => {
   const { id } = await ctx.params;
   const supabase = createAdminClient();
 
