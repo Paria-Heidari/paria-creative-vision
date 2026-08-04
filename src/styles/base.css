@@ -1,6 +1,8 @@
 html,
 body {
   min-height: 100%;
+  background-color: #000; /* neutral fallback — never visible */
+  margin: 0;
 }
 
 @utility skeleton {
