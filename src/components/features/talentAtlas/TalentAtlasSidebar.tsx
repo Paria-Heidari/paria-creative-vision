@@ -5,68 +5,42 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, Users, Settings } from 'lucide-react';
 import { routes as ROUTE } from '@/lib/routes/routes';
+import { ROLES, type Role } from '@/lib/auth0/roles';
 import { Typography } from '@/components/ui/Typography';
 
 const sections = [
   {
     label: 'Overview',
-    items: [
-      {
-        label: 'Dashboard',
-        href: ROUTE.talentAtlasDashboard,
-        icon: LayoutDashboard,
-        badge: null,
-      },
-    ],
+    allowedRoles: [ROLES.ADMIN, ROLES.COORDINATOR, ROLES.COMPANY, ROLES.CANDIDATE] as Role[],
+    items: [{ label: 'Dashboard', href: ROUTE.talentAtlasDashboard, icon: LayoutDashboard, badge: null }],
   },
   {
     label: 'Hiring',
-    items: [
-      {
-        label: 'Candidates',
-        href: ROUTE.talentAtlasCandidates,
-        icon: Users,
-        badge: null,
-      },
-    ],
+    allowedRoles: [ROLES.ADMIN, ROLES.COORDINATOR] as Role[],
+    items: [{ label: 'Candidates', href: ROUTE.talentAtlasCandidates, icon: Users, badge: null }],
   },
   {
     label: 'Campaigns',
-    items: [
-      {
-        label: 'Overview',
-        href: ROUTE.talentAtlasCampaigns,
-        icon: LayoutDashboard,
-        badge: null,
-      },
-    ],
+    allowedRoles: [ROLES.ADMIN, ROLES.COORDINATOR, ROLES.COMPANY] as Role[],
+    items: [{ label: 'Overview', href: ROUTE.talentAtlasCampaigns, icon: LayoutDashboard, badge: null }],
   },
   {
     label: 'Companies',
-    items: [
-      {
-        label: 'Overview',
-        href: ROUTE.talentAtlasCompanies,
-        icon: LayoutDashboard,
-        badge: null,
-      },
-    ],
+    allowedRoles: [ROLES.ADMIN, ROLES.COORDINATOR, ROLES.COMPANY] as Role[],
+    items: [{ label: 'Overview', href: ROUTE.talentAtlasCompanies, icon: LayoutDashboard, badge: null }],
   },
   {
     label: 'Admin',
-    items: [
-      {
-        label: 'Settings',
-        href: ROUTE.talentAtlasSettings,
-        icon: Settings,
-        badge: null,
-      },
-    ],
+    allowedRoles: [ROLES.ADMIN, ROLES.COORDINATOR] as Role[],
+    items: [{ label: 'Settings', href: ROUTE.talentAtlasSettings, icon: Settings, badge: null }],
   },
 ];
 
-export function TalentAtlasSidebar({ footer }: { footer?: ReactNode }) {
+export function TalentAtlasSidebar({ footer, roles }: { footer?: ReactNode; roles: Role[] }) {
   const pathname = usePathname();
+  const visibleSections = sections.filter((s) =>
+    s.allowedRoles.some((r) => roles.includes(r)),
+  );
 
   return (
     <aside className="flex w-80 shrink-0 flex-col bg-[#0f1929]">
@@ -89,7 +63,7 @@ export function TalentAtlasSidebar({ footer }: { footer?: ReactNode }) {
 
       {/* Nav */}
       <nav className="flex-1 space-y-6 px-3 pb-4">
-        {sections.map((section) => (
+        {visibleSections.map((section) => (
           <div key={section.label}>
             <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
               {section.label}

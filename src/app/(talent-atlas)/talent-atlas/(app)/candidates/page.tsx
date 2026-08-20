@@ -1,33 +1,37 @@
 'use client';
 
-import { useCandidates } from '@/hooks/talent-atlas/useCandidates';
+import { useState } from 'react';
+import { useCandidates, useUpdateCandidateStage } from '@/hooks/talent-atlas/useCandidates';
 import { useCampaigns } from '@/hooks/talent-atlas/useCampaigns';
-
-const stageStyles: Record<string, string> = {
-  applied: 'bg-blue-50 text-blue-700 ring-blue-600/20',
-  screening: 'bg-yellow-50 text-yellow-700 ring-yellow-600/20',
-  interview: 'bg-purple-50 text-purple-700 ring-purple-600/20',
-  hired: 'bg-green-50 text-green-700 ring-green-600/20',
-};
-
-const decisionStyles: Record<string, string> = {
-  proceed: 'bg-green-50 text-green-700 ring-green-600/20',
-  hold: 'bg-amber-50 text-amber-700 ring-amber-600/20',
-};
-
-const ENDPOINT = '/api/talent-atlas/candidates';
+import { STAGES } from '@/data/talentAtlasMockData';
+import { KanbanColumn } from '@/components/features/talentAtlas/KanbanColumn';
+import { AddCandidateForm } from '@/components/features/talentAtlas/AddCandidateForm';
 
 export default function CandidatesPage() {
-  const { data, isLoading, error } = useCandidates();
+  const { data } = useCandidates();
   const { data: campaigns } = useCampaigns();
+  const { mutate: updateStage } = useUpdateCandidateStage();
 
-  const campaignMap = Object.fromEntries(
-    (campaigns ?? []).map((c) => [c.id, c.title]),
-  );
+  const [showForm, setShowForm] = useState(false);
+  const [dragOverStage, setDragOverStage] = useState<string | null>(null);
 
-  if (isLoading) return <p className="text-sm text-slate-500">Loading...</p>;
-  if (error)
-    return <p className="text-sm text-red-500">Failed to load candidates.</p>;
+  const candidates = data ?? [];
+  const activeCampaigns = (campaigns ?? []).filter((c) => c.status === 'active');
+  const campaignMap = Object.fromEntries((campaigns ?? []).map((c) => [c.id, c.title]));
+
+  const handleDragStart = (e: React.DragEvent, candidateId: string) => {
+    e.dataTransfer.setData('candidateId', candidateId);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDrop = (e: React.DragEvent, stage: string) => {
+    e.preventDefault();
+    setDragOverStage(null);
+    const id = e.dataTransfer.getData('candidateId');
+    const candidate = candidates.find((c) => c.id === id);
+    if (!candidate || candidate.stage === stage) return;
+    updateStage({ id, stage });
+  };
 
   return (
     <div className="space-y-6">
@@ -35,74 +39,38 @@ export default function CandidatesPage() {
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">Candidates</h1>
           <p className="mt-1 text-sm text-slate-500">
-            All candidates across active campaigns
+            Drag cards between columns to move candidates through the pipeline
           </p>
         </div>
-        <a
-          href={ENDPOINT}
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 font-mono text-xs text-slate-500 hover:bg-slate-100"
+        <button
+          onClick={() => setShowForm((v) => !v)}
+          className="rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-700"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-          GET {ENDPOINT}
-        </a>
+          {showForm ? 'Cancel' : '+ Add candidate'}
+        </button>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-        <table className="min-w-full divide-y divide-slate-200">
-          <thead className="bg-slate-50">
-            <tr>
-              {['Name', 'Email', 'Campaign', 'Stage', 'Latest Feedback'].map((col) => (
-                <th
-                  key={col}
-                  className="px-5 py-3 text-left text-xs font-medium tracking-wide text-slate-500 uppercase"
-                >
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {data?.map((c) => (
-              <tr key={c.id} className="hover:bg-slate-50">
-                <td className="px-5 py-4 text-sm font-medium text-slate-900">
-                  {c.full_name}
-                </td>
-                <td className="px-5 py-4 text-sm text-slate-500">{c.email}</td>
-                <td className="px-5 py-4 text-sm text-slate-500">
-                  {campaignMap[c.campaign_id] ?? '—'}
-                </td>
-                <td className="px-5 py-4">
-                  <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${stageStyles[c.stage] ?? ''}`}
-                  >
-                    {c.stage}
-                  </span>
-                </td>
-                <td className="px-5 py-4 text-sm text-slate-500">
-                  {c.latestFeedback ? (
-                    <span
-                      className="inline-flex items-center gap-1.5"
-                      title={`${c.latestFeedback.company}: ${c.latestFeedback.feedback}`}
-                    >
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${decisionStyles[c.latestFeedback.decision] ?? ''}`}
-                      >
-                        {c.latestFeedback.decision}
-                      </span>
-                      <span className="max-w-[16rem] truncate">
-                        {c.latestFeedback.feedback}
-                      </span>
-                    </span>
-                  ) : (
-                    '—'
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {showForm && (
+        <AddCandidateForm
+          activeCampaigns={activeCampaigns}
+          onSuccess={() => setShowForm(false)}
+        />
+      )}
+
+      <div className="grid grid-cols-5 gap-4">
+        {STAGES.map((stage) => (
+          <KanbanColumn
+            key={stage}
+            stage={stage}
+            cards={candidates.filter((c) => c.stage === stage)}
+            campaignMap={campaignMap}
+            isOver={dragOverStage === stage}
+            onDragStart={handleDragStart}
+            onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setDragOverStage(stage); }}
+            onDragLeave={() => setDragOverStage(null)}
+            onDrop={(e) => handleDrop(e, stage)}
+          />
+        ))}
       </div>
     </div>
   );
