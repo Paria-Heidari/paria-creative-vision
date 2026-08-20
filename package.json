@@ -8,6 +8,8 @@
     "dev:all": "npm run ws:server & npm run dev",
     "build": "next build --turbopack",
     "start": "next start",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
@@ -26,7 +28,8 @@
     "react-dom": "^19.1.2",
     "rxjs": "^7.8.2",
     "tailwind-merge": "^3.5.0",
-    "ws": "^8.21.0"
+    "ws": "^8.21.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -37,6 +40,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/ws": "^8.18.1",
+    "@vitest/coverage-v8": "^2.1.9",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
@@ -47,6 +51,7 @@
     "supabase": "^2.72.7",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^2.1.9"
   }
 }
