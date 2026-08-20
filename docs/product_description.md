@@ -22,8 +22,8 @@ Build a portfolio website that allows users to explore Paria’s creative work �
 - Filter photos by category / subcategory
 - Filter articles by technology category (Web Dev, AI)
 - Work / case studies section to provide context through storytelling
-- Contact form with validation
-- Project storytelling — optional interactive elements such as maps for travel/location-based work
+- Private admin CMS — photo upload (Sharp + Supabase Storage + atomic rollback), edit metadata, delete, on-demand cache invalidation via `revalidatePath`
+- TalentAtlas hiring dashboard — role-based kanban board (5 stages, drag-and-drop), campaigns, companies, live WebSocket updates through RxJS event pipeline, Auth0 RBAC
 
 ---
 ## Requirements
@@ -140,4 +140,6 @@ flowchart LR
 
 ## Tech stack
 
-Next.js 16 (with Partial Pre-Rendering via `cacheComponents`), TypeScript, Tailwind CSS v4, Supabase (PostgreSQL + Storage), Framer Motion, Turbopack. Full stack rationale and **frontend/application architecture** (routing, data flow, components, images, structure) → **[architecture.md](./architecture.md)**.
+Next.js 16 (App Router, PPR via `cacheComponents`), TypeScript, Tailwind CSS v4, Supabase (PostgreSQL + Storage), Auth0 (authentication + RBAC), TanStack Query v5 (server state + optimistic updates), RxJS (real-time event pipeline), WebSocket (`ws` library, separate Node.js process), Framer Motion, Turbopack.
+
+Full stack rationale and **frontend/application architecture** → **[architecture.md](./architecture.md)**.
