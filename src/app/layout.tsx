@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Syne, Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { metadataInfo } from '@/data/staticData';
+import { WebVitals } from '@/components/layout/WebVitals';
 import './globals.css';
 
 const syne = Syne({ subsets: ['latin'], variable: '--font-syne' });
@@ -31,8 +32,11 @@ export default function RootLayout({
       className={`${Grotesk.variable} ${inter.variable} ${syne.variable} font-grotesk`}
       suppressHydrationWarning
     >
-      {/* suppressHydrationWarning: extensions (e.g. Grammarly) inject attributes on <body> */}
-      <body suppressHydrationWarning>{children}</body>
+      {/* suppressHydrationWarning: extensions inject attributes on <body> */}
+      <body suppressHydrationWarning>
+        <WebVitals />
+        {children}
+      </body>
     </html>
   );
 }

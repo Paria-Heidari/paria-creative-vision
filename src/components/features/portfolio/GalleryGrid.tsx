@@ -1,10 +1,14 @@
 'use client';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Photo } from '@/types/photo.types';
 import { motion } from 'framer-motion';
 import GalleryItem from './GalleryItem';
-import Lightbox from './Lightbox';
 import { Typography } from '@/components/ui/Typography';
+
+// Lightbox is a heavy modal (full-screen overlay + image + navigation).
+// Lazy-load it so its JS chunk is only downloaded when the user actually opens a photo.
+const Lightbox = dynamic(() => import('./Lightbox'), { ssr: false });
 import GalleryEmptyState from './GalleryEmptyState';
 
 interface GalleryGridProps {

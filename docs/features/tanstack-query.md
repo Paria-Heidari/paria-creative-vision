@@ -24,7 +24,7 @@ WS Server (ws-server.ts, port NEXT_PUBLIC_WS_PORT, default 4000)
                           └── React UI    # re-renders automatically, no refetch
 ```
 
-`RealtimeProvider` mounts `useRealtimeSync` (renders null) in `(talent-atlas)/talent-atlas/(app)/layout.tsx` — scoped to Talent Atlas routes only; the WS connection never opens on portfolio/work/about pages.
+`RealtimeSync` mounts `useRealtimeSync` (renders null) in `(talent-atlas)/talent-atlas/(app)/layout.tsx` — scoped to Talent Atlas routes only; the WS connection never opens on portfolio/work/about pages.
 
 Event types (`src/types/ws.types.ts`, discriminated union on `type`):
 - `connected` — handshake on socket open
@@ -43,7 +43,7 @@ Files:
 - src/hooks/talent-atlas/useCandidates.ts, useCampaigns.ts, useCompanies.ts — one `useQuery` per resource; `useCandidates` also exports `useCreateCandidate` (a mutation) and the `CandidateFeedback` type
 - src/app/(talent-atlas)/talent-atlas/(app)/candidates/page.tsx — renders `latestFeedback` as the "Latest Feedback" column
 - src/hooks/talent-atlas/useRealtimeSync.ts — WS → RxJS → cache bridge, plus `applyEventToCache`
-- src/components/providers/talentAtlas/RealtimeProvider.tsx — thin wrapper that just calls `useRealtimeSync()`
+- src/components/providers/talentAtlas/RealtimeSync.tsx — thin wrapper that just calls `useRealtimeSync()`
 - src/lib/realtime/wsStream.ts — RxJS pipeline (dedupe by `eventId`, 200ms buffer, coalesce by entity)
 - src/hooks/useWebSocket.ts — generic WS hook with exponential-backoff reconnect
 - src/types/ws.types.ts — `WsEvent` discriminated union

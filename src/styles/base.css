@@ -1,8 +1,6 @@
-html,
-body {
+html {
   min-height: 100%;
-  background-color: #000; /* neutral fallback — never visible */
-  margin: 0;
+  background-color: #000;
 }
 
 @utility skeleton {
@@ -18,6 +16,7 @@ body {
 }
 
 body {
+  min-height: 100%;
   background: var(--semi-background);
   color: var(--semi-foreground);
   margin: 0;
