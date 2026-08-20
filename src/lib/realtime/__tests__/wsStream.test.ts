@@ -12,7 +12,12 @@ function candidateEvent(
   return {
     type: 'candidate_updated',
     eventId,
-    payload: { candidateId: id, candidateName: 'Test', stage, campaignId: 'c1' },
+    payload: {
+      candidateId: id,
+      candidateName: 'Test',
+      stage,
+      campaignId: 'c1',
+    },
     timestamp: Date.now(),
   };
 }

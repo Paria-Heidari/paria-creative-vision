@@ -592,31 +592,46 @@ Level 3: Why not a separate React SPA + Node.js API? That's a valid architecture
 
 ## 11. TESTING — What to Add Before the Interview
 
-Currently: no tests. Here's what to add and how to talk about it.
+Two test suites are written and passing. Here's what exists and what remains.
 
-### What to build (priority order):
+### What's done:
 
-**1. Unit test: `wsStream.ts` (highest value)**
-This is pure logic with no React, no network, no framework. Test:
-- Duplicate events are dropped
-- Events within 200ms are coalesced to latest
-- Empty 200ms windows emit nothing
-- The bounded Set evicts oldest entry at 10,001
+**1. ✅ Unit test: `wsStream.ts` — `src/lib/realtime/__tests__/wsStream.test.ts`**
 
-This is the most impressive test to show because it proves you can isolate and test a complex pipeline.
+Four tests covering the full pipeline using Vitest fake timers and `vi.resetModules()` to isolate state between tests:
+- Duplicate `eventId` → second event dropped, first passes through
+- Same entity updated 3 times in 200ms → only the latest survives (coalescing)
+- Empty 200ms window → nothing emitted
+- Bounded Set eviction at 10,001 entries → oldest evicted, re-sent event treated as new
 
-**2. Unit test: Zod schemas**
-Test that invalid inputs return the right error messages. Quick to write, demonstrates schema-first thinking.
+Key technique: each test calls `vi.resetModules()` + dynamic `import()` to get a fresh module with a clean `SEEN_EVENTS` Set and a new `Subject` — no shared state between tests.
 
-**3. Unit test: `withAuth` role checking**
-Mock `auth0.getSession()`, test that a handler is called with the right roles and blocked with wrong ones.
+**2. ✅ Unit test: `withAuth` — `src/lib/auth0/__tests__/withAuth.test.ts`**
+
+Three tests covering the security boundary:
+- No session → 401 `{ error: 'Unauthorized' }`, handler never called
+- Session with wrong role (CANDIDATE vs ADMIN/COORDINATOR required) → 403 `{ error: 'Forbidden' }`, handler never called
+- Session with matching role (COORDINATOR) → 200, handler called exactly once
+
+Key technique: `vi.mock('@/lib/auth0/auth0')` hoisted above imports so the module gets the mocked version at load time. `vi.mocked(auth0.getSession)` for typed mock control.
+
+---
+
+### What remains (priority order):
+
+**3. Unit test: Zod schemas — `src/lib/schemas/talentAtlas.ts`**
+Test that invalid inputs return the right error fields. Quick to write, demonstrates schema-first thinking. Worth adding before the interview.
 
 **4. API integration test: PATCH /candidates/[id]**
-Test the happy path and the 404 path. Mock the WS broadcast.
+Test the happy path and the 403 path (wrong role). Mock the WS broadcast. Requires a bit more setup but proves the full route handler path.
 
-### What to say if you don't have tests yet:
+---
 
-> "I don't have tests on this project yet — that's a gap I'd fix before treating this as production code. If I were writing them now, I'd start with the RxJS pipeline in `wsStream.ts` — it's pure logic with no dependencies, easy to test in isolation, and the behavior (dedup, buffer, coalesce) is exactly the kind of thing that breaks silently without tests. Then the Zod schemas, then the API endpoints. I'd use Vitest since it integrates cleanly with TypeScript projects without config overhead."
+### What to say about tests:
+
+> "I have two test suites. The first covers the RxJS pipeline in `wsStream.ts` — four tests using Vitest's fake timers and `vi.resetModules()` to isolate module state between runs. This was the highest priority because the pipeline behavior (dedup, buffer, coalesce) is exactly the kind of thing that breaks silently and is hard to debug by hand. The second covers `withAuth` — the security boundary. A bug there silently allows unauthorized access, so I test every role combination: no session, wrong role, matching role.
+>
+> What I'd add next: Zod schema tests for invalid input shapes, and an integration test for the PATCH endpoint. I deliberately skipped UI snapshot tests — they're fragile and low signal — and E2E tests until the product stabilizes."
 
 ---
 
@@ -630,7 +645,7 @@ Test the happy path and the 404 path. Mock the WS broadcast.
 | React frontend | React (Next.js) ✓ | Strong overlap. You know modern React deeply — Server Components, hooks, optimistic updates. |
 | SQL databases (PostgreSQL) | Supabase PostgreSQL ✓ | Direct match. You've written queries, designed schema, used the typed client. |
 | Azure CI/CD | GitHub Actions ✓, Vercel | "I've built CI pipelines with GitHub Actions. Azure DevOps pipelines follow the same principles — stages, jobs, environment variables, deployment gates. The tooling is different but the concepts are identical." |
-| Testing web apps and APIs | Limited currently | Be honest — see testing section above. Show you know what to test and why. |
+| Testing web apps and APIs | Vitest: wsStream.ts (4 tests) + withAuth (3 tests) ✓ | Lead with what's done — the pipeline test with fake timers is the most impressive. Be honest that Zod schemas and API integration tests are still to add. |
 | Strategic advisor mindset | You built this project with documented decisions | Frame every decision as "here's the problem, here's what I considered, here's what I chose and why" — that IS consultant thinking. |
 
 ### Their values — connect them to your work

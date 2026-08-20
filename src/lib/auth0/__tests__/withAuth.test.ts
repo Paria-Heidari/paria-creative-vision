@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
-
-// Mock auth0 before importing withAuth so the module gets the mocked version
+// Testing --- no session, wrong role, matching role
 vi.mock('@/lib/auth0/auth0', () => ({
   auth0: { getSession: vi.fn() },
 }));
@@ -20,7 +19,9 @@ const makeCtx = () => ({
 });
 
 // A handler that always succeeds — used to verify withAuth calls through
-const successHandler = vi.fn().mockResolvedValue(new Response('ok', { status: 200 }));
+const successHandler = vi
+  .fn()
+  .mockResolvedValue(new Response('ok', { status: 200 }));
 
 describe('withAuth', () => {
   beforeEach(() => {
