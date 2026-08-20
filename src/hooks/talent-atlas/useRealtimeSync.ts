@@ -39,15 +39,33 @@ function applyEventToCache(
 ) {
   switch (event.type) {
     case 'candidate_updated': {
+      type CachedCandidate = { id: string; stage: string; campaign_id: string };
+      const candidates =
+        queryClient.getQueryData<CachedCandidate[]>(queryKeys.candidates) ?? [];
+      const oldStage = candidates.find((c) => c.id === event.payload.candidateId)?.stage;
+      const newStage = event.payload.stage;
+
       queryClient.setQueryData(
         queryKeys.candidates,
-        (old: { id: string; stage: string }[] = []) =>
+        (old: CachedCandidate[] = []) =>
           old.map((c) =>
-            c.id === event.payload.candidateId
-              ? { ...c, stage: event.payload.stage }
-              : c,
+            c.id === event.payload.candidateId ? { ...c, stage: newStage } : c,
           ),
       );
+
+      // Keep campaign hired_count in sync when a candidate crosses the 'hired' boundary.
+      if (oldStage !== newStage && (oldStage === 'hired' || newStage === 'hired')) {
+        const delta = newStage === 'hired' ? 1 : -1;
+        queryClient.setQueryData(
+          queryKeys.campaigns,
+          (old: { id: string; hired_count: number }[] = []) =>
+            old.map((c) =>
+              c.id === event.payload.campaignId
+                ? { ...c, hired_count: Math.max(0, c.hired_count + delta) }
+                : c,
+            ),
+        );
+      }
       break;
     }
     case 'campaign_updated': {
@@ -93,6 +111,17 @@ function applyEventToCache(
           },
           ...old,
         ],
+      );
+
+      // A new candidate always starts as 'applied' — bump the campaign's applied_count.
+      queryClient.setQueryData(
+        queryKeys.campaigns,
+        (old: { id: string; applied_count: number }[] = []) =>
+          old.map((c) =>
+            c.id === event.payload.campaignId
+              ? { ...c, applied_count: c.applied_count + 1 }
+              : c,
+          ),
       );
       break;
     }

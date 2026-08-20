@@ -16,7 +16,7 @@ function isDuplicate(event: WsEvent): boolean {
     return true;
   }
   SEEN_EVENTS.add(event.eventId);
-  // Prevent unbounded memory growth: evict oldest entry when limit reached
+  // Prevent unbounded memory growth: send out oldest entry when limit reached
   if (SEEN_EVENTS.size > MAX_SEEN) {
     const oldest = SEEN_EVENTS.values().next().value;
     if (oldest !== undefined) SEEN_EVENTS.delete(oldest);
