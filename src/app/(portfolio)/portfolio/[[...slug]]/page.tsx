@@ -21,6 +21,7 @@ interface PortfolioPageProps {
   }>;
 }
 // Generate static paths for all categories and subcategories at build time
+// Vercel distributes the file to its edge nodes globally.
 export async function generateStaticParams() {
   const categories = await getAllCategoriesStatic();
 
