@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Images, Upload, ArrowLeft } from 'lucide-react';
+import { Images, Upload, ArrowLeft, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils/utils';
 
 const navItems = [
@@ -58,13 +58,20 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="border-t border-white/[0.06] px-3 py-4">
+      <div className="border-t border-white/[0.06] px-3 py-4 flex flex-col gap-0.5">
         <Link
           href="/"
           className="font-inter flex items-center gap-2 px-2.5 py-2 text-[12px] text-slate-500 transition-colors duration-150 hover:text-slate-300"
         >
           <ArrowLeft className="h-3.5 w-3.5 shrink-0" aria-hidden />
           Back to site
+        </Link>
+        <Link
+          href="/auth/logout?returnTo=https://paria.eu"
+          className="font-inter flex items-center gap-2 px-2.5 py-2 text-[12px] text-slate-500 transition-colors duration-150 hover:text-red-400"
+        >
+          <LogOut className="h-3.5 w-3.5 shrink-0" aria-hidden />
+          Log out
         </Link>
       </div>
     </aside>
