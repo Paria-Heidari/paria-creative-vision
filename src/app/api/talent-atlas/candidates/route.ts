@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { WebSocket } from 'ws';
 import { withAuth } from '@/lib/auth0/withAuth';
-import { MOCK_CANDIDATES } from '@/data/talentAtlasMockData';
 import { ROLES } from '@/lib/auth0/roles';
+import { CreateCandidateSchema } from '@/lib/schemas/talentAtlas';
+import { candidatesStore } from '@/lib/store/talentAtlasStore';
 import type { CandidateCreatedEvent } from '@/types/ws.types';
 
-type Candidate = (typeof MOCK_CANDIDATES)[number];
+type Candidate = (typeof candidatesStore)[number];
 
 const notifyWsServer = (candidate: Candidate) => {
   const ws = new WebSocket(
@@ -29,19 +30,38 @@ const notifyWsServer = (candidate: Candidate) => {
   });
 };
 
-// mutable in-memory store — persists until dev server restarts
-const candidates = [...MOCK_CANDIDATES];
 const roles = [ROLES.ADMIN, ROLES.COORDINATOR];
 
-const handlerGet = async () => NextResponse.json(candidates);
+const handlerGet = async () => NextResponse.json(candidatesStore);
 const handlerPost = async (req: NextRequest) => {
-  const body = await req.json();
+  const parsed = CreateCandidateSchema.safeParse(await req.json());
+
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: 'Validation failed', issues: parsed.error.issues },
+      { status: 400 },
+    );
+  }
+
+  const { email, campaign_id } = parsed.data;
+  const duplicate = candidatesStore.some(
+    (c) =>
+      c.email.toLowerCase() === email.toLowerCase() &&
+      c.campaign_id === campaign_id,
+  );
+  if (duplicate) {
+    return NextResponse.json(
+      { error: 'This candidate has already been added to this campaign' },
+      { status: 409 },
+    );
+  }
+
   const newCandidate = {
     id: `temp-${Date.now()}`,
-    stage: 'applied',
-    ...body,
+    stage: 'applied' as const,
+    ...parsed.data,
   };
-  candidates.push(newCandidate);
+  candidatesStore.push(newCandidate);
   notifyWsServer(newCandidate);
 
   return NextResponse.json(newCandidate, { status: 201 });

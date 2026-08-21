@@ -2,6 +2,7 @@ import { ROLES } from '@/lib/auth0/roles';
 import { withAuth } from '@/lib/auth0/withAuth';
 import { createAdminClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 
 export const DELETE = withAuth([ROLES.ADMIN], async (_req, ctx) => {
   const { id } = await ctx.params;
@@ -29,6 +30,9 @@ export const DELETE = withAuth([ROLES.ADMIN], async (_req, ctx) => {
   if (deleteError) {
     return NextResponse.json({ error: deleteError.message }, { status: 500 });
   }
+
+  revalidatePath('/portfolio', 'layout');
+  revalidatePath('/');
 
   return new NextResponse(null, { status: 204 });
 });
@@ -68,6 +72,9 @@ export const PATCH = withAuth([ROLES.ADMIN], async (req, ctx) => {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  revalidatePath('/portfolio', 'layout');
+  revalidatePath('/');
 
   return NextResponse.json(data);
 });

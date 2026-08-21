@@ -1,10 +1,5 @@
-// Pool for ws-server.ts's random simulator only. candidate_created (real POSTs)
-// and connected (per-socket handshake) are triggered elsewhere and don't belong here.
-export const TYPES = [
-  'candidate_updated',
-  'campaign_updated',
-  'company_feedback',
-] as const;
+// candidate_updated fires only on real PATCH requests (kanban drag), not simulated.
+export const TYPES = ['campaign_updated', 'company_feedback'] as const;
 
 export type CandidateCreatedEvent = {
   type: 'candidate_created';

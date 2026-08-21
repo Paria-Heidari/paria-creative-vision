@@ -8,6 +8,10 @@ export function createQueryClient() {
         staleTime: 1000 * 60,
         // prevents double-fetches
         refetchOnWindowFocus: false,
+        retry: 2, // retries failed GETs twice before showing error
+      },
+      mutations: {
+        retry: 1, // retries failed POSTs once (safe here, IDs are server-generated)
       },
     },
   });

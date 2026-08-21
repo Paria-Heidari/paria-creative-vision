@@ -17,12 +17,19 @@ export async function getSessionOrRedirect() {
 export async function getAdminSessionOrRedirect() {
   const session = await auth0.getSession();
 
-  const userRoles = session?.user?.roles ?? [];
-  const isAdmin = userRoles.includes(ROLES.ADMIN);
-  if (!session || !isAdmin) {
+  if (!session) {
     redirect(
       `/auth/login?returnTo=${process.env.APP_BASE_URL?.replace(/\/$/, '')}${ROUTE.admin}`,
     );
   }
+
+  const userRoles = (session.user as { roles?: string[] }).roles ?? [];
+  const isAdmin = userRoles.includes(ROLES.ADMIN);
+
+  if (!isAdmin) {
+    // because Auth0 already has an active session and would bounce back here.
+    redirect(ROUTE.talentAtlas);
+  }
+
   return session;
 }

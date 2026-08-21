@@ -2,6 +2,7 @@ import { ROLES } from '@/lib/auth0/roles';
 import { withAuth } from '@/lib/auth0/withAuth';
 import { createAdminClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import sharp from 'sharp';
 
 export const POST = withAuth([ROLES.ADMIN], async (req: NextRequest) => {
@@ -84,6 +85,9 @@ export const POST = withAuth([ROLES.ADMIN], async (req: NextRequest) => {
     await supabase.storage.from('creative-vision-pics').remove([filePath]);
     return NextResponse.json({ error: insertError.message }, { status: 500 });
   }
+
+  revalidatePath('/portfolio', 'layout');
+  revalidatePath('/');
 
   return NextResponse.json(data, { status: 201 });
 });

@@ -62,80 +62,124 @@ Entity–Relationship Diagram (ERD) of the portfolio database built on Supabase 
 public/                        # Static assets served directly
 docs/                          # Project documentation
 src/
-├── app/                          # Next.js App Router pages & layouts
-│   ├── layout.tsx                # Root layout
-│   ├── globals.css               # Global styles entry point
-│   ├── (portfolio)/              # Route group — main portfolio site
-│   │   ├── layout.tsx
-│   │   ├── page.tsx              # Home page (hero + featured gallery)
+├── app/                          # Next.js App Router — four route groups
+│   ├── layout.tsx                # Root shell (fonts only)
+│   ├── globals.css               # @import "tailwindcss" + token file imports
+│   │
+│   ├── (portfolio)/              # Public photography portfolio
+│   │   ├── layout.tsx            # Header + Footer layout
+│   │   ├── page.tsx              # / — home page (hero + featured gallery)
 │   │   ├── about/page.tsx
-│   │   ├── articles/page.tsx
-│   │   ├── portfolio/[[...slug]]/page.tsx  # Gallery; slug=[category, subcategory]
+│   │   ├── articles/page.tsx     # Medium RSS, ISR revalidate 3600s
+│   │   ├── portfolio/[[...slug]]/page.tsx  # /portfolio/[cat]/[sub] catch-all
 │   │   └── work/
-│   │       ├── page.tsx          # Work / case studies listing
-│   │       └── [slug]/page.tsx   # Individual case study
-│   └── (verdikt)/                # Route group — separate app prototype
-│       └── verdikt/
-│           ├── layout.tsx
-│           └── dashboard/page.tsx
+│   │       ├── page.tsx          # /work — case studies listing
+│   │       └── [slug]/page.tsx   # /work/[slug] — individual case study
+│   │
+│   ├── (admin)/admin/            # Private photo CMS (Auth0-gated)
+│   │   ├── layout.tsx            # AdminAuthGate + AdminSidebar
+│   │   ├── page.tsx              # /admin
+│   │   ├── upload/page.tsx       # /admin/upload — photo upload pipeline
+│   │   ├── photos/page.tsx       # /admin/photos — photo grid + management
+│   │   └── photos/[id]/edit/page.tsx  # /admin/photos/[id]/edit
+│   │
+│   ├── (talent-atlas)/talent-atlas/  # Hiring dashboard (Auth0 + role-based)
+│   │   ├── layout.tsx            # Outer bare shell
+│   │   ├── page.tsx              # Entry / redirect
+│   │   └── (app)/                # Inner group with full layout
+│   │       ├── layout.tsx        # QueryProvider + RealtimeSync + Header + Sidebar + AuthGate
+│   │       ├── dashboard/page.tsx
+│   │       ├── candidates/page.tsx    # /talent-atlas/candidates — kanban board
+│   │       ├── campaigns/page.tsx
+│   │       ├── companies/page.tsx
+│   │       └── settings/page.tsx
+│   │
+│   ├── (verdikt)/verdikt/        # Early SaaS prototype
+│   │   ├── layout.tsx
+│   │   └── dashboard/page.tsx
+│   │
+│   └── api/                      # Next.js Route Handlers
+│       ├── admin/photos/route.ts            # POST (upload) + GET
+│       ├── admin/photos/[id]/route.ts       # PATCH + DELETE + revalidatePath
+│       ├── talent-atlas/candidates/route.ts
+│       ├── talent-atlas/candidates/[id]/route.ts  # PATCH stage + WS broadcast
+│       ├── talent-atlas/campaigns/route.ts
+│       └── talent-atlas/companies/route.ts
 │
 ├── components/
 │   ├── branding/Logo/
-│   ├── features/                 # Page-specific feature components
+│   ├── features/                 # Feature-scoped components
+│   │   ├── admin/                # AdminSidebar, AdminTopBar, UploadForm, PhotoGrid,
+│   │   │                         #   PhotoCard, PhotoManager, EditPhotoForm, PhotoMetadataCard
+│   │   ├── talentAtlas/          # TalentAtlasHeader, TalentAtlasSidebar, SidebarUserFooter,
+│   │   │                         #   DashboardOverview, KanbanColumn, CandidateCard,
+│   │   │                         #   AddCandidateForm, FeedbackBadge, RealtimeSync
 │   │   ├── home/                 # Hero, FeaturedGallery, LatestArticles, SelectedWork
-│   │   ├── portfolio/            # GalleryGrid, GalleryItem, GalleryFilters, Lightbox, PortfolioPageHero
+│   │   ├── portfolio/            # GalleryGrid, GalleryItem, GalleryFilters, Lightbox
 │   │   ├── articles/             # ArticleCard, ArticleGrid, ArticleFilter, ArticleList
 │   │   ├── work/                 # WorkCard, WorkGrid, WorkPageHero
 │   │   │   └── workItemPage/     # WorkItemPageHero, WorkItemSidebar, WorkDeepDiveSection,
 │   │   │                         #   KeyDecisionsSection, SitePreviewSection
 │   │   └── about/                # ProfileCard, DualCardSection, AboutPageHero
-│   ├── layout/                   # Structural layout components
-│   │   ├── Header/               # Header, DesktopNav, MobileNav, MobileNavOverlay
-│   │   ├── Footer/               # Footer, SocialIcons
-│   │   ├── Container/            # Max-width wrapper
-│   │   ├── Body/                 # Page body wrapper
-│   │   ├── Flex/                 # Flex layout primitive
-│   │   ├── Grid/                 # Grid layout primitive + GridItem
-│   │   └── Stack/                # Stack layout primitive
-│   └── ui/                       # Shared design-system components
-│       ├── Button/               # Button with variants
-│       ├── Typography/           # Type scale component
-│       ├── CtaLink/ & CtaSection/
-│       ├── SectionHeader/
-│       ├── TextBlock/
-│       ├── Divider/ & DecorativeLine/
-│       ├── Loading/
-│       ├── BackNavigationLink/
-│       └── icons/                # SVG icon components
+│   ├── layout/                   # Header, Footer, Container, Body, Flex, Grid, Stack
+│   ├── providers/                # QueryProvider, WebVitals
+│   └── ui/                       # Button, Typography, CtaLink, SectionHeader, TextBlock,
+│                                  #   Divider, DecorativeLine, Loading, BackNavigationLink, icons
 │
-├── data/                         # Static content
+├── data/
 │   ├── staticData.ts
 │   ├── aboutData.ts
-│   └── workData.ts
+│   ├── workData.ts
+│   └── talentAtlasMockData.ts    # MOCK_CAMPAIGNS, MOCK_CANDIDATES, STAGE_LABELS, STAGE_COLORS
 │
 ├── hooks/
-│   └── useHeaderScroll.ts        # Scroll-aware header hide/show + background state
+│   ├── talent-atlas/
+│   │   ├── useCandidates.ts      # useQuery + useUpdateCandidateStage (optimistic update)
+│   │   ├── useCampaigns.ts
+│   │   ├── useCompanies.ts
+│   │   └── useRealtimeSync.ts    # Subscribes to wsStream, patches TanStack cache
+│   ├── useRole.ts
+│   ├── useWebSocket.ts
+│   └── useHeaderScroll.ts
 │
-├── lib/                          # API & utilities
+├── lib/
 │   ├── api/
-│   │   ├── photos/photos.ts      # Supabase queries for photos/categories
-│   │   ├── workProjects/         # Supabase queries for work_projects/decisions/articles
+│   │   ├── admin/photos.ts       # Supabase admin photo queries (service role)
+│   │   ├── photos/photos.ts      # Portfolio photo queries (anon key + RLS)
+│   │   ├── workProjects/         # Work project queries
 │   │   ├── mediumArticles/       # Medium RSS integration
 │   │   └── apiUtils/apiUtils.ts  # Shared Postgrest error logging
+│   ├── auth0/
+│   │   ├── withAuth.ts           # HOF — reads session, checks roles, wraps handler
+│   │   ├── session.ts            # getSessionOrRedirect, getAdminSessionOrRedirect
+│   │   ├── auth0.ts              # Auth0 SDK instance
+│   │   ├── roles.ts              # ROLES enum: ADMIN, COORDINATOR, COMPANY, CANDIDATE
+│   │   └── __tests__/withAuth.test.ts
+│   ├── realtime/
+│   │   ├── wsStream.ts           # RxJS: Subject → filter(dedup) → bufferTime(200) → coalesce
+│   │   └── __tests__/wsStream.test.ts
+│   ├── schemas/talentAtlas.ts    # Zod schemas: CreateCampaign, CreateCandidate, UpdateStage
+│   ├── store/talentAtlasStore.ts # In-memory singleton arrays (mock; replace with Supabase in prod)
+│   ├── query/
+│   │   ├── queryClient.ts        # TanStack Query client config (staleTime, refetchOnWindowFocus)
+│   │   └── queryKeys.ts          # Centralised query key factory
 │   ├── routes/routes.ts          # Centralised route path constants
 │   ├── supabase/
-│   │   ├── server.ts             # Server-component Supabase client (cookies)
-│   │   ├── client.ts             # Browser Supabase client
-│   │   └── static.ts             # Singleton client for generateStaticParams
+│   │   ├── server.ts             # Server Component client (anon key + cookies)
+│   │   ├── client.ts             # Browser client
+│   │   └── static.ts             # Singleton for generateStaticParams (no cookies)
 │   └── utils/utils.tsx
 │
-├── styles/                       # Global CSS (tokens, base, animations)
-├── types/                        # TypeScript types
-│   ├── database.types.ts         # Auto-generated Supabase types
-│   ├── photo.types.ts            # Photo domain types
-│   ├── work.types.ts             # Work project domain types
-│   └── ui.types.ts               # Shared UI types (variants, sizes)
-└── data/                         # Static content and project data
+├── styles/                       # Global CSS split by domain
+│   ├── tokens.css                # Design tokens: primitive → semantic → @theme Tailwind mapping
+│   └── base.css                  # Minimal global defaults
+│
+└── types/
+    ├── photo.types.ts
+    ├── work.types.ts
+    ├── ui.types.ts
+    ├── ws.types.ts               # WsEvent discriminated union (all WebSocket event types)
+    └── database.types.ts         # Auto-generated from Supabase schema (npm run supabase:types)
 ```
 
 ---

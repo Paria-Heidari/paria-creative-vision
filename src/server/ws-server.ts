@@ -2,10 +2,10 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { TYPES, type WsEvent } from '@/types/ws.types';
 import {
   MOCK_CAMPAIGNS,
-  MOCK_CANDIDATES,
   MOCK_COMPANIES,
   MOCK_FEEDBACKS,
   DECISIONS,
+  MOCK_CANDIDATES,
 } from '@/data/talentAtlasMockData';
 
 const PORT = Number(process.env.NEXT_PUBLIC_WS_PORT) || 4000;
@@ -89,22 +89,9 @@ setInterval(() => {
 setInterval(() => {
   eventCounter++;
 
-  const eventType = TYPES[eventCounter % 3];
+  const eventType = TYPES[eventCounter % TYPES.length];
 
-  if (eventType === 'candidate_updated') {
-    const candidate = pick(MOCK_CANDIDATES);
-    broadcast({
-      type: 'candidate_updated',
-      eventId: `evt-${eventCounter}`,
-      payload: {
-        candidateId: candidate.id,
-        candidateName: candidate.full_name,
-        stage: candidate.stage,
-        campaignId: candidate.campaign_id,
-      },
-      timestamp: Date.now(),
-    });
-  } else if (eventType === 'campaign_updated') {
+  if (eventType === 'campaign_updated') {
     const campaign = pick(MOCK_CAMPAIGNS);
     broadcast({
       type: 'campaign_updated',
@@ -112,7 +99,7 @@ setInterval(() => {
       payload: {
         campaignId: campaign.id,
         campaignTitle: campaign.title,
-        applied_count: campaign.applied_count + Math.floor(Math.random() * 3),
+        applied_count: campaign.applied_count,
         hired_count: campaign.hired_count,
       },
       timestamp: Date.now(),
@@ -136,7 +123,7 @@ setInterval(() => {
   console.log(
     `Broadcast: ${eventType} [evt-${eventCounter}] to ${clients.size} client(s)`,
   );
-}, 10000);
+}, 2000);
 
 // Clean shutdown on Ctrl+C
 process.on('SIGINT', () => {

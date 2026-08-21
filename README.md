@@ -6,16 +6,21 @@ Live site: [paria.eu](https://paria.eu)
 
 ## Tech Stack
 
-- **Next.js 16** — App Router, Server Components, static generation
+- **Next.js 16** — App Router, Server Components, PPR, static generation
 - **TypeScript** — Strict mode, types generated from Supabase schema
-- **Tailwind CSS v4** — Custom design system with design tokens
-- **Supabase** — PostgreSQL database, storage, and row-level security
+- **Tailwind CSS v4** — Custom design system with three-layer design tokens
+- **Supabase** — PostgreSQL database, Storage, row-level security
+- **Auth0** — Authentication and role-based access control
+- **TanStack Query v5** — Server state, optimistic updates, cache management
+- **RxJS** — Real-time event pipeline (dedup, buffer, coalesce)
 - **Framer Motion** — Scroll-triggered animations
 - **Vercel** — CI/CD and deployment
 
 ## Features
 
 - Photography portfolio with masonry gallery, category/subcategory filtering, and lightbox viewer
+- Private admin CMS — photo upload pipeline (Sharp + Supabase Storage + DB), edit, delete, and on-demand cache invalidation
+- TalentAtlas hiring dashboard — role-based kanban board, campaigns, live WebSocket updates via RxJS pipeline
 - Engineering work section with case studies and key decision documentation
 - Articles section pulling from Medium via RSS
 - Custom design system — tokens, typography scale, and components built from scratch
@@ -66,40 +71,66 @@ MEDIUM_USERNAME=your_medium_username
 
 ## Project Structure
 
-This repo hosts two apps under one domain using Next.js route groups:
+Four route groups under one Next.js app — each with its own layout, auth model, and data layer:
 
-- **Portfolio** (`paria.eu/*`)
-- **Verdikt** — B2B decision-tracking SaaS demo
+- **`(portfolio)`** — public photography portfolio (`paria.eu/*`)
+- **`(admin)`** — private photo CMS (`paria.eu/admin/*`), Auth0-gated
+- **`(talent-atlas)`** — authenticated hiring dashboard (`paria.eu/talent-atlas/*`), role-based
+- **`(verdikt)`** — early-stage B2B SaaS prototype (`paria.eu/verdikt/*`)
 
 ```
 src/
 ├── app/
-│   ├── layout.tsx                    # Bare HTML shell (fonts only)
-│   ├── (portfolio)/                  # Public portfolio — Header + Footer layout
-│   │   ├── layout.tsx
-│   │   ├── page.tsx                  # /
-│   │   ├── portfolio/                # /portfolio — photography gallery
-│   │   ├── work/                     # /work — case studies
-│   │   ├── articles/                 # /articles
-│   │   └── about/                    # /about
-│   └── (verdikt)/                    # Verdikt SaaS — Sidebar layout
-│       └── verdikt/
-│           ├── layout.tsx
-│           ├── login/                # /verdikt/login
-│           ├── auth/callback/        # /verdikt/auth/callback (magic link handler)
-│           ├── dashboard/            # /verdikt/dashboard
-│           └── departments/          # /verdikt/departments
+│   ├── layout.tsx                          # Root shell (fonts only)
+│   ├── (portfolio)/                        # Public portfolio — Header + Footer layout
+│   │   ├── page.tsx                        # /
+│   │   ├── portfolio/[[...slug]]/page.tsx  # /portfolio + /portfolio/[cat]/[sub]
+│   │   ├── work/[slug]/page.tsx            # /work — case studies
+│   │   ├── articles/page.tsx               # /articles — Medium RSS
+│   │   └── about/page.tsx                  # /about
+│   ├── (admin)/admin/                      # Admin CMS — Auth0-gated sidebar layout
+│   │   ├── layout.tsx                      # AdminAuthGate + AdminSidebar
+│   │   ├── page.tsx                        # /admin
+│   │   ├── upload/page.tsx                 # /admin/upload
+│   │   ├── photos/page.tsx                 # /admin/photos
+│   │   └── photos/[id]/edit/page.tsx       # /admin/photos/[id]/edit
+│   ├── (talent-atlas)/talent-atlas/        # TalentAtlas — Auth0 + role-based
+│   │   └── (app)/                          # Inner group: QueryProvider + RealtimeSync + AuthGate
+│   │       ├── dashboard/page.tsx
+│   │       ├── candidates/page.tsx         # Kanban board
+│   │       ├── campaigns/page.tsx
+│   │       ├── companies/page.tsx
+│   │       └── settings/page.tsx
+│   ├── (verdikt)/verdikt/                  # Early SaaS prototype
+│   │   └── dashboard/page.tsx
+│   └── api/
+│       ├── admin/photos/route.ts           # POST + GET photos
+│       ├── admin/photos/[id]/route.ts      # PATCH + DELETE photo
+│       ├── talent-atlas/candidates/route.ts
+│       ├── talent-atlas/candidates/[id]/route.ts
+│       ├── talent-atlas/campaigns/route.ts
+│       └── talent-atlas/companies/route.ts
 ├── components/
-│   ├── features/         # Page-specific components (portfolio, verdikt, home…)
+│   ├── features/         # admin/ · talentAtlas/ · portfolio/ · home/ · work/ · articles/ · about/
 │   ├── layout/           # Container, Grid, Stack, Header, Footer
-│   └── ui/               # Shared design system components
-├── data/                 # Static content and navigation data
+│   ├── providers/        # QueryProvider, WebVitals
+│   └── ui/               # Shared design-system primitives
+├── data/                 # Static content
+├── hooks/
+│   ├── talent-atlas/     # useCandidates, useCampaigns, useCompanies, useRealtimeSync
+│   ├── useRole.ts
+│   ├── useWebSocket.ts
+│   └── useHeaderScroll.ts
 ├── lib/
-│   ├── api/              # Supabase query functions (portfolio)
-│   ├── verdikt/          # Verdikt query functions, workflow engine, auth helpers
-│   └── supabase/         # Supabase clients (server, client, server-admin)
-├── migrations/           # SQL migrations (run in Supabase dashboard)
-└── types/                # TypeScript definitions (portfolio + verdikt)
+│   ├── api/              # photos, workProjects, mediumArticles, admin/photos
+│   ├── auth0/            # withAuth HOF, session helpers, roles, __tests__
+│   ├── realtime/         # wsStream (RxJS pipeline), __tests__
+│   ├── schemas/          # Zod schemas — talentAtlas
+│   ├── store/            # talentAtlasStore (in-memory singleton)
+│   ├── query/            # queryClient, queryKeys
+│   ├── routes/           # Centralised route constants
+│   └── supabase/         # server, client, static clients
+└── types/                # photo.types, work.types, ui.types, database.types (generated)
 ```
 
 ## TypeScript Type Generation

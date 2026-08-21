@@ -49,20 +49,37 @@ Photos are stored in Supabase Storage, referenced via `storage_path` field.
 
 ### Routing & Pages
 
-Uses Next.js App Router with route groups and Server Components:
+Uses Next.js App Router with four route groups, each with its own layout and auth model:
 
-- `(portfolio)` route group — main portfolio site:
-  - `/` - Home page with hero and featured photos
-  - `/portfolio/[[...slug]]` - Gallery; slug params drive filtering:
+- `(portfolio)` route group — public photography portfolio:
+  - `/` — Home page with hero and featured photos
+  - `/portfolio/[[...slug]]` — Gallery; slug params drive filtering:
     - `/portfolio` — all photos
     - `/portfolio/[categorySlug]` — filter by category
     - `/portfolio/[categorySlug]/[subcategorySlug]` — filter by subcategory
-  - `/about` - About page
-  - `/articles` - Articles (Medium RSS feed)
-  - `/work` - Work / case studies listing
-  - `/work/[slug]` - Individual case study
-- `(verdikt)` route group — separate early-stage app section at `/verdikt/*`:
-  - `/verdikt/dashboard` - Dashboard (prototype)
+  - `/about` — About page
+  - `/articles` — Articles (Medium RSS, ISR revalidate 3600s)
+  - `/work` — Work / case studies listing
+  - `/work/[slug]` — Individual case study
+
+- `(admin)` route group — private photo CMS at `/admin/*`:
+  - Layout: `AdminAuthGate` (Server Component, calls `getAdminSessionOrRedirect()`) + `AdminSidebar`
+  - `/admin` — Dashboard / redirect
+  - `/admin/upload` — Photo upload (Sharp + Supabase Storage + DB insert + rollback)
+  - `/admin/photos` — Photo grid management
+  - `/admin/photos/[id]/edit` — Edit photo metadata
+
+- `(talent-atlas)` route group — authenticated hiring dashboard at `/talent-atlas/*`:
+  - Outer layout: bare shell
+  - Inner `(app)` layout: `QueryProvider` + `RealtimeSync` (WS → TanStack cache) + `TalentAtlasHeader` + `SidebarWithRoles` + `AuthGate`
+  - `/talent-atlas/dashboard` — KPI overview
+  - `/talent-atlas/candidates` — Kanban board (5 stages, drag-and-drop)
+  - `/talent-atlas/campaigns` — Campaign list
+  - `/talent-atlas/companies` — Partner companies
+  - `/talent-atlas/settings` — Settings
+
+- `(verdikt)` route group — early-stage SaaS prototype at `/verdikt/*`:
+  - `/verdikt/dashboard` — Dashboard (prototype)
 
 Route constants are centralised in `/src/lib/routes/routes.ts`.
 
@@ -248,71 +265,109 @@ export default async function Page({ params }: PortfolioPageProps) {
 ```
 src/
 ├── app/
-│   ├── layout.tsx                          # Root layout
-│   ├── globals.css
-│   ├── (portfolio)/                        # Main portfolio site (route group)
-│   │   ├── layout.tsx
-│   │   ├── page.tsx                        # Home page
+│   ├── layout.tsx                          # Root shell (fonts only)
+│   ├── globals.css                         # @import "tailwindcss" + token imports
+│   ├── (portfolio)/                        # Public photography portfolio
+│   │   ├── layout.tsx                      # Header + Footer
+│   │   ├── page.tsx                        # / — home, featured photos
 │   │   ├── about/page.tsx
-│   │   ├── articles/page.tsx
-│   │   ├── portfolio/[[...slug]]/page.tsx  # Gallery; slug = [category, subcategory]
+│   │   ├── articles/page.tsx               # Medium RSS, ISR revalidate 3600s
+│   │   ├── portfolio/[[...slug]]/page.tsx  # /portfolio/[cat]/[sub] — catch-all
 │   │   └── work/
 │   │       ├── page.tsx
 │   │       └── [slug]/page.tsx
-│   └── (verdikt)/                          # Separate app section (early prototype)
-│       └── verdikt/
-│           ├── layout.tsx
-│           └── dashboard/page.tsx
+│   ├── (admin)/admin/                      # Private photo CMS
+│   │   ├── layout.tsx                      # AdminAuthGate + AdminSidebar
+│   │   ├── page.tsx                        # /admin
+│   │   ├── upload/page.tsx                 # /admin/upload — Sharp + Storage + DB
+│   │   ├── photos/page.tsx                 # /admin/photos — photo grid
+│   │   └── photos/[id]/edit/page.tsx       # /admin/photos/[id]/edit
+│   ├── (talent-atlas)/talent-atlas/        # Hiring dashboard
+│   │   ├── layout.tsx                      # Outer shell
+│   │   ├── page.tsx                        # Entry redirect
+│   │   └── (app)/                          # Inner group
+│   │       ├── layout.tsx                  # QueryProvider + RealtimeSync + Header + Sidebar + AuthGate
+│   │       ├── dashboard/page.tsx
+│   │       ├── candidates/page.tsx         # Kanban board
+│   │       ├── campaigns/page.tsx
+│   │       ├── companies/page.tsx
+│   │       └── settings/page.tsx
+│   ├── (verdikt)/verdikt/                  # Early prototype
+│   │   ├── layout.tsx
+│   │   └── dashboard/page.tsx
+│   └── api/
+│       ├── admin/photos/route.ts           # POST (upload) + GET
+│       ├── admin/photos/[id]/route.ts      # PATCH + DELETE + revalidatePath
+│       ├── talent-atlas/candidates/route.ts
+│       ├── talent-atlas/candidates/[id]/route.ts  # PATCH stage + WS broadcast
+│       ├── talent-atlas/campaigns/route.ts
+│       └── talent-atlas/companies/route.ts
 ├── components/
 │   ├── branding/Logo/
-│   ├── features/                           # Page-specific feature components
+│   ├── features/
+│   │   ├── admin/                          # AdminSidebar, AdminTopBar, UploadForm, PhotoGrid,
+│   │   │                                   #   PhotoCard, PhotoManager, EditPhotoForm, PhotoMetadataCard
+│   │   ├── talentAtlas/                    # TalentAtlasHeader, TalentAtlasSidebar, SidebarUserFooter,
+│   │   │                                   #   DashboardOverview, KanbanColumn, CandidateCard,
+│   │   │                                   #   AddCandidateForm, FeedbackBadge, RealtimeSync
 │   │   ├── home/
-│   │   ├── portfolio/
+│   │   ├── portfolio/                      # GalleryGrid, GalleryItem, GalleryFilters, Lightbox
 │   │   ├── articles/
 │   │   ├── work/
-│   │   │   └── workItemPage/               # Work detail page sections
+│   │   │   └── workItemPage/
 │   │   └── about/
-│   ├── layout/                             # Structural layout components
-│   │   ├── Header/  (DesktopNav, MobileNav, MobileNavOverlay)
-│   │   ├── Footer/
-│   │   ├── Container/
-│   │   ├── Body/
-│   │   ├── Flex/
-│   │   ├── Grid/
-│   │   └── Stack/
-│   └── ui/                                 # Shared design-system primitives
-│       ├── Button/
-│       ├── Typography/
-│       ├── CtaLink/ & CtaSection/
-│       ├── SectionHeader/
-│       ├── TextBlock/
-│       ├── Divider/ & DecorativeLine/
-│       ├── Loading/
-│       ├── BackNavigationLink/
-│       └── icons/
-├── data/                                   # Static content
+│   ├── layout/                             # Header, Footer, Container, Body, Flex, Grid, Stack
+│   ├── providers/                          # QueryProvider, WebVitals
+│   └── ui/                                 # Button, Typography, CtaLink, SectionHeader, TextBlock,
+│                                           #   Divider, Loading, BackNavigationLink, icons
+├── data/
 │   ├── staticData.ts
 │   ├── aboutData.ts
-│   └── workData.ts
+│   ├── workData.ts
+│   └── talentAtlasMockData.ts              # MOCK_CAMPAIGNS, MOCK_CANDIDATES, STAGE_LABELS, STAGE_COLORS
 ├── hooks/
+│   ├── talent-atlas/
+│   │   ├── useCandidates.ts               # useQuery + useUpdateCandidateStage (optimistic)
+│   │   ├── useCampaigns.ts
+│   │   ├── useCompanies.ts
+│   │   └── useRealtimeSync.ts             # Subscribes to wsStream, calls setQueryData
+│   ├── useRole.ts
+│   ├── useWebSocket.ts
 │   └── useHeaderScroll.ts
 ├── lib/
 │   ├── api/
-│   │   ├── photos/photos.ts                # Photo Supabase queries
-│   │   ├── workProjects/workProjects.ts    # Work project Supabase queries
-│   │   ├── mediumArticles/                 # Medium RSS integration
-│   │   └── apiUtils/apiUtils.ts            # Shared error logging
-│   ├── routes/routes.ts                    # Centralised route constants
+│   │   ├── admin/photos.ts                # Supabase admin photo queries
+│   │   ├── photos/photos.ts               # Portfolio photo queries
+│   │   ├── workProjects/workProjects.ts
+│   │   ├── mediumArticles/
+│   │   └── apiUtils/apiUtils.ts
+│   ├── auth0/
+│   │   ├── withAuth.ts                    # HOF — reads session, checks roles, wraps handler
+│   │   ├── session.ts                     # getSessionOrRedirect, getAdminSessionOrRedirect
+│   │   ├── auth0.ts                       # Auth0 SDK instance
+│   │   ├── roles.ts                       # ROLES enum (ADMIN, COORDINATOR, COMPANY, CANDIDATE)
+│   │   └── __tests__/withAuth.test.ts
+│   ├── realtime/
+│   │   ├── wsStream.ts                    # RxJS: Subject → filter(dedup) → bufferTime(200) → coalesce
+│   │   └── __tests__/wsStream.test.ts
+│   ├── schemas/talentAtlas.ts             # Zod schemas — CreateCampaign, CreateCandidate, UpdateStage
+│   ├── store/talentAtlasStore.ts          # In-memory singleton arrays for TalentAtlas
+│   ├── query/
+│   │   ├── queryClient.ts                 # TanStack Query client config
+│   │   └── queryKeys.ts                   # Centralised query key factory
+│   ├── routes/routes.ts
 │   ├── supabase/
-│   │   ├── server.ts                       # Server Components client (cookies)
-│   │   ├── client.ts                       # Browser client
-│   │   └── static.ts                       # Singleton for generateStaticParams
+│   │   ├── server.ts                      # Server Components client (cookies)
+│   │   ├── client.ts                      # Browser client
+│   │   └── static.ts                      # Singleton for generateStaticParams
 │   └── utils/utils.tsx
+├── styles/                                # tokens.css, base.css, animations
 └── types/
     ├── photo.types.ts
     ├── work.types.ts
     ├── ui.types.ts
-    └── database.types.ts                   # Auto-generated from Supabase schema
+    ├── ws.types.ts                        # WsEvent discriminated union
+    └── database.types.ts                  # Auto-generated from Supabase schema
 ```
 
 ## Commit Message Conventions

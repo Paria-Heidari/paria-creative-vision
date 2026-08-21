@@ -1,7 +1,5 @@
-### Get all candidates
 GET http://localhost:3000/api/talent-atlas/candidates
 
-### Create a candidate
 POST http://localhost:3000/api/talent-atlas/candidates
 Content-Type: application/json
 
@@ -11,8 +9,6 @@ Content-Type: application/json
   "campaign_id": "1"
 }
 
-### Get all campaigns
 GET http://localhost:3000/api/talent-atlas/campaigns
 
-### Get all companies
 GET http://localhost:3000/api/talent-atlas/companies

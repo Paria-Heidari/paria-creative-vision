@@ -4,7 +4,7 @@ Entry:
 src/app/(talent-atlas)/talent-atlas/(app)/dashboard/page.tsx
 
 Shell/Layout:
-src/app/(talent-atlas)/talent-atlas/(app)/layout.tsx — wraps children in QueryProvider, RealtimeProvider (WS → TanStack cache), TalentAtlasHeader, TalentAtlasSidebar, Auth0Provider
+src/app/(talent-atlas)/talent-atlas/(app)/layout.tsx — wraps children in QueryProvider, RealtimeSync (WS → TanStack cache), TalentAtlasHeader, TalentAtlasSidebar, Auth0Provider
 
 Authentication:
 See [[authentication]]. Server-side gated by `AuthGate` in the shared `(app)/layout.tsx` (blocks before any page renders, applies to this page like every other Talent Atlas route). `useUser()` in `DashboardOverview` is display-only (welcome message), not a gate.
@@ -22,7 +22,7 @@ React Query, via `useCampaigns()` / `useCandidates()` — same pattern as the ot
 - **Recent Candidates** (replaces the old hardcoded "Live Activity" feed) = first 4 candidates from `useCandidates()`, campaign name resolved via a `campaignMap`, stage shown instead of a timestamp — there's no `created_at` field anywhere, so a real "2h ago"-style feed isn't possible without new data, and this doesn't fabricate one.
 
 Realtime:
-RealtimeProvider (src/components/providers/talentAtlas/RealtimeProvider.tsx) + useRealtimeSync (src/hooks/talent-atlas/useRealtimeSync.ts) + wsStream (src/lib/realtime/wsStream.ts) — opens a WebSocket and feeds updates into the TanStack Query cache. Runs at the layout level. Since this page now reads `queryKeys.campaigns`/`queryKeys.candidates` via the same hooks as Candidates/Campaigns pages, realtime updates to those keys (e.g. `candidate_created`, `campaign_updated`) now also refresh this page's stats live — not just the pages that were already wired up.
+RealtimeSync (src/components/providers/talentAtlas/RealtimeSync.tsx) + useRealtimeSync (src/hooks/talent-atlas/useRealtimeSync.ts) + wsStream (src/lib/realtime/wsStream.ts) — opens a WebSocket and feeds updates into the TanStack Query cache. Runs at the layout level. Since this page now reads `queryKeys.campaigns`/`queryKeys.candidates` via the same hooks as Candidates/Campaigns pages, realtime updates to those keys (e.g. `candidate_created`, `campaign_updated`) now also refresh this page's stats live — not just the pages that were already wired up.
 
 Main Components:
 - DashboardOverview (src/components/features/talentAtlas/DashboardOverview.tsx)
