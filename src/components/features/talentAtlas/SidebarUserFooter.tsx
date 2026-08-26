@@ -1,7 +1,6 @@
 import { LogOut } from 'lucide-react';
 import { getSessionOrRedirect } from '@/lib/auth0/session';
 import Image from 'next/image';
-import {routes as ROUTE} from '@/lib/routes/routes';
 
 export async function SidebarUserFooter() {
   const session = await getSessionOrRedirect();
@@ -34,7 +33,7 @@ export async function SidebarUserFooter() {
         <p className="truncate text-xs text-slate-400">{user.email}</p>
       </div>
       <a
-        href={`/auth/logout?returnTo=${process.env.APP_BASE_URL}${ROUTE.talentAtlas}`}
+        href={`/auth/logout?returnTo=${process.env.APP_BASE_URL}`}
         className="shrink-0 text-slate-400 transition-colors hover:text-white"
         title="Sign out"
       >
