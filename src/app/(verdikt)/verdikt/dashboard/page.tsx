@@ -10,7 +10,7 @@ export default function DashboardPage() {
           'Overdue',
         ].map((kpi) => (
           <div key={kpi} className="rounded-lg border p-4">
-            <p className="text-sm text-gray-500">{kpi}</p>
+            <p className="text-sm text-foreground-muted">{kpi}</p>
             <p className="mt-1 text-2xl font-semibold">—</p>
           </div>
         ))}

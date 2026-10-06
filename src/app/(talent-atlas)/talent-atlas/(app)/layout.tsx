@@ -39,7 +39,7 @@ export default function TalentAtlasAppLayout({
 }) {
   return (
     <QueryProvider>
-      <div className="flex h-screen flex-col overflow-hidden">
+      <div data-surface="workspace" className="flex h-screen flex-col overflow-hidden">
         {/* one connection for the entire app, multiple consumers */}
         <RealtimeSync />
         <TalentAtlasHeader />
@@ -48,7 +48,7 @@ export default function TalentAtlasAppLayout({
             <SidebarWithRoles />
           </Suspense>
           <Auth0Provider>
-            <main className="flex-1 overflow-y-auto bg-white p-8">
+            <main className="flex-1 overflow-y-auto bg-surface p-8">
               <Suspense fallback={<Loading />}>
                 <AuthGate>{children}</AuthGate>
               </Suspense>

@@ -3,6 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Brain, Code, Newspaper } from 'lucide-react';
 import Button from '@/components/ui/Button/Button';
+import { Typography } from '@/components/ui/Typography';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import {
@@ -84,8 +85,6 @@ const ArticleFilter = ({
                 key={category.id}
                 variant={isActive ? 'gold' : 'secondary'}
                 size="sm"
-                btnText={category.label}
-                btnTextVariant="paragraphSmall"
                 startIcon={<Icon className="h-4 w-4 shrink-0" />}
                 onClick={() => handleCategoryChange(category.id)}
                 className={
@@ -93,7 +92,11 @@ const ArticleFilter = ({
                     ? 'border-foreground/10 hover:border-accent-gold hover:text-accent-gold w-full bg-white/80 hover:bg-white/90'
                     : 'w-full'
                 }
-              />
+              >
+                <Typography variant="paragraphSmall" as="span">
+                  {category.label}
+                </Typography>
+              </Button>
             );
           })}
         </motion.div>

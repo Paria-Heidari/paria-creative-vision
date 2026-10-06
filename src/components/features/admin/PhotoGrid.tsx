@@ -9,8 +9,8 @@ interface PhotoGridProps {
 export default function PhotoGrid({ photos, onDelete }: PhotoGridProps) {
   if (photos?.length === 0) {
     return (
-      <div className="flex min-h-[200px] items-center justify-center rounded-xl border border-dashed border-slate-200">
-        <p className="font-inter text-[13px] text-slate-400">No photos yet</p>
+      <div className="flex min-h-[200px] items-center justify-center rounded-xl border border-dashed border-border">
+        <p className="font-inter text-[13px] text-foreground-subtle">No photos yet</p>
       </div>
     );
   }

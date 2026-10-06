@@ -27,11 +27,14 @@ const CtaMedium = ({ mediumUsername, className }: CtaMediumProps) => {
       </Typography>
       <Link href={mediumUrl} target="_blank" rel="noopener noreferrer">
         <Button
-          btnText="View on Medium"
           variant="secondary"
           size="md"
           startIcon={<ExternalLink className="h-4 w-4" />}
-        />
+        >
+          <Typography variant="paragraph" as="span">
+            View on Medium
+          </Typography>
+        </Button>
       </Link>
     </motion.div>
   );

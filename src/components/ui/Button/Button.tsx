@@ -6,7 +6,6 @@ import type {
 import Link from 'next/link';
 import LoadingSpinner from '@/components/ui/icons/LoadingSpinner';
 import { cn } from '@/lib/utils/utils';
-import { Typography } from '../Typography';
 
 const buttonClassMap = {
   primary:
@@ -40,8 +39,6 @@ type ButtonRounded = keyof typeof roundedClassMap;
 
 type BaseProps = {
   children?: ReactNode;
-  btnText?: string;
-  btnTextVariant?: 'paragraph' | 'paragraphSmall' | 'navLink';
   variant?: ButtonVariant;
   size?: ButtonSize;
   startIcon?: ReactNode;
@@ -73,8 +70,6 @@ const baseButtonClasses =
 
 export default function Button({
   children,
-  btnText,
-  btnTextVariant,
   variant = 'primary',
   size = 'md',
   startIcon,
@@ -105,16 +100,7 @@ export default function Button({
           {startIcon}
         </span>
       ) : null}
-      {children}
-      {btnText && (
-        <Typography
-          variant={btnTextVariant ?? 'paragraph'}
-          as="span"
-          className={cn(loading && 'opacity-0')}
-        >
-          {btnText}
-        </Typography>
-      )}
+      {loading ? <span className="opacity-0">{children}</span> : children}
       {loading && (
         <span className="absolute">
           <LoadingSpinner />

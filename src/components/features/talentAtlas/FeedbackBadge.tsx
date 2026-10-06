@@ -14,7 +14,7 @@ export function FeedbackBadge({ feedback }: { feedback: CandidateFeedback }) {
         {feedback.decision}
       </span>
       <span
-        className="max-w-[120px] truncate text-xs text-slate-400"
+        className="max-w-[120px] truncate text-xs text-foreground-subtle"
         title={feedback.feedback}
       >
         {feedback.feedback}

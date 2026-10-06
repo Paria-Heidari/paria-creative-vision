@@ -53,9 +53,9 @@ export function DashboardOverview() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Dashboard</h1>
-        {user && (<h2 className="text-slate-500">Welcome back, {user.given_name}!</h2>)}
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
+        {user && (<h2 className="text-foreground-muted">Welcome back, {user.given_name}!</h2>)}
+        <p className="mt-1 text-sm text-foreground-muted">
           Overview of your hiring activity
         </p>
       </div>
@@ -66,13 +66,13 @@ export function DashboardOverview() {
           return (
             <div
               key={stat.label}
-              className="rounded-xl border border-slate-200 bg-white p-5"
+              className="rounded-xl border border-border bg-surface p-5"
             >
               <div className="flex items-center justify-between">
-                <p className="text-sm text-slate-500">{stat.label}</p>
-                <Icon size={18} className="text-slate-400" />
+                <p className="text-sm text-foreground-muted">{stat.label}</p>
+                <Icon size={18} className="text-foreground-subtle" />
               </div>
-              <p className="mt-2 text-3xl font-semibold text-slate-900">
+              <p className="mt-2 text-3xl font-semibold text-foreground">
                 {stat.value}
               </p>
             </div>
@@ -81,24 +81,24 @@ export function DashboardOverview() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="text-base font-semibold text-slate-900">
+        <div className="rounded-xl border border-border bg-surface p-5">
+          <h2 className="text-base font-semibold text-foreground">
             Active Campaigns
           </h2>
           <ul className="mt-4 space-y-4">
             {topCampaigns.map((campaign) => (
               <li key={campaign.name}>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium text-slate-700">
+                  <span className="font-medium text-foreground-secondary">
                     {campaign.name}
                   </span>
-                  <span className="text-slate-500">
+                  <span className="text-foreground-muted">
                     {campaign.applicants} applicants
                   </span>
                 </div>
-                <div className="mt-2 h-1.5 w-full rounded-full bg-slate-100">
+                <div className="mt-2 h-1.5 w-full rounded-full bg-surface-strong">
                   <div
-                    className="h-1.5 rounded-full bg-blue-600"
+                    className="h-1.5 rounded-full bg-accent"
                     style={{ width: `${campaign.progress}%` }}
                   />
                 </div>
@@ -107,17 +107,17 @@ export function DashboardOverview() {
           </ul>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="text-base font-semibold text-slate-900">
+        <div className="rounded-xl border border-border bg-surface p-5">
+          <h2 className="text-base font-semibold text-foreground">
             Recent Candidates
           </h2>
           <ul className="mt-4 space-y-4">
             {recentCandidates.map((item) => (
               <li key={item.id} className="flex gap-3 text-sm">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600" />
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                 <div>
-                  <p className="text-slate-700">{item.text}</p>
-                  <p className="text-xs text-slate-400 capitalize">{item.stage}</p>
+                  <p className="text-foreground-secondary">{item.text}</p>
+                  <p className="text-xs text-foreground-subtle capitalize">{item.stage}</p>
                 </div>
               </li>
             ))}

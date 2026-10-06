@@ -109,7 +109,7 @@ export default function UploadForm({ categories }: UploadFormProps) {
             'flex min-h-[640px] w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10 text-center transition-colors',
             isDragging
               ? 'border-sky-400 bg-sky-50'
-              : 'border-slate-300 bg-white hover:border-slate-400',
+              : 'border-strong bg-surface hover:border-strong',
           )}
         >
           {/* eslint-disable @next/next/no-img-element */}
@@ -121,16 +121,16 @@ export default function UploadForm({ categories }: UploadFormProps) {
             />
           ) : (
             <>
-              <Upload className="h-9 w-9 text-slate-400" />
+              <Upload className="h-9 w-9 text-foreground-subtle" />
               <div>
-                <p className="font-inter text-[15px] font-medium text-slate-600">
+                <p className="font-inter text-[15px] font-medium text-foreground-secondary">
                   Drop your photo here
                 </p>
-                <p className="font-inter mt-1 text-[13px] text-slate-400">
+                <p className="font-inter mt-1 text-[13px] text-foreground-subtle">
                   or click to browse from your computer
                 </p>
               </div>
-              <span className="font-inter rounded border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] text-slate-400">
+              <span className="font-inter rounded border border-border bg-surface-muted px-3 py-1 text-[11px] text-foreground-subtle">
                 JPG · PNG · WEBP · up to 20 MB
               </span>
             </>
@@ -145,9 +145,9 @@ export default function UploadForm({ categories }: UploadFormProps) {
         />
 
         {/* Hint */}
-        <div className="flex items-center gap-2.5 rounded-lg border border-slate-200 bg-white px-4 py-3">
+        <div className="flex items-center gap-2.5 rounded-lg border border-border bg-surface px-4 py-3">
           <Info className="h-4 w-4 shrink-0 text-sky-500" />
-          <p className="font-inter text-[12px] text-slate-500">
+          <p className="font-inter text-[12px] text-foreground-muted">
             The photo will be uploaded to Supabase Storage and appear in your
             portfolio once published.
           </p>
@@ -161,7 +161,7 @@ export default function UploadForm({ categories }: UploadFormProps) {
         <button
           type="submit"
           disabled={!file || isSubmitting}
-          className="font-inter flex w-full items-center justify-center gap-2 rounded-lg bg-[#0F172A] py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-50"
+          className="font-inter flex w-full items-center justify-center gap-2 rounded-lg bg-action-primary py-2.5 text-[14px] font-semibold text-on-action-primary transition-colors hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Upload className="h-4 w-4" />
           {isSubmitting ? 'Uploading…' : 'Upload & Save'}

@@ -83,9 +83,11 @@ export default function ProfileCard({ info, className }: ProfileCardInfo) {
                   size="md"
                   rounded="full"
                   startIcon={<Mail className="h-4 w-4" />}
-                  btnText={info.emailBtnText}
-                  btnTextVariant="paragraphSmall"
-                />
+                >
+                  <Typography variant="paragraphSmall" as="span">
+                    {info.emailBtnText}
+                  </Typography>
+                </Button>
                 <Button
                   href={info.githubBtnLink}
                   variant="tertiary"
@@ -93,9 +95,11 @@ export default function ProfileCard({ info, className }: ProfileCardInfo) {
                   rounded="full"
                   external
                   startIcon={<GitHubIcon className="h-4 w-4" />}
-                  btnText={info.githubBtnText}
-                  btnTextVariant="paragraphSmall"
-                />
+                >
+                  <Typography variant="paragraphSmall" as="span">
+                    {info.githubBtnText}
+                  </Typography>
+                </Button>
               </Stack>
             </Stack>
           </div>

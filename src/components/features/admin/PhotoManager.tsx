@@ -44,21 +44,21 @@ export default function PhotoManager({ photos, categories }: PhotoManagerProps) 
         action={{ label: 'Upload Photo', href: '/admin/upload' }}
       />
 
-      <div className="flex-1 overflow-y-auto bg-slate-50 p-7">
+      <div className="flex-1 overflow-y-auto bg-surface-muted p-7">
         {/* Filter chips */}
         <div className="mb-6 flex flex-wrap gap-2">
           {filterChips.map((chip, i) => {
             const isSeparator = i === 3;
             return (
               <span key={chip.value} className="flex items-center gap-2">
-                {isSeparator && <span className="h-5 w-px bg-slate-300" />}
+                {isSeparator && <span className="h-5 w-px bg-border-strong" />}
                 <button
                   type="button"
                   onClick={() => setFilter(chip.value)}
                   className={`font-inter rounded-full px-3.5 py-1 text-[13px] transition-colors ${
                     filter === chip.value
-                      ? 'bg-slate-900 text-white'
-                      : 'border border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                      ? 'bg-action-primary text-on-action-primary'
+                      : 'border border-border bg-surface text-foreground-secondary hover:border-strong'
                   }`}
                 >
                   {chip.label}

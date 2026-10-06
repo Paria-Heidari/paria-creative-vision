@@ -27,7 +27,7 @@ export default async function EditPhotoPage({ params }: EditPhotoPageProps) {
         subtitle={photo.title ?? undefined}
         action={{ label: '← Back', href: '/admin/photos' }}
       />
-      <div className="flex-1 overflow-y-auto bg-slate-50 p-7">
+      <div className="flex-1 overflow-y-auto bg-surface-muted p-7">
         <EditPhotoForm photo={photo} categories={categories} />
       </div>
     </div>

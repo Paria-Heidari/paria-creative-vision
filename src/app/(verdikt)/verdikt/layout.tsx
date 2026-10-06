@@ -4,13 +4,13 @@ export default function VerdiktLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen">
+    <div data-surface="workspace" className="flex min-h-screen">
       {/* Sidebar placeholder */}
-      <aside className="w-64 border-r border-gray-200 bg-gray-50 p-6">
+      <aside className="w-64 border-r border-border bg-surface-muted p-6">
         <div className="mb-8 flex flex-col gap-1">
           <p className="font-semibold">Verdikt</p>
         </div>
-        <nav className="flex flex-col gap-1 text-sm text-gray-600">
+        <nav className="flex flex-col gap-1 text-sm text-foreground-secondary">
           <a href="/verdikt/dashboard">Dashboard</a>
           <a href="/verdikt/decisions">All Decisions</a>
           <a href="/verdikt/decisions/new">New Decision</a>

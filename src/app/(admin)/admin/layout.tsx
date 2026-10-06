@@ -14,8 +14,8 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
-      <Suspense fallback={<div className="w-[220px] shrink-0 bg-[#0F172A]" />}>
+    <div data-surface="workspace" className="flex h-screen overflow-hidden bg-surface-muted">
+      <Suspense fallback={<div className="w-[220px] shrink-0 bg-chrome" />}>
         <AdminSidebar />
       </Suspense>
       <Suspense fallback={<Loading className="mx-auto" />}>

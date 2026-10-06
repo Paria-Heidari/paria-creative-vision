@@ -21,7 +21,7 @@ interface PhotoMetadataCardProps {
 }
 
 const inputClass =
-  'font-inter rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] text-slate-900 outline-none placeholder:text-slate-400 focus:border-slate-400 focus:bg-white';
+  'font-inter rounded-md border border-border bg-surface-muted px-3 py-2 text-[13px] text-foreground outline-none placeholder:text-foreground-subtle focus:border-focus focus:bg-surface';
 
 export default function PhotoMetadataCard({ categories, initialValues }: PhotoMetadataCardProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>(
@@ -33,14 +33,14 @@ export default function PhotoMetadataCard({ categories, initialValues }: PhotoMe
     categories.find((c) => c.id === selectedCategory)?.subcategories ?? [];
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5">
-      <p className="font-inter mb-4 text-[11px] font-semibold tracking-[0.12em] text-slate-400 uppercase">
+    <div className="rounded-xl border border-border bg-surface p-5">
+      <p className="font-inter mb-4 text-[11px] font-semibold tracking-[0.12em] text-foreground-subtle uppercase">
         Photo Details
       </p>
 
       {/* Title */}
       <div className="mb-3 flex flex-col gap-1.5">
-        <label className="font-inter text-[12px] font-medium text-slate-600">Title</label>
+        <label className="font-inter text-[12px] font-medium text-foreground-secondary">Title</label>
         <input
           name="title"
           type="text"
@@ -53,7 +53,7 @@ export default function PhotoMetadataCard({ categories, initialValues }: PhotoMe
 
       {/* Description */}
       <div className="mb-3 flex flex-col gap-1.5">
-        <label className="font-inter text-[12px] font-medium text-slate-600">Description</label>
+        <label className="font-inter text-[12px] font-medium text-foreground-secondary">Description</label>
         <textarea
           name="description"
           rows={3}
@@ -66,7 +66,7 @@ export default function PhotoMetadataCard({ categories, initialValues }: PhotoMe
       {/* Category + Subcategory */}
       <div className="mb-3 grid grid-cols-2 gap-3">
         <div className="flex flex-col gap-1.5">
-          <label className="font-inter text-[12px] font-medium text-slate-600">Category</label>
+          <label className="font-inter text-[12px] font-medium text-foreground-secondary">Category</label>
           <select
             name="category_id"
             defaultValue={initialValues?.categoryId ?? ''}
@@ -80,7 +80,7 @@ export default function PhotoMetadataCard({ categories, initialValues }: PhotoMe
           </select>
         </div>
         <div className="flex flex-col gap-1.5">
-          <label className="font-inter text-[12px] font-medium text-slate-600">Subcategory</label>
+          <label className="font-inter text-[12px] font-medium text-foreground-secondary">Subcategory</label>
           <select
             name="subcategory_id"
             defaultValue={initialValues?.subcategoryId ?? ''}
@@ -97,7 +97,7 @@ export default function PhotoMetadataCard({ categories, initialValues }: PhotoMe
       {/* City + Country */}
       <div className="mb-3 grid grid-cols-2 gap-3">
         <div className="flex flex-col gap-1.5">
-          <label className="font-inter text-[12px] font-medium text-slate-600">City</label>
+          <label className="font-inter text-[12px] font-medium text-foreground-secondary">City</label>
           <input
             name="location_city"
             type="text"
@@ -107,7 +107,7 @@ export default function PhotoMetadataCard({ categories, initialValues }: PhotoMe
           />
         </div>
         <div className="flex flex-col gap-1.5">
-          <label className="font-inter text-[12px] font-medium text-slate-600">Country</label>
+          <label className="font-inter text-[12px] font-medium text-foreground-secondary">Country</label>
           <input
             name="location_country"
             type="text"
@@ -120,7 +120,7 @@ export default function PhotoMetadataCard({ categories, initialValues }: PhotoMe
 
       {/* Display order */}
       <div className="mb-4 flex flex-col gap-1.5">
-        <label className="font-inter text-[12px] font-medium text-slate-600">Display order</label>
+        <label className="font-inter text-[12px] font-medium text-foreground-secondary">Display order</label>
         <input
           name="display_order"
           type="number"
@@ -130,23 +130,23 @@ export default function PhotoMetadataCard({ categories, initialValues }: PhotoMe
         />
       </div>
 
-      <div className="mb-4 h-px bg-slate-100" />
+      <div className="mb-4 h-px bg-border-muted" />
 
       {/* Publish toggle + hidden input so FormData captures it */}
       <div className="flex items-center justify-between">
-        <span className="font-inter text-[13px] font-medium text-slate-700">
+        <span className="font-inter text-[13px] font-medium text-foreground-secondary">
           {initialValues?.published !== undefined ? 'Published' : 'Publish immediately'}
         </span>
         <div
           onClick={() => setPublished((p) => !p)}
           className={cn(
             'relative h-4 w-8 cursor-pointer rounded-full transition-colors',
-            published ? 'bg-[#0F172A]' : 'bg-slate-300',
+            published ? 'bg-action-primary' : 'bg-border-strong',
           )}
         >
           <span
             className={cn(
-              'absolute top-0 left-0 h-4 w-4 rounded-full bg-white shadow transition-transform',
+              'absolute top-0 left-0 h-4 w-4 rounded-full bg-surface shadow transition-transform',
               published ? 'translate-x-4' : 'translate-x-0',
             )}
           />

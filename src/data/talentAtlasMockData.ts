@@ -21,7 +21,7 @@ export const STAGE_COLORS: Record<Stage, { header: string }> = {
   screening: { header: 'bg-yellow-50 text-yellow-700 border-yellow-200' },
   interview: { header: 'bg-purple-50 text-purple-700 border-purple-200' },
   hired: { header: 'bg-green-50 text-green-700 border-green-200' },
-  on_hold: { header: 'bg-slate-100 text-slate-500 border-slate-200' },
+  on_hold: { header: 'bg-surface-strong text-foreground-muted border-border' },
 };
 
 export const MOCK_CAMPAIGNS = [

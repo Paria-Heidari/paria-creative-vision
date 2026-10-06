@@ -29,7 +29,7 @@ export function KanbanColumn({
       onDragLeave={onDragLeave}
       onDrop={onDrop}
       className={`flex flex-col rounded-xl border transition-colors ${
-        isOver ? 'border-slate-400 bg-slate-100' : 'border-slate-200 bg-slate-50'
+        isOver ? 'border-strong bg-surface-strong' : 'border-border bg-surface-muted'
       }`}
     >
       <div
@@ -38,7 +38,7 @@ export function KanbanColumn({
         <span className="text-xs font-semibold uppercase tracking-wide">
           {STAGE_LABELS[stage as keyof typeof STAGE_LABELS]}
         </span>
-        <span className="rounded-full bg-white/60 px-2 py-0.5 text-xs font-medium">
+        <span className="rounded-full bg-surface/60 px-2 py-0.5 text-xs font-medium">
           {cards.length}
         </span>
       </div>
@@ -55,8 +55,8 @@ export function KanbanColumn({
 
         {cards.length === 0 && (
           <div
-            className={`flex flex-1 items-center justify-center rounded-lg border-2 border-dashed py-6 text-xs text-slate-400 transition-colors ${
-              isOver ? 'border-slate-400' : 'border-slate-200'
+            className={`flex flex-1 items-center justify-center rounded-lg border-2 border-dashed py-6 text-xs text-foreground-subtle transition-colors ${
+              isOver ? 'border-strong' : 'border-border'
             }`}
           >
             Drop here

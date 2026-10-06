@@ -13,7 +13,7 @@ export async function SidebarUserFooter() {
     : (user.email ?? '??').slice(0, 2).toUpperCase();
 
   return (
-    <div className="flex items-center gap-3 border-t border-slate-700/50 px-5 py-4">
+    <div className="flex items-center gap-3 border-t border-chrome-raised/50 px-5 py-4">
       {user.picture ? (
         <Image
           src={user.picture}
@@ -24,17 +24,17 @@ export async function SidebarUserFooter() {
           unoptimized
         />
       ) : (
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-600 text-xs font-semibold text-white">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-chrome-raised text-xs font-semibold text-on-chrome">
           {initials}
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-white">{user.name ?? user.email}</p>
-        <p className="truncate text-xs text-slate-400">{user.email}</p>
+        <p className="truncate text-sm font-medium text-on-chrome">{user.name ?? user.email}</p>
+        <p className="truncate text-xs text-on-chrome-muted">{user.email}</p>
       </div>
       <a
         href={`/auth/logout?returnTo=${process.env.APP_BASE_URL}`}
-        className="shrink-0 text-slate-400 transition-colors hover:text-white"
+        className="shrink-0 text-on-chrome-muted transition-colors hover:text-on-chrome"
         title="Sign out"
       >
         <LogOut size={15} />

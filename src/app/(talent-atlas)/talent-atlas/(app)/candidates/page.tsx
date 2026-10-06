@@ -37,14 +37,14 @@ export default function CandidatesPage() {
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Candidates</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="text-2xl font-semibold text-foreground">Candidates</h1>
+          <p className="mt-1 text-sm text-foreground-muted">
             Drag cards between columns to move candidates through the pipeline
           </p>
         </div>
         <button
           onClick={() => setShowForm((v) => !v)}
-          className="rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-700"
+          className="rounded-lg bg-action-primary px-3 py-1.5 text-xs font-medium text-on-action-primary hover:bg-action-primary-hover"
         >
           {showForm ? 'Cancel' : '+ Add candidate'}
         </button>

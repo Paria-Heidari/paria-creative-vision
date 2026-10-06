@@ -55,7 +55,7 @@ export default function EditPhotoForm({ photo, categories }: EditPhotoFormProps)
     <form onSubmit={handleSubmit} className="flex flex-col gap-6 lg:flex-row">
       {/* Left — current photo preview */}
       <div className="flex flex-1 flex-col gap-4">
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <div className="overflow-hidden rounded-xl border border-border bg-surface">
           {imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -64,12 +64,12 @@ export default function EditPhotoForm({ photo, categories }: EditPhotoFormProps)
               className="w-full object-cover"
             />
           ) : (
-            <div className="flex min-h-[300px] items-center justify-center bg-slate-100">
-              <p className="font-inter text-[13px] text-slate-400">No image</p>
+            <div className="flex min-h-[300px] items-center justify-center bg-surface-strong">
+              <p className="font-inter text-[13px] text-foreground-subtle">No image</p>
             </div>
           )}
         </div>
-        <p className="font-inter text-[12px] text-slate-400">
+        <p className="font-inter text-[12px] text-foreground-subtle">
           Image replacement is not supported — upload a new photo to swap the image.
         </p>
       </div>
@@ -93,7 +93,7 @@ export default function EditPhotoForm({ photo, categories }: EditPhotoFormProps)
         <button
           type="submit"
           disabled={isSubmitting}
-          className="font-inter flex w-full items-center justify-center gap-2 rounded-lg bg-[#0F172A] py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-50"
+          className="font-inter flex w-full items-center justify-center gap-2 rounded-lg bg-action-primary py-2.5 text-[14px] font-semibold text-on-action-primary transition-colors hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Save className="h-4 w-4" />
           {isSubmitting ? 'Saving…' : 'Save Changes'}

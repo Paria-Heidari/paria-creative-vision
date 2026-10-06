@@ -72,12 +72,14 @@ export default function CtaSection({
                   key={href}
                   href={href}
                   external={external}
-                  btnText={label}
-                  btnTextVariant="paragraphSmall"
                   size="md"
                   rounded="full"
                   {...buttonProps}
-                />
+                >
+                  <Typography variant="paragraphSmall" as="span">
+                    {label}
+                  </Typography>
+                </Button>
               ))}
             </Stack>
           </Stack>

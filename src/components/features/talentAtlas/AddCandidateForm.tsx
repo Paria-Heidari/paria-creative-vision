@@ -28,12 +28,12 @@ export function AddCandidateForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 rounded-xl border border-slate-200 bg-white p-5"
+      className="space-y-4 rounded-xl border border-border bg-surface p-5"
     >
-      <h2 className="text-sm font-semibold text-slate-800">New candidate</h2>
+      <h2 className="text-sm font-semibold text-foreground-secondary">New candidate</h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div>
-          <label className="mb-1 block text-xs font-medium text-slate-600">
+          <label className="mb-1 block text-xs font-medium text-foreground-secondary">
             Full name <span className="text-red-500">*</span>
           </label>
           <input
@@ -41,11 +41,11 @@ export function AddCandidateForm({
             value={form.full_name}
             onChange={(e) => setForm((f) => ({ ...f, full_name: e.target.value }))}
             placeholder="e.g. Jane Doe"
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400"
+            className="w-full rounded-lg border border-border px-3 py-2 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:ring-2 focus:ring-focus"
           />
         </div>
         <div>
-          <label className="mb-1 block text-xs font-medium text-slate-600">
+          <label className="mb-1 block text-xs font-medium text-foreground-secondary">
             Email <span className="text-red-500">*</span>
           </label>
           <input
@@ -54,18 +54,18 @@ export function AddCandidateForm({
             value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
             placeholder="jane@example.com"
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400"
+            className="w-full rounded-lg border border-border px-3 py-2 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:ring-2 focus:ring-focus"
           />
         </div>
         <div>
-          <label className="mb-1 block text-xs font-medium text-slate-600">
+          <label className="mb-1 block text-xs font-medium text-foreground-secondary">
             Campaign <span className="text-red-500">*</span>
           </label>
           <select
             required
             value={form.campaign_id}
             onChange={(e) => setForm((f) => ({ ...f, campaign_id: e.target.value }))}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400"
+            className="w-full rounded-lg border border-border px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-focus"
           >
             <option value="">Select campaign…</option>
             {activeCampaigns.map((c) => (
@@ -82,7 +82,7 @@ export function AddCandidateForm({
         <button
           type="submit"
           disabled={isPending}
-          className="rounded-lg bg-slate-900 px-4 py-2 text-xs font-medium text-white hover:bg-slate-700 disabled:opacity-50"
+          className="rounded-lg bg-action-primary px-4 py-2 text-xs font-medium text-on-action-primary hover:bg-action-primary-hover disabled:opacity-50"
         >
           {isPending ? 'Adding…' : 'Add candidate'}
         </button>

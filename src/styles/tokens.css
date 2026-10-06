@@ -23,6 +23,20 @@
   --pri-stone-800: #3d3630;
   --pri-stone-900: #2a2521;
 
+  /* cool neutrals (same values as Tailwind's slate) */
+  --pri-slate-50: oklch(98.4% 0.003 247.858);
+  --pri-slate-100: oklch(96.8% 0.007 247.896);
+  --pri-slate-200: oklch(92.9% 0.013 255.508);
+  --pri-slate-300: oklch(86.9% 0.022 252.894);
+  --pri-slate-400: oklch(70.4% 0.04 256.788);
+  --pri-slate-500: oklch(55.4% 0.046 257.417);
+  --pri-slate-600: oklch(44.6% 0.043 257.281);
+  --pri-slate-700: oklch(37.2% 0.044 257.287);
+  --pri-slate-800: oklch(27.9% 0.041 260.031);
+  --pri-slate-900: oklch(20.8% 0.042 265.755);
+  --pri-navy-950: #0f1929;
+  --pri-blue-600: oklch(54.6% 0.245 262.881);
+
   /* accents */
   --pri-gold-100: #f4ebde;
   --pri-gold-200: #e8dbc8;
@@ -129,33 +143,81 @@
   --pri-breakpoint-2xl: 1536px;
 }
 
-/* Semantic tokens: usage roles */
+/* Semantic tokens: what a colour is FOR.
+   Rules:
+   - One token = one job. Components use these, never --pri-* primitives.
+   - Two tokens may share a colour today if they could need different
+     colours later (e.g. foreground vs action-primary in dark mode).
+   - No numbered scales here. Numbers belong to primitives.
+   Default values = the "editorial" look (portfolio). Surfaces below
+   remap the same names. */
 :root {
-  --semi-background: var(--pri-stone-300);
-  --semi-foreground: var(--pri-stone-800);
-  --semi-foreground-muted: var(--pri-stone-600);
-  --semi-foreground-subtle: var(--pri-stone-500);
+  /* Page */
+  --semi-background: var(
+    --pri-stone-300
+  ); /* page background behind everything */
 
-  --semi-surface: var(--pri-white);
-  --semi-surface-muted: var(--pri-stone-50);
-  --semi-surface-strong: var(--pri-stone-200);
+  /* Text, strongest → weakest */
+  --semi-foreground: var(--pri-stone-800); /* body text, headings */
+  --semi-foreground-secondary: var(
+    --pri-stone-700
+  ); /* labels, card titles, table values */
+  --semi-foreground-muted: var(--pri-stone-600); /* descriptions, helper text */
+  --semi-foreground-subtle: var(
+    --pri-stone-500
+  ); /* placeholders, meta, empty states */
 
+  /* Surfaces: things that sit on the page */
+  --semi-surface: var(--pri-white); /* cards, panels, inputs */
+  --semi-surface-muted: var(
+    --pri-stone-50
+  ); /* table headers, wells, input fill */
+  --semi-surface-strong: var(
+    --pri-stone-200
+  ); /* hover rows, image placeholders, badges */
+  --semi-surface-alt: var(--pri-surface-alt);
+  --semi-surface-raised: var(--pri-surface-raised);
+
+  /* Borders and lines */
+  --semi-border: var(--pri-stone-200); /* default card/input border */
+  --semi-border-muted: var(--pri-stone-100); /* row dividers, hairlines */
+  --semi-border-subtle: var(--pri-stone-50);
+  --semi-border-strong: var(
+    --pri-stone-300
+  ); /* hover/drag-over borders, separators, toggle off */
+
+  /* Focus: must reach 3:1 against its background (WCAG 1.4.11) */
+  --semi-focus: var(--pri-gold-500); /* focus rings and focused input borders */
+
+  /* Accent: highlights, active states, progress */
   --semi-accent: var(--pri-gold-200);
   --semi-accent-hover: var(--pri-gold-300);
+  --semi-on-accent: var(--pri-stone-800); /* text/icons on accent */
   --semi-accent-gold: var(--pri-gold-400);
   --semi-accent-gold-hover: var(--pri-gold-500);
   --semi-accent-gold-light: var(--pri-gold-100);
 
-  --semi-surface-alt: var(--pri-surface-alt);
-  --semi-surface-raised: var(--pri-surface-raised);
+  /* Primary action: the strongest button on a screen */
+  --semi-action-primary: var(--pri-stone-800);
+  --semi-action-primary-hover: var(--pri-stone-700);
+  --semi-on-action-primary: var(--pri-white); /* text/icons on action-primary */
+
+  /* Chrome: dark header/sidebar bars */
+  --semi-chrome: var(--pri-stone-900); /* bar background */
+  --semi-chrome-raised: var(
+    --pri-stone-700
+  ); /* hover/active items, avatars, dividers on chrome (use with /30, /60) */
+  --semi-on-chrome: var(--pri-white); /* active/hovered text on chrome */
+  --semi-on-chrome-muted: var(--pri-stone-300); /* default nav text on chrome */
+  --semi-on-chrome-subtle: var(
+    --pri-stone-500
+  ); /* section labels, captions on chrome */
+
+  /* Feedback */
   --semi-success: var(--pri-success-500);
   --semi-warning: var(--pri-warning-500);
   --semi-danger: var(--pri-danger-500);
   --semi-info: var(--pri-info-500);
-
-  --semi-border: var(--pri-stone-200);
-  --semi-border-muted: var(--pri-stone-100);
-  --semi-border-subtle: var(--pri-stone-50);
 
   --semi-box-shadow-sm: var(--pri-box-shadow-sm);
   --semi-box-shadow-md: var(--pri-box-shadow-md);
@@ -183,32 +245,74 @@
   --semi-font-family-grotesk: var(--pri-font-grotesk);
 }
 
+/* Workspace surface: dashboards and tools (admin, Talent Atlas).
+   Usage: <div data-surface="workspace">. Same names, cooler values.
+   Only remap tokens here; never add new names. */
+[data-surface='workspace'] {
+  --semi-foreground: var(--pri-slate-900);
+  --semi-foreground-secondary: var(--pri-slate-700);
+  --semi-foreground-muted: var(--pri-slate-500);
+  --semi-foreground-subtle: var(--pri-slate-400);
+
+  --semi-surface: var(--pri-white);
+  --semi-surface-muted: var(--pri-slate-50);
+  --semi-surface-strong: var(--pri-slate-100);
+
+  --semi-border: var(--pri-slate-200);
+  --semi-border-muted: var(--pri-slate-100);
+  --semi-border-strong: var(--pri-slate-300);
+
+  /* slate-500: ~4.7:1 on white, ~4.6:1 on surface-muted (WCAG 1.4.11 needs 3:1) */
+  --semi-focus: var(--pri-slate-500);
+
+  --semi-accent: var(--pri-blue-600);
+  --semi-on-accent: var(--pri-white);
+
+  --semi-action-primary: var(--pri-slate-900);
+  --semi-action-primary-hover: var(--pri-slate-700);
+  --semi-on-action-primary: var(--pri-white);
+
+  --semi-chrome: var(--pri-navy-950);
+  --semi-chrome-raised: var(--pri-slate-700);
+  --semi-on-chrome: var(--pri-white);
+  --semi-on-chrome-muted: var(--pri-slate-300);
+  --semi-on-chrome-subtle: var(--pri-slate-500);
+}
+/* create classes from these variables - bridge: makes the Tailwind class*/
 @theme inline {
   --color-background: var(--semi-background);
   --color-foreground: var(--semi-foreground);
+  --color-foreground-secondary: var(--semi-foreground-secondary);
   --color-foreground-muted: var(--semi-foreground-muted);
   --color-foreground-subtle: var(--semi-foreground-subtle);
-
   --color-surface: var(--semi-surface);
   --color-surface-muted: var(--semi-surface-muted);
   --color-surface-strong: var(--semi-surface-strong);
-
+  --color-surface-alt: var(--semi-surface-alt);
+  --color-surface-raised: var(--semi-surface-raised);
+  --color-border: var(--semi-border);
+  --color-border-muted: var(--semi-border-muted);
+  --color-border-subtle: var(--semi-border-subtle);
+  --color-border-strong: var(--semi-border-strong);
+  --color-focus: var(--semi-focus);
   --color-accent: var(--semi-accent);
   --color-accent-hover: var(--semi-accent-hover);
+  --color-on-accent: var(--semi-on-accent);
   --color-accent-gold: var(--semi-accent-gold);
   --color-accent-gold-hover: var(--semi-accent-gold-hover);
   --color-accent-gold-light: var(--semi-accent-gold-light);
-  --color-surface-alt: var(--semi-surface-alt);
-  --color-surface-raised: var(--semi-surface-raised);
-
+  --color-action-primary: var(--semi-action-primary);
+  --color-action-primary-hover: var(--semi-action-primary-hover);
+  --color-on-action-primary: var(--semi-on-action-primary);
+  --color-chrome: var(--semi-chrome);
+  --color-chrome-raised: var(--semi-chrome-raised);
+  --color-on-chrome: var(--semi-on-chrome);
+  --color-on-chrome-muted: var(--semi-on-chrome-muted);
+  --color-on-chrome-subtle: var(--semi-on-chrome-subtle);
   --color-success: var(--semi-success);
   --color-warning: var(--semi-warning);
   --color-danger: var(--semi-danger);
   --color-info: var(--semi-info);
-
-  --color-border: var(--semi-border);
-  --color-border-muted: var(--semi-border-muted);
-  --color-border-subtle: var(--semi-border-subtle);
 
   --font-family-inter: var(--semi-font-family-inter);
   --font-family-syne: var(--semi-font-family-syne);

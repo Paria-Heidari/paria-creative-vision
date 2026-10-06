@@ -14,11 +14,11 @@ export function CandidateCard({
     <div
       draggable
       onDragStart={onDragStart}
-      className="cursor-grab rounded-lg border border-slate-200 bg-white p-3 shadow-sm transition-all select-none hover:border-slate-300 hover:shadow-md active:cursor-grabbing"
+      className="cursor-grab rounded-lg border border-border bg-surface p-3 shadow-sm transition-all select-none hover:border-strong hover:shadow-md active:cursor-grabbing"
     >
-      <p className="text-sm font-medium text-slate-900">{candidate.full_name}</p>
-      <p className="mt-0.5 text-xs text-slate-500">{candidate.email}</p>
-      <p className="mt-1.5 text-xs text-slate-400">{campaignName}</p>
+      <p className="text-sm font-medium text-foreground">{candidate.full_name}</p>
+      <p className="mt-0.5 text-xs text-foreground-muted">{candidate.email}</p>
+      <p className="mt-1.5 text-xs text-foreground-subtle">{campaignName}</p>
       {candidate.latestFeedback && <FeedbackBadge feedback={candidate.latestFeedback} />}
     </div>
   );

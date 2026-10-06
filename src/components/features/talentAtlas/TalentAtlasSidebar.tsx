@@ -43,17 +43,17 @@ export function TalentAtlasSidebar({ footer, roles }: { footer?: ReactNode; role
   );
 
   return (
-    <aside className="flex w-80 shrink-0 flex-col bg-[#0f1929]">
+    <aside className="flex w-80 shrink-0 flex-col bg-chrome">
       {/* Org header */}
       <div className="flex items-center gap-3 px-5 py-6">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-fuchsia-700 text-sm font-bold text-white">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-fuchsia-700 text-sm font-bold text-on-chrome">
           TA
         </div>
         <div className="min-w-0">
           <Link href={ROUTE.talentAtlas}>
             <Typography
               variant="h6"
-              className="truncate font-semibold text-white"
+              className="truncate font-semibold text-on-chrome"
             >
               TalentAtlas
             </Typography>
@@ -65,7 +65,7 @@ export function TalentAtlasSidebar({ footer, roles }: { footer?: ReactNode; role
       <nav className="flex-1 space-y-6 px-3 pb-4">
         {visibleSections.map((section) => (
           <div key={section.label}>
-            <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
+            <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-on-chrome-subtle uppercase">
               {section.label}
             </p>
             <ul className="space-y-0.5">
@@ -80,8 +80,8 @@ export function TalentAtlasSidebar({ footer, roles }: { footer?: ReactNode; role
                       href={item.href}
                       className={`flex items-center gap-3 rounded-md px-2 py-2 text-sm transition-colors ${
                         isActive
-                          ? 'bg-slate-700/60 font-medium text-white'
-                          : 'text-slate-300 hover:bg-slate-700/30 hover:text-white'
+                          ? 'bg-chrome-raised/60 font-medium text-on-chrome'
+                          : 'text-on-chrome-muted hover:bg-chrome-raised/30 hover:text-on-chrome'
                       }`}
                     >
                       <Icon size={16} className="shrink-0" />

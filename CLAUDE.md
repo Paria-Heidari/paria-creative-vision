@@ -126,7 +126,9 @@ import { GalleryGrid, GalleryFilters } from '@/components/Gallery';
 **Tailwind CSS v4**:
 - Using new v4 syntax with `@tailwind` directive
 - Custom fonts: Syne (headings), Inter (body)
-- Color system: `background`, `foreground`, `accent` CSS variables
+- Color system: tokens in `src/styles/tokens.css`, in three tiers: `--pri-*` primitives (raw values) → `--semi-*` semantic roles (one token = one job, documented inline) → Tailwind utilities via `@theme inline` (`text-foreground`, `bg-chrome`, `border-strong`…)
+- Surfaces: the default values are the editorial (portfolio) look. Dashboards (admin, Talent Atlas, Verdikt) wrap their layout in `data-surface="workspace"`, which remaps the same semantic names to slate/navy values. Never add token names inside a surface block, only remap
+- Components must not use raw palette classes (`text-slate-500`), arbitrary hex (`bg-[#0f1929]`) or `--pri-*` primitives; `npm run check:tokens` enforces this
 - Custom animations defined in Tailwind config
 
 **Path Aliases**:
